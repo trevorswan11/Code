@@ -1,0 +1,8 @@
+import javax.swing.JFrame;
+
+public class MyFirstWindow extends JFrame{
+    // class body goes here
+  MyFirstWindow j = new MyFirstWindow()
+    j.setSize(100,300)
+> j.setVisible(true)
+}

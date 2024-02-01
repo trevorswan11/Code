@@ -1,0 +1,7 @@
+import javax.swing.JFrame;
+
+public class MyFirstClass extends JFrame{
+    // class body goes here
+    JFrame j = new JFrame
+    j = setVisible(true)
+}
