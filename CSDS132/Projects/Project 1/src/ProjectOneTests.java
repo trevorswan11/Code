@@ -1,18 +1,21 @@
 import static org.junit.Assert.*;
 import org.junit.*;
 
-public class AccountTest {
+public class ProjectOneTests {
     private String accountInput = "12345";
     private Double currentBalance = 20.0;
+    private int balLimit = 104;
 
-    // This initializes the account to be tested
-    Account account = new Account("12345");
+    // This initializes the account to be tested using the more complex constructor
+    Account account = new Account("12345", 104);
 
-    // This tests the "getAccountNumber" method
+    // This tests the constructor that has 2 inputs and get method
     @Test
-    public void accNumberTest() {
+    public void accConstructorTest() {
         String num = account.getAccountNumber();
         assertEquals(accountInput, num);
+        int predLimit = account.getBalanceLimit();
+        assertEquals(balLimit, predLimit);
     }
 
     // This tests the "getBalance" method
@@ -39,13 +42,4 @@ public class AccountTest {
         Double predCredit = account.getBalance();
         assertEquals(actualCredit, predCredit);
     }
-
-    // This tests the getter/setter methods for the Balance Limit
-    @Test
-    public void balanceLimitTest() {
-        int actualLimit = 103;
-        account.setBalanceLimit(actualLimit);
-        int predLimit = account.getBalanceLimit();
-        assertEquals(actualLimit, predLimit);
-    } 
 }

@@ -20,10 +20,10 @@ public class Account {
     // This constuctor initializes the account number and its balance limit based on appropriate inputs
     public Account(String inputNumber, int inputLimit) {
         this(inputNumber);
-        balanceLimit = inputLimit;
+        setBalanceLimit(inputLimit);
     }
 
-    // This method gets the NUmber of the Student's Account. It is a string output
+    // This method gets the Number of the Student's Account. It is a string output
     public String getAccountNumber() {
         return accountNumber;
     }
