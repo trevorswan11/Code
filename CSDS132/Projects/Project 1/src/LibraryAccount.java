@@ -25,10 +25,9 @@ public class LibraryAccount extends Account {
     }
 
     // This construsctor initializes account number, balance limit, book fine, and reserved items
-    public LibraryAccount(String inputNumber, int inputlimit, double inputFine, double inputReserve) {
+    public LibraryAccount(String inputNumber, int inputlimit, double inputBookFine, double inputReserve) {
         super(inputNumber, inputlimit);
-        bookFine = inputFine;
-        setBookFine(inputFine);
+        setBookFine(inputBookFine);
         setReserveFine(inputReserve);
     }
 

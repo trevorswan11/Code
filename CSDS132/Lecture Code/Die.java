@@ -3,13 +3,17 @@ public class Die extends Object {
     // A field to represent the current value and die size
     private int currentValue = 1;
     // the final modifier makes it so that the field can never be modified
-    private final int dieSize = 6;
+    private final int dieSize;
 
-//    public static void main(String[] args) {
-//       Die d = new Die();
-//       d.getValue(); 
-//       d.roll();
-//    }
+    // This constructor creates a Die with a specified die size
+    public Die(int dieSize) {
+        this.dieSize = dieSize;
+    }
+   public static void main(String[] args) {
+      Die d = new Die(2);
+      d.getValue(); 
+      d.roll();
+   }
 
     // A method to access the current value
     public int getValue() {
