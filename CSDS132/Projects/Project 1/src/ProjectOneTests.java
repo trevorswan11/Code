@@ -22,7 +22,7 @@ public class ProjectOneTests {
     // This initializes a library account to be tested using the complex constructor
     LibraryAccount libAccount = new LibraryAccount(accountInput, balLimit, inputBookFine, inputReserve); 
 
-// All Acount Class Tests can be found below this line
+// All Account Class Tests can be found below this line
     // This tests the constructor that has 2 inputs and get method
     @Test
     public void accConstructorTest() {
@@ -71,9 +71,51 @@ public class ProjectOneTests {
     public void libSignatureTest() {
         String libAccountNumber = libAccount.getAccountNumber();
         Double bookFineAmount = libAccount.getBookFine();
-        Double reserveFineAount = libAccount.getReserveFine();
+        Double reserveFineAmount = libAccount.getReserveFine();
         assertEquals(accountInput, libAccountNumber);
-        assertEquals(balLimit,libAccount.getBalanceLimit());
+        assertEquals(balLimit, libAccount.getBalanceLimit());
+        assertEquals(inputBookFine, bookFineAmount);
+        assertEquals(inputReserve, reserveFineAmount);
+    }
 
+    /* This tests the decrement methods for the overdue Books and Reserve fields.
+     * The "if (<= 0) {} branch is tested by attempting to subtract from 0 books"
+     */
+    @Test
+    public void overdueDecrementTest() {
+        libAccount.decrementOverdueBooks();
+        int amountBook = libAccount.getNumberOverdueBooks();
+        assertEquals(0, amountBook);
+        libAccount.decrementOverdueReserve();
+        int amountReserve = libAccount.getNumberOverdueReserve();
+        assertEquals(0, amountReserve);
+    }
+
+    /* This tests the increment methods for the overdue books, followed by the else branch
+     * in the decrement methods. This is done for both the Book and Reserve fields
+     */
+    @Test
+    public void overdueAccountTests() {
+        int finalIncrease = (int)(Math.random()+6);
+        for (int i = 0; i < finalIncrease; i++) {
+            libAccount.incrementOverdueBooks();
+            libAccount.incrementOverdueReserve();
+        }
+
+        libAccount.decrementOverdueBooks();
+        libAccount.decrementOverdueReserve();
+        assertEquals(finalIncrease - 1, libAccount.getNumberOverdueBooks());
+        assertEquals(finalIncrease - 1, libAccount.getNumberOverdueReserve());
+    }
+
+    /* This tests the canBorrow method by setting the current balance higher than the limit,
+     * then setting it lower than the limit and observing the result of the method. This code
+     * works because it gets the balance limit from the get method in Account
+     */
+    @Test
+    public void canBorrowTest() {
+        assertTrue(libAccount.canBorrow());
+        libAccount.charge(libAccount.getBalanceLimit() + 1);
+        assertFalse(libAccount.canBorrow());
     }
 }

@@ -17,7 +17,7 @@ public class Account {
         accountNumber = inputNumber;
     }
 
-    // This constuctor initializes the account number and its balance limit based on appropriate inputs
+    // This constructor initializes the account number and its balance limit based on appropriate inputs
     public Account(String inputNumber, int inputLimit) {
         this(inputNumber);
         setBalanceLimit(inputLimit);

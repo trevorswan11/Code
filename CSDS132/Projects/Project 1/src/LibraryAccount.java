@@ -62,7 +62,7 @@ public class LibraryAccount extends Account {
      * It is a void method */
     public void decrementOverdueBooks() {
         // checks to see if there is 0 overdue books. Reterns 0 if already at 0.
-        if (overdueBooks < 0) {
+        if (overdueBooks <= 0) {
             overdueBooks = 0;
         }
         // decreases amount by 1 if there is a non-zero amount
@@ -71,7 +71,7 @@ public class LibraryAccount extends Account {
         }
     }
 
-    /* This method returns the total numebr of currently overdue books. It takes an int input */
+    /* This method returns the total number of currently overdue books. It takes an int input */
     public int getNumberOverdueBooks() {
         return overdueBooks;
     }
@@ -85,7 +85,7 @@ public class LibraryAccount extends Account {
      * It is a void method */
     public void decrementOverdueReserve() {
         // checks to see if there are 0 items in overdue reserve, and sets to 0 if this is true
-        if (overdueReserve < 0) {
+        if (overdueReserve <= 0) {
             overdueReserve = 0;
         }
         // Decreases the amount of overdue books by 1 if the first statement is false
