@@ -1,0 +1,6 @@
+public class PreLabFour {
+  public String compareValues(int x, int y) {
+    if (x > y) {
+      return x + " is larger than " + y;
+  }
+}
