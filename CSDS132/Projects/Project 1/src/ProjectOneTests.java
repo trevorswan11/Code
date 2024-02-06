@@ -58,7 +58,7 @@ public class ProjectOneTests {
     } 
 
 // All LibraryAccount Class Tests can be found below this line
-    // This tests the simple libraryaccount constructor
+    // This tests the simple LibraryAccount constructor
     @Test
     public void libSimpleTest() {
         String libAccountNum = simpleLibrary.getAccountNumber();
@@ -133,6 +133,6 @@ public class ProjectOneTests {
         Double balanceTotal = bookFine + reserveFine + libAccount.getBalance();
         libAccount.endOfDay();
         assertEquals(balanceTotal, libAccount.getBalance());
-
     }
+// All CreditAccount Class Tests can be found below this line
 }
