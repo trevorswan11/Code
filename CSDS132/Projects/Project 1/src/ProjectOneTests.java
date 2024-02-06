@@ -16,7 +16,7 @@ public class ProjectOneTests {
     // This initializes the account to be tested using the more complex constructor
     Account account = new Account(accountInput, balLimit);
 
-    // This initializes a new library account with the simple signiture
+    // This initializes a new library account with the simple signature
     LibraryAccount simpleLibrary = new LibraryAccount(accountInput);
 
     // This initializes a library account to be tested using the complex constructor

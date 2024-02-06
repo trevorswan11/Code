@@ -19,14 +19,14 @@ public class LibraryAccount extends Account {
     // This field holds the total fine amount in the account
     private double fineAmount = 0.0;
 
-    // This constructor initializs the account number 
+    // This constructor initializes the account number 
     public LibraryAccount(String inputNumber) {
         super(inputNumber);
     }
 
-    // This construsctor initializes account number, balance limit, book fine, and reserved items
-    public LibraryAccount(String inputNumber, int inputlimit, double inputBookFine, double inputReserve) {
-        super(inputNumber, inputlimit);
+    // This constructor initializes account number, balance limit, book fine, and reserved items
+    public LibraryAccount(String inputNumber, int inputLimit, double inputBookFine, double inputReserve) {
+        super(inputNumber, inputLimit);
         setBookFine(inputBookFine);
         setReserveFine(inputReserve);
     }
@@ -61,7 +61,7 @@ public class LibraryAccount extends Account {
     /* This method decreases the amount of overdue books down to at most 0. 
      * It is a void method */
     public void decrementOverdueBooks() {
-        // checks to see if there is 0 overdue books. Reterns 0 if already at 0.
+        // checks to see if there is 0 overdue books. Returns 0 if already at 0.
         if (overdueBooks <= 0) {
             overdueBooks = 0;
         }
