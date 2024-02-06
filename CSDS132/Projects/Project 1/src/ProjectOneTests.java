@@ -118,4 +118,21 @@ public class ProjectOneTests {
         libAccount.charge(libAccount.getBalanceLimit() + 1);
         assertFalse(libAccount.canBorrow());
     }
+
+    /* This tests the endOfDay method by increasing the total number of overdue books and reserves to 5
+     * then by calling the method to multiply these numbers with their respective fine amounts
+     */
+    @Test
+    public void endOfDayTest() {
+        for (int i = 0; i < 5; i++) {
+            libAccount.incrementOverdueBooks();
+            libAccount.incrementOverdueReserve();
+        }
+        Double bookFine = libAccount.getNumberOverdueBooks() * libAccount.getBookFine();
+        Double reserveFine = libAccount.getNumberOverdueReserve() * libAccount.getReserveFine();
+        Double balanceTotal = bookFine + reserveFine + libAccount.getBalance();
+        libAccount.endOfDay();
+        assertEquals(balanceTotal, libAccount.getBalance());
+
+    }
 }

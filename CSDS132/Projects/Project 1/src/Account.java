@@ -1,6 +1,6 @@
 /* Trevor Swan
  * Account Class
- * CSDS132 Spring 2024
+ * CSDS132 Spring 2024 - Project 1
  */
 public class Account {
     // Stores Account Number of Student. It is final as it will never change
