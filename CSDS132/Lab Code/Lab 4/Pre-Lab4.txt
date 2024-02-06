@@ -22,5 +22,4 @@ Interactions Pane input and their outputs below:
 > tester.compareValues(2,2)
 "the two values are equal"
 
-An else statement is used here because if one of the values is not greater than the other,
-then the values must be equal.
+An else statement is used here because if one of the values is not greater than the other, then the values must be equal.
