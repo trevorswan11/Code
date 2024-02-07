@@ -12,53 +12,67 @@ public class Account {
     // Stores the Highest balance the Student may have
     private int balanceLimit = 100;
 
-    // This constructor initializes the accountNumber to an inputted value called inputNumber
+    /** This constructor initializes the accountNumber to an inputted value
+     * @param inputNumber The desired account number as a String
+     */ 
     public Account(String inputNumber) {
         // Note: this is *not* initialized to an actual value to allow the constructors below to work
-        accountNumber = inputNumber;
+        this.accountNumber = inputNumber;
     }
 
-    /* This constructor initializes the account number and its balance limit (inputLimit) 
-     * based on appropriate inputs. The inputNumber is defined the same as the Account(String inputNumber) 
-     * constructor.
+    /** This constructor initializes the account number and its balance limit (inputLimit) 
+     * based on appropriate inputs. 
+     * @param inputNumber The desired account number as a String
+     * @param inputLimit The desired account balance limit as an int
      */
     public Account(String inputNumber, int inputLimit) {
         this(inputNumber);
-        setBalanceLimit(inputLimit);
+        this.setBalanceLimit(inputLimit);
     }
 
-    // This method gets the Number of the Student's Account. It is a string output
+    /** Gets the Number of the Student's Account. 
+     * @return Account number as a String
+     */
     public String getAccountNumber() {
         return accountNumber;
     }
 
-    // This method returns the current Balance in the Students account. It is a double output
+    /** Returns the current Balance in the Students account.
+     * @return Current balance of the account as a Double
+     */
     public Double getBalance() {
         return accountBalance;
     }
 
-    /* This method increases the balance of the account by an inputted value that represents the amount to
-     * be charged. This variable is called chargeAmount. It is a void method
+    /** Increases the balance of the account by an inputted value that represents the amount to
+     * be charged.
+     * @param chargeAmount Indicates the amount to increase the account's balance by as a Double
+     * @return void
      */
     public void charge(double chargeAmount) {
-        accountBalance = getBalance() + chargeAmount;
+        this.accountBalance = getBalance() + chargeAmount;
     }
 
-    /* This method decreases the balance of the account by inputted value that represents the amount to
-     * be credited. This variable is called creditAmount. It is a void method
+    /** Decreases the balance of the account by inputted value that represents the amount to
+     * be credited. 
+     * @param creditAmount Indicates the amount to decrease the account's balance by as a Double
+     * @return void
      */
     public void credit(double creditAmount) {
-        accountBalance = getBalance() - creditAmount;
+        this.accountBalance = getBalance() - creditAmount;
     }
 
-    /* This method sets the balance limit of the account to the inputted int value called setLimit. 
-     * It is a void method.
+    /** Sts the balance limit of the account to the inputted int value called setLimit. 
+     * @param setLimit The desired value to set the account's balance limit to as an int
+     * @return void
      */ 
     public void setBalanceLimit(int setLimit) {
-        balanceLimit = setLimit;
+        this.balanceLimit = setLimit;
     }
 
-    // This methods returns the balance limit of the account. It is an int output
+    /** Returns the balance limit of the account. 
+     * @return Integer output that represents the account's balance limit
+     */
     public int getBalanceLimit() {
         return balanceLimit;
     }
