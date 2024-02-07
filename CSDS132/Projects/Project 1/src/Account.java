@@ -12,12 +12,16 @@ public class Account {
     // Stores the Highest balance the Student may have
     private int balanceLimit = 100;
 
-    // This constructor initializes the accountNumber to an inputted value value
+    // This constructor initializes the accountNumber to an inputted value called inputNumber
     public Account(String inputNumber) {
+        // Note: this is *not* initialized to an actual value to allow the constructors below to work
         accountNumber = inputNumber;
     }
 
-    // This constructor initializes the account number and its balance limit based on appropriate inputs
+    /* This constructor initializes the account number and its balance limit (inputLimit) 
+     * based on appropriate inputs. The inputNumber is defined the same as the Account(String inputNumber) 
+     * constructor.
+     */
     public Account(String inputNumber, int inputLimit) {
         this(inputNumber);
         setBalanceLimit(inputLimit);
@@ -33,17 +37,23 @@ public class Account {
         return accountBalance;
     }
 
-    // This method increases the balance of the account by an inputted value. It is a void
+    /* This method increases the balance of the account by an inputted value that represents the amount to
+     * be charged. This variable is called chargeAmount. It is a void method
+     */
     public void charge(double chargeAmount) {
         accountBalance = getBalance() + chargeAmount;
     }
 
-    // This method decreases the balance of the account by inputted value. It is a void
+    /* This method decreases the balance of the account by inputted value that represents the amount to
+     * be credited. This variable is called creditAmount. It is a void method
+     */
     public void credit(double creditAmount) {
         accountBalance = getBalance() - creditAmount;
     }
 
-    // This method sets the balance limit of the account to the inputted int value. It is a void 
+    /* This method sets the balance limit of the account to the inputted int value called setLimit. 
+     * It is a void method.
+     */ 
     public void setBalanceLimit(int setLimit) {
         balanceLimit = setLimit;
     }

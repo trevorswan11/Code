@@ -96,7 +96,7 @@ public class ProjectOneTests {
      */
     @Test
     public void overdueAccountTests() {
-        int finalIncrease = (int)(Math.random()+6);
+        int finalIncrease = (int)(Math.random() + 6);
         for (int i = 0; i < finalIncrease; i++) {
             libAccount.incrementOverdueBooks();
             libAccount.incrementOverdueReserve();

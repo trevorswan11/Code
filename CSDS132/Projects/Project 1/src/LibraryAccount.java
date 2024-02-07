@@ -19,19 +19,23 @@ public class LibraryAccount extends Account {
     // This field holds the total fine amount in the account
     private double fineAmount = 0.0;
 
-    // This constructor initializes the account number 
+    // This constructor initializes the account number with a string called inputNumber 
     public LibraryAccount(String inputNumber) {
         super(inputNumber);
     }
 
-    // This constructor initializes account number, balance limit, book fine, and reserved items
+    /* This constructor initializes account number, balance limit, book fine, and reserved items.
+     * These variables are inputNumber, inputLimit, inputBookFine, and inputReserve, respectively.
+     */
     public LibraryAccount(String inputNumber, int inputLimit, double inputBookFine, double inputReserve) {
         super(inputNumber, inputLimit);
         setBookFine(inputBookFine);
         setReserveFine(inputReserve);
     }
 
-    // This method sets the book fine amount to the size of the fine on the day. It takes a double 
+    /*  This method sets the book fine amount to the size of the fine on the day. It takes a double 
+     * called bookFineSize that represents the amount per day the student must pay for any overdue books.
+    */
     public void setBookFine(Double bookFineSize) {
         bookFine = bookFineSize;
     }
@@ -42,7 +46,9 @@ public class LibraryAccount extends Account {
     }
 
     /* This method sets the amount fined for a reserved book to the amount due that day. 
-     * It takes a double */
+     * It takes a double input called reserveFineSize which represents the amount that
+     * the student owes per day of not returning an overdue item 
+     */
     public void setReserveFine(Double reserveFineSize) {
         reserveFine = reserveFineSize;
     }
@@ -53,13 +59,15 @@ public class LibraryAccount extends Account {
     }
 
     /* This method increases the amount of overdue books in the account by one. 
-     * It is a void method */
+     * It is a void method 
+     */
     public void incrementOverdueBooks() {
         overdueBooks = getNumberOverdueBooks() + 1;
     }
 
     /* This method decreases the amount of overdue books down to at most 0. 
-     * It is a void method */
+     * It is a void method 
+     */
     public void decrementOverdueBooks() {
         // checks to see if there is 0 overdue books. Returns 0 if already at 0.
         if (overdueBooks <= 0) {
@@ -82,7 +90,8 @@ public class LibraryAccount extends Account {
     } 
 
     /* This method decreases the amount of reserved overdue items in the account to at most 0. 
-     * It is a void method */
+     * It is a void method 
+     */
     public void decrementOverdueReserve() {
         // checks to see if there are 0 items in overdue reserve, and sets to 0 if this is true
         if (overdueReserve <= 0) {
@@ -100,7 +109,8 @@ public class LibraryAccount extends Account {
     }
 
     /* This method checks to see if the balance in the account is less than or equal to the balance limit. 
-     * returns boolean value */
+     * returns boolean value 
+     */
     public Boolean canBorrow() {
         // Return true if the user has a balance less than or equal to than the limit
         if (getBalance() <= getBalanceLimit()) {
@@ -113,7 +123,8 @@ public class LibraryAccount extends Account {
     }
 
     /* This method increases the balance by the products of the overdue amount and its fine,
-     * Along with the reserved item amount and its fine. It is a void method */
+     * Along with the reserved item amount and its fine. It is a void method 
+     */
     public void endOfDay() {
         // Calculate the total owed using methods above
         fineAmount = getNumberOverdueBooks() * getBookFine() + getNumberOverdueReserve() * getReserveFine();
