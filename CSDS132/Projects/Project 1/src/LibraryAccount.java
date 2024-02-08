@@ -19,14 +19,14 @@ public class LibraryAccount extends Account {
     // This field holds the total fine amount in the account
     private double fineAmount = 0.0;
 
-    /** This constructor initializes an account with a desired account number
+    /** Creates an account with a desired account number
      * @param inputNumber The desired account number as a String
      */
     public LibraryAccount(String inputNumber) {
         super(inputNumber);
     }
 
-    /** This constructor initializes an account with a desired account number, balance limit, book fine, and reserved items.
+    /** Creates an account with a desired account number, balance limit, book fine, and reserved items.
      * @param inputNumber The desired account number as a String
      * @param inputLimit The desired balance limit of the account as an int
      * @param inputBookFine The desired amount to fine the student per book overdue as a Double
@@ -38,7 +38,7 @@ public class LibraryAccount extends Account {
         this.setReserveFine(inputReserve);
     }
 
-    /** Sets the book fine amount to the size of the fine on the day.
+    /** Sets the book fine amount to the amount the student will be charged per overdue day.
      * @param bookFineSize The desired amount to charge the student per overdue book as a Double
      * @return void
     */
@@ -46,15 +46,16 @@ public class LibraryAccount extends Account {
         this.bookFine = bookFineSize;
     }
 
-    /** Returns the book fine.
+    /** Returns the book fine/day for the Student.
      * @return The account's book fine value, the amount owed per overdue book, as a Double
      */
     public Double getBookFine() {
         return bookFine;
     }
 
-    /** Sets the amount fined for a reserved book to the amount due that day. 
-     * @param reserveFineSize Represents the amount that the student owes per day of not returning an overdue item 
+    /** Sets the amount fined for a reserved book to the amount due per overdue reserved item/day. 
+     * @param reserveFineSize Represents the amount that the student owes per day of not returning an overdue item, as a Double
+     * @return void
      */
     public void setReserveFine(Double reserveFineSize) {
         this.reserveFine = reserveFineSize;
@@ -75,8 +76,7 @@ public class LibraryAccount extends Account {
     }
 
     /** This method decreases the amount of overdue books down to at most 0. 
-     * The amount remains at zero if this method is called when there are no overdue books.
-     * The amount is decreased by 1 otherwise
+     * The amount remains at zero if there are no overdue books. The amount is decreased by 1 otherwise
      * @return void
      */
     public void decrementOverdueBooks() {
@@ -91,7 +91,7 @@ public class LibraryAccount extends Account {
     }
 
     /** Returns the total number of currently overdue books.
-     * @return The number of overdue books in the account
+     * @return The number of overdue books in the account, as an int
      */
     public int getNumberOverdueBooks() {
         return overdueBooks;
@@ -105,8 +105,7 @@ public class LibraryAccount extends Account {
     } 
 
     /** This method decreases the amount of overdue books down to at most 0. 
-     * The amount remains at zero if this method is called when there are no overdue reserved items.
-     * The amount is decreased by 1 otherwise.
+     * The amount remains at zero if there are no overdue reserved items. The amount is decreased by 1 otherwise.
      * @return void
      */
     public void decrementOverdueReserve() {
@@ -120,14 +119,14 @@ public class LibraryAccount extends Account {
         }
     }
 
-    /** Returns the total number of currently overdue books.
-     * @return The number of overdue reserved items in the account
+    /** Returns the total number of currently overdue reserved items for the student.
+     * @return The number of overdue reserved items in the account, as an int
      */    
     public int getNumberOverdueReserve() {
         return overdueReserve;
     }
 
-    /** Checks to see if the balance in the account is less than or equal to the balance limit. 
+    /** Checks to see if the student can borrow an item. True if the balance doesn't exceed the limit. 
      * @return Boolean value, true indicates the user can borrow, false indicates they cannot. 
      */
     public Boolean canBorrow() {
@@ -141,8 +140,7 @@ public class LibraryAccount extends Account {
         }
     }
 
-    /** Increases the balance by the products of the overdue amount times its fine,
-     * along with the reserved item amount times its fine. 
+    /** Increases the student's balance by the amount owed per item times their respective fines.
      * @return void 
      */
     public void endOfDay() {

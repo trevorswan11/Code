@@ -12,7 +12,7 @@ public class Account {
     // Stores the Highest balance the Student may have
     private int balanceLimit = 100;
 
-    /** This constructor initializes the accountNumber to an inputted value
+    /** Sets the account number to an inputted value.
      * @param inputNumber The desired account number as a String
      */ 
     public Account(String inputNumber) {
@@ -20,8 +20,7 @@ public class Account {
         this.accountNumber = inputNumber;
     }
 
-    /** This constructor initializes the account number and its balance limit (inputLimit) 
-     * based on appropriate inputs. 
+    /** Sets the account number and its balance limit based on appropriate inputs. 
      * @param inputNumber The desired account number as a String
      * @param inputLimit The desired account balance limit as an int
      */
@@ -44,8 +43,15 @@ public class Account {
         return accountBalance;
     }
 
-    /** Increases the balance of the account by an inputted value that represents the amount to
-     * be charged.
+    /** Sets the student's balance to a desired amount.
+     * @param balanceAmount A Double value that represents the desired new balance.
+     * @return void
+     */
+    public void setBalance(Double balanceAmount) {
+        accountBalance = balanceAmount;
+    }
+
+    /** Increases the balance of the account by an inputted value.
      * @param chargeAmount Indicates the amount to increase the account's balance by as a Double
      * @return void
      */
@@ -53,8 +59,7 @@ public class Account {
         this.accountBalance = getBalance() + chargeAmount;
     }
 
-    /** Decreases the balance of the account by inputted value that represents the amount to
-     * be credited. 
+    /** Decreases the balance of the account by inputted value.
      * @param creditAmount Indicates the amount to decrease the account's balance by as a Double
      * @return void
      */
@@ -62,7 +67,7 @@ public class Account {
         this.accountBalance = getBalance() - creditAmount;
     }
 
-    /** Sts the balance limit of the account to the inputted int value called setLimit. 
+    /** Sets the balance limit of the account to the inputted value. 
      * @param setLimit The desired value to set the account's balance limit to as an int
      * @return void
      */ 

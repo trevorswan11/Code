@@ -8,7 +8,7 @@ import org.junit.*;
 public class ProjectOneTests {
     // These are the fields for the following class tests
     private String accountInput = "12345";
-    private Double currentBalance = 20.0;
+    private Double currentBalance = 27.0;
     private int balLimit = 104;
     private Double inputBookFine = 20.0;
     private Double inputReserve = 10.0;
@@ -35,6 +35,7 @@ public class ProjectOneTests {
     // This tests the "getBalance" method
     @Test
     public void balanceTest() {
+        account.setBalance(currentBalance);
         Double bal = account.getBalance();
         assertEquals(currentBalance, bal);
     }
