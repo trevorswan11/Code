@@ -75,7 +75,6 @@ public class CreditAccount extends Account {
     public void credit(double creditAmount) {
         super.credit(creditAmount);
         this.amountPaidThisMonth = getAmountPaidThisMonth() + creditAmount;
-
     }
     // This is the main method
     public static void main(String[] args) {
