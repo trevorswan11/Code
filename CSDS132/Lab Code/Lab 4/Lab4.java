@@ -58,14 +58,16 @@ public class Lab4 {
     }
   }
 
+  // All of the methods can be called in this main method, where user input is gotten from the command line
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
     System.out.println("Key for Testing:\n 1. max\n 2. middle\n 3. Bias Rounding\n 4. Unbiased Rounding\n 5. Quit");
-
-    while (true) {
+    Boolean run = true;
+    while (run) {
       System.out.print("Input: ");
-      int input = sc.nextInt();
-      if (input == 1) {
+      String input = sc.next();
+
+      if (input.equals("1")) {
         System.out.print("\nx = ");
         double x = sc.nextDouble();
         System.out.print("\ny = ");
@@ -74,7 +76,7 @@ public class Lab4 {
         System.out.println(larger);
       }
 
-      else if (input == 2) {
+      else if (input.equals("2")) {
         // scanner for command line input
         System.out.print("\nx = ");
         double x = sc.nextDouble();
@@ -88,7 +90,7 @@ public class Lab4 {
         System.out.println(middle);
       }
 
-      else if (input == 3) {
+      else if (input.equals("3")) {
         // rounding method testing
         System.out.print("Value to be rounded: ");
         double value1 = sc.nextDouble();
@@ -96,16 +98,24 @@ public class Lab4 {
         System.out.println(result1);
       }
 
-      else if (input == 4) {
+      else if (input.equals("4")) {
         // biased rounding
         System.out.print("Value to be rounded: ");
         double value2 = sc.nextDouble();
         int result2 = roundDouble(value2);
         System.out.println(result2);
-      } else if (input == 5) {
-        break;
+      } 
+
+      else if (input.equals("5")) {
+        System.out.println("Thank you!");
+        run = false;
+      }
+
+      else {
+        System.out.println("Invalid input");
       }
     }
+
     // closes the scanner
     sc.close();
   }
