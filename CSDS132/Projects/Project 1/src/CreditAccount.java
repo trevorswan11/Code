@@ -37,12 +37,28 @@ public class CreditAccount extends Account {
         return interestRate;
     }
 
+    /** Sets the users monthly payment amount to a desired value.
+     * @param setMonthly Desired monthly payment amount as a double
+     * @return void
+     */
+    public void setMonthlyPayment(Double setMonthly) {
+        monthlyPayment = setMonthly;
+    }
+
     /** Returns the monthly payment amount for the student.
      * Note: The amount they owe that prevents interest charges. 
      * @return Amount owed for monthly payment, as a Double
     */
     public Double getMonthlyPayment() {
         return monthlyPayment;
+    }
+
+    /** Sets the amount the user has paid this month to a desired value. 
+     * @param setPaid Desired amount to set the total amount the user has paid this month as a Double
+     * @return void
+    */
+    public void setAmountPaidThisMonth(Double setPaid) {
+        amountPaidThisMonth = setPaid;
     }
 
     /** Returns the amount that the student has paid this month.
@@ -59,12 +75,12 @@ public class CreditAccount extends Account {
      * @return void
      */
     public void endOfMonth() {
-        if (amountPaidThisMonth < monthlyPayment) {
+        if (getAmountPaidThisMonth() < getMonthlyPayment()) {
           super.charge((this.getInterestRate() * super.getBalance()) / 12);  
         }
 
-        amountPaidThisMonth = 0.0;
-        monthlyPayment = this.getBalance();
+        this.setAmountPaidThisMonth(0.0);
+        this.setMonthlyPayment(super.getBalance());
     }
 
     /** Decreases the balance of both the account and the amount payed this month by the student.
@@ -74,7 +90,7 @@ public class CreditAccount extends Account {
     @Override 
     public void credit(double creditAmount) {
         super.credit(creditAmount);
-        this.amountPaidThisMonth = getAmountPaidThisMonth() + creditAmount;
+        this.setAmountPaidThisMonth(getAmountPaidThisMonth() + creditAmount);
     }
     // This is the main method
     public static void main(String[] args) {

@@ -32,7 +32,7 @@ public class ProjectOneTests {
         assertEquals(balLimit, predLimit);
     }
 
-    // This tests the "getBalance" method
+    // This tests the "getBalance" and "setBalance" methods
     @Test
     public void balanceTest() {
         account.setBalance(currentBalance);
@@ -107,6 +107,17 @@ public class ProjectOneTests {
         libAccount.decrementOverdueReserve();
         assertEquals(finalIncrease - 1, libAccount.getNumberOverdueBooks());
         assertEquals(finalIncrease - 1, libAccount.getNumberOverdueReserve());
+    }
+
+    /* This tests the "setter" methods for the overdue books and overdue reserved items.
+     * This makes use of the setter methods in conjunction with getter methods that have been established to work 
+     */
+    @Test
+    public void setterOverdueTests() {
+        libAccount.setNumberOverdue(29);
+        assertEquals(29, libAccount.getNumberOverdueBooks());
+        libAccount.setNumberOverdueReserve(113);
+        assertEquals(113, libAccount.getNumberOverdueReserve());
     }
 
     /* This tests the canBorrow method by setting the current balance higher than the limit,

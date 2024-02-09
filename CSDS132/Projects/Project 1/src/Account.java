@@ -36,6 +36,14 @@ public class Account {
         return accountNumber;
     }
 
+    /** Sets the student's balance to a desired amount.
+     * @param balanceAmount A Double value that represents the desired new balance.
+     * @return void
+     */
+    public void setBalance(Double balanceAmount) {
+        this.accountBalance = balanceAmount;
+    }
+
     /** Returns the current Balance in the Students account.
      * @return Current balance of the account as a Double
      */
@@ -43,20 +51,12 @@ public class Account {
         return accountBalance;
     }
 
-    /** Sets the student's balance to a desired amount.
-     * @param balanceAmount A Double value that represents the desired new balance.
-     * @return void
-     */
-    public void setBalance(Double balanceAmount) {
-        accountBalance = balanceAmount;
-    }
-
     /** Increases the balance of the account by an inputted value.
      * @param chargeAmount Indicates the amount to increase the account's balance by as a Double
      * @return void
      */
     public void charge(double chargeAmount) {
-        this.accountBalance = getBalance() + chargeAmount;
+        this.setBalance(getBalance() + chargeAmount);
     }
 
     /** Decreases the balance of the account by inputted value.
@@ -64,7 +64,7 @@ public class Account {
      * @return void
      */
     public void credit(double creditAmount) {
-        this.accountBalance = getBalance() - creditAmount;
+        this.setBalance(getBalance() - creditAmount);
     }
 
     /** Sets the balance limit of the account to the inputted value. 

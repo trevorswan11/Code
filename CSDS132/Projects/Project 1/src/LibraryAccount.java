@@ -90,6 +90,14 @@ public class LibraryAccount extends Account {
         }
     }
 
+    /** Sets the number of overdue books in the account to a desired amount
+     * @param setOverdueAmount Desired amount of Overdue books to be in the account as an int
+     * @return void
+     */
+    public void setNumberOverdue(int setOverdueAmount) {
+        this.overdueBooks = setOverdueAmount;
+    }
+
     /** Returns the total number of currently overdue books.
      * @return The number of overdue books in the account, as an int
      */
@@ -119,6 +127,14 @@ public class LibraryAccount extends Account {
         }
     }
 
+    /** Sets the Number of overdue books in the account to a desired value.
+     * @param setReserveAmount Desired amount of Overdue Reserved items to be in the account as an int
+     * @return void
+     */
+    public void setNumberOverdueReserve(int setReserveAmount) {
+        this.overdueReserve = setReserveAmount;
+    }
+
     /** Returns the total number of currently overdue reserved items for the student.
      * @return The number of overdue reserved items in the account, as an int
      */    
@@ -144,7 +160,7 @@ public class LibraryAccount extends Account {
      * @return void 
      */
     public void endOfDay() {
-        // Calculate the total owed using methods above
+        // Calculate the total owed using methods above, I used a variable here to avoid too long of a statement
         this.fineAmount = getNumberOverdueBooks() * getBookFine() + getNumberOverdueReserve() * getReserveFine();
 
         // charge the account with the charge(Double) method from the Account class
