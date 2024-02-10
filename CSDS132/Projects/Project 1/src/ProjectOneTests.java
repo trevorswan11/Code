@@ -190,8 +190,11 @@ public class ProjectOneTests {
     public void endOfMonthIntTest() {
         credAccount.setMonthlyPayment(inputMonthly);
         credAccount.setAmountPaidThisMonth(inputMonthly - 1);
+        Double oldBal = credAccount.getBalance();
+        Double predBal = (credAccount.getInterestRate() * credAccount.getBalance()) / 12 + oldBal;
         credAccount.endOfMonth();
         
+        assertEquals(predBal, credAccount.getBalance());
         assertEquals(emptyBal, credAccount.getAmountPaidThisMonth());
         assertEquals(credAccount.getBalance(), credAccount.getMonthlyPayment());
     }
@@ -201,8 +204,10 @@ public class ProjectOneTests {
     public void endOfMonthTest() {
         credAccount.setMonthlyPayment(inputMonthly);
         credAccount.setAmountPaidThisMonth(inputMonthly);
+        Double oldBal = credAccount.getBalance();
         credAccount.endOfMonth();
 
+        assertEquals(oldBal, credAccount.getBalance());
         assertEquals(emptyBal, credAccount.getAmountPaidThisMonth());
         assertEquals(credAccount.getBalance(), credAccount.getMonthlyPayment());
     }
