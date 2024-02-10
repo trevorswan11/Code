@@ -1,3 +1,4 @@
+package projectone;
 /* Trevor Swan
  * CreditAccount Class
  * CSDS132 Spring 2024 - Project 1
