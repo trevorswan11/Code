@@ -1,5 +1,6 @@
 {
     "cSpell.words": [
         "Eskin"
-    ]
+    ],
+    "java.debug.settings.onBuildFailureProceed": true
 }
