@@ -185,7 +185,7 @@ public class ProjectOneTests {
 
     }
 
-    /* This tests the end of the month method with interest being applied*/
+    /* This tests the end of the month method with interest being applied */
     @Test
     public void endOfMonthIntTest() {
         credAccount.setMonthlyPayment(inputMonthly);
