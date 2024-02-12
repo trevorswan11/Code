@@ -5,8 +5,7 @@ public class Employee {
     private String name;
     private int number;
     private static int lastEmployeeNumber = 0;
-    private Double salary = 100.;
-
+    private double salary = 100.;
     
     /* A constructor that takes the name and number as input */
     public Employee(String name, int number) {
@@ -38,15 +37,16 @@ public class Employee {
     }
 
     /* retrieves the salary for the employee  */
-    public Double getSalary() {
+    public double getSalary() {
         return salary;
     }
 
     /* sets the salary for the employee */
     public void setSalary(double inputSalary) {
-        salary = inputSalary;
+        this.salary = inputSalary;
     }
 
+    
     @Override
     /* override the inherited toString method */
     public String toString() {

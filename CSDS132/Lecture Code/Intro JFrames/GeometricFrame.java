@@ -4,16 +4,23 @@
 import javax.swing.JFrame;
 
 public class GeometricFrame extends JFrame{
+    private String originalTitle;
+    private boolean isSizeOnTitle;
     public static void main(String[] args){
+        // Necessary code to test properly
         GeometricFrame g = new GeometricFrame();
         GeometricFrame h = new GeometricFrame();
         g.setVisible(true);
         g.setSize(200,700);
-        h.setVisible(true);
-        h.setSize(100, 400);
+        // h.setVisible(true);
+        // h.setSize(100, 400);
+
+        // Method tests can be found below
         // g.transpose();
         // g.scale(1.2);
-        g.isSameArea(h);
+        // g.isSameArea(h);
+        g.addSizeToTitle(true);
+        
     }
     // this method transposes a window's dimensions
     public void transpose(){
@@ -42,5 +49,23 @@ public class GeometricFrame extends JFrame{
         else { 
             return false;
         }
+    }
+
+    /* This method adds the size to the frame title */
+    public void addSizeToTitle(boolean showSize) {
+        if (showSize) {
+            super.setTitle(this.getTitle() + "("+this.getWidth()+"x"+this.getHeight()+")");
+            this.isSizeOnTitle = true;
+        }
+        else {
+            super.setTitle(this.originalTitle);
+            this.setTitle(this.getTitle());
+        }
+    }
+
+    /* this overrides the setTitle method from the parent */
+    public void setTitle(String title) {
+        super.setTitle(title);
+        this.originalTitle = title;
     }
 }
