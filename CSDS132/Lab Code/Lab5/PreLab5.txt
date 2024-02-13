@@ -1,0 +1,39 @@
+Trevor Swan - CSDS132
+tcs94
+
+Below is my java script to calculate and display the loops:
+public class PreLab5 {
+    /* This method uses a WHILE loop to sum the first 10 positive integers */
+    public int firstTenWhile() {
+        int count = 0;
+        int sum = 0;
+        while (count <= 10) {
+            sum = sum + count;   
+            count = count + 1;;    
+        }
+        return sum;
+    }
+
+     /* This method uses a FOR loop to sum the first 10 positive integers */
+    public int firstTenFor() {
+        int sum = 0;
+        for (int i = 0; i <= 10; i++) {
+            sum = sum + i;
+        }
+        return sum;
+    }
+
+    public static void main(String[] args) {
+        PreLab5 a = new PreLab5();
+        int whileSum = a.firstTenWhile();
+        int forSum = a.firstTenFor();
+        System.out.printf("While Loop Sum = %d\nFor Loop Sum = %d",whileSum,forSum);
+    }
+}
+
+
+Below is my command line input and output:
+$ javac PreLab5
+$ java PreLab5
+While Loop Sum = 55
+For Loop Sum = 55
