@@ -20,6 +20,7 @@ public class LibraryAccount extends Account {
     private double fineAmount = 0.0;
 
     /** Creates an account with a desired account number
+     * 
      * @param inputNumber The desired account number as a String
      */
     public LibraryAccount(String inputNumber) {
@@ -27,10 +28,11 @@ public class LibraryAccount extends Account {
     }
 
     /** Creates an account with a desired account number, balance limit, book fine, and reserved items.
+     * 
      * @param inputNumber The desired account number as a String
      * @param inputLimit The desired balance limit of the account as an int
-     * @param inputBookFine The desired amount to fine the student per book overdue as a Double
-     * @param inputReserveFine The desired amount to fine the student per overdue reserve item as a Double
+     * @param inputBookFine The desired amount to fine the student per book overdue as a double
+     * @param inputReserveFine The desired amount to fine the student per overdue reserve item as a double
      */
     public LibraryAccount(String inputNumber, int inputLimit, double inputBookFine, double inputReserve) {
         super(inputNumber, inputLimit);
@@ -39,36 +41,41 @@ public class LibraryAccount extends Account {
     }
 
     /** Sets the book fine amount to the amount the student will be charged per overdue day.
-     * @param bookFineSize The desired amount to charge the student per overdue book as a Double
+     * 
+     * @param bookFineSize The desired amount to charge the student per overdue book as a double
      * @return void
     */
-    public void setBookFine(Double bookFineSize) {
+    public void setBookFine(double bookFineSize) {
         this.bookFine = bookFineSize;
     }
 
     /** Returns the book fine/day for the Student.
-     * @return The account's book fine value, the amount owed per overdue book, as a Double
+     * 
+     * @return The account's book fine value, the amount owed per overdue book, as a double
      */
-    public Double getBookFine() {
+    public double getBookFine() {
         return bookFine;
     }
 
-    /** Sets the amount fined for a reserved book to the amount due per overdue reserved item/day. 
-     * @param reserveFineSize Represents the amount that the student owes per day of not returning an overdue item, as a Double
+    /** Sets the amount fined for a reserved book to the amount due per overdue reserved item/day.
+     *  
+     * @param reserveFineSize Represents the amount that the student owes per day of not returning an overdue item, as a double
      * @return void
      */
-    public void setReserveFine(Double reserveFineSize) {
+    public void setReserveFine(double reserveFineSize) {
         this.reserveFine = reserveFineSize;
     }
 
     /** Returns the amount fined for each day overdue.
-     * @return The account's reserved items fine value, the amount owed per overdue reserved item, as a Double
+     * 
+     * @return The account's reserved items fine value, the amount owed per overdue reserved item, as a double
     */
-    public Double getReserveFine() {
+    public double getReserveFine() {
         return reserveFine;
     }
 
     /** Increases the amount of overdue books in the account by one. 
+     * 
      * @return void
      */
     public void incrementOverdueBooks() {
@@ -77,6 +84,7 @@ public class LibraryAccount extends Account {
 
     /** This method decreases the amount of overdue books down to at most 0. 
      * The amount remains at zero if there are no overdue books. The amount is decreased by 1 otherwise
+     * 
      * @return void
      */
     public void decrementOverdueBooks() {
@@ -91,6 +99,7 @@ public class LibraryAccount extends Account {
     }
 
     /** Sets the number of overdue books in the account to a desired amount
+     * 
      * @param setOverdueAmount Desired amount of Overdue books to be in the account as an int
      * @return void
      */
@@ -99,6 +108,7 @@ public class LibraryAccount extends Account {
     }
 
     /** Returns the total number of currently overdue books.
+     * 
      * @return The number of overdue books in the account, as an int
      */
     public int getNumberOverdueBooks() {
@@ -106,6 +116,7 @@ public class LibraryAccount extends Account {
     }
 
     /** Increases the amount of overdue books in the account by one. 
+     * 
      * @return void
      */
     public void incrementOverdueReserve() {
@@ -114,6 +125,7 @@ public class LibraryAccount extends Account {
 
     /** This method decreases the amount of overdue books down to at most 0. 
      * The amount remains at zero if there are no overdue reserved items. The amount is decreased by 1 otherwise.
+     * 
      * @return void
      */
     public void decrementOverdueReserve() {
@@ -128,6 +140,7 @@ public class LibraryAccount extends Account {
     }
 
     /** Sets the Number of overdue books in the account to a desired value.
+     * 
      * @param setReserveAmount Desired amount of Overdue Reserved items to be in the account as an int
      * @return void
      */
@@ -136,6 +149,7 @@ public class LibraryAccount extends Account {
     }
 
     /** Returns the total number of currently overdue reserved items for the student.
+     * 
      * @return The number of overdue reserved items in the account, as an int
      */    
     public int getNumberOverdueReserve() {
@@ -143,6 +157,7 @@ public class LibraryAccount extends Account {
     }
 
     /** Checks to see if the student can borrow an item. True if the balance doesn't exceed the limit. 
+     * 
      * @return Boolean value, true indicates the user can borrow, false indicates they cannot. 
      */
     public Boolean canBorrow() {
@@ -157,13 +172,14 @@ public class LibraryAccount extends Account {
     }
 
     /** Increases the student's balance by the amount owed per item times their respective fines.
+     * 
      * @return void 
      */
     public void endOfDay() {
         // Calculate the total owed using methods above, I used a variable here to avoid too long of a statement
         this.fineAmount = getNumberOverdueBooks() * getBookFine() + getNumberOverdueReserve() * getReserveFine();
 
-        // charge the account with the charge(Double) method from the Account class
+        // charge the account with the charge(double) method from the Account class
         charge(fineAmount);
     }
 

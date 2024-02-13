@@ -1,0 +1,7 @@
+public class InstanceTests {
+  public void doIExist() {
+    InstanceTests a = new InstanceTests;
+  }
+}
+
+

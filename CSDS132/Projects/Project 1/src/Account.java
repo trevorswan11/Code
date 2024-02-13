@@ -21,6 +21,7 @@ public class Account {
     }
 
     /** Sets the account number and its balance limit based on appropriate inputs. 
+     * 
      * @param inputNumber The desired account number as a String
      * @param inputLimit The desired account balance limit as an int
      */
@@ -30,29 +31,33 @@ public class Account {
     }
 
     /** Gets the Number of the Student's Account. 
-     * @return Account number as a String
+     *
+     *  @return Account number as a String
      */
     public String getAccountNumber() {
         return accountNumber;
     }
 
     /** Sets the student's balance to a desired amount.
-     * @param balanceAmount A Double value that represents the desired new balance.
+     * 
+     * @param balanceAmount A double value that represents the desired new balance.
      * @return void
      */
-    public void setBalance(Double balanceAmount) {
+    public void setBalance(double balanceAmount) {
         this.accountBalance = balanceAmount;
     }
 
     /** Returns the current Balance in the Students account.
-     * @return Current balance of the account as a Double
+     * 
+     * @return Current balance of the account as a double
      */
-    public Double getBalance() {
+    public double getBalance() {
         return accountBalance;
     }
 
     /** Increases the balance of the account by an inputted value.
-     * @param chargeAmount Indicates the amount to increase the account's balance by as a Double
+     * 
+     * @param chargeAmount Indicates the amount to increase the account's balance by as a double
      * @return void
      */
     public void charge(double chargeAmount) {
@@ -60,7 +65,8 @@ public class Account {
     }
 
     /** Decreases the balance of the account by inputted value.
-     * @param creditAmount Indicates the amount to decrease the account's balance by as a Double
+     * 
+     * @param creditAmount Indicates the amount to decrease the account's balance by as a double
      * @return void
      */
     public void credit(double creditAmount) {
@@ -68,6 +74,7 @@ public class Account {
     }
 
     /** Sets the balance limit of the account to the inputted value. 
+     * 
      * @param setLimit The desired value to set the account's balance limit to as an int
      * @return void
      */ 
@@ -76,6 +83,7 @@ public class Account {
     }
 
     /** Returns the balance limit of the account. 
+     * 
      * @return Integer output that represents the account's balance limit
      */
     public int getBalanceLimit() {

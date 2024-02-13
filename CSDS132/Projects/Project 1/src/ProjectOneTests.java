@@ -8,14 +8,14 @@ import org.junit.*;
 public class ProjectOneTests {
     // These are the fields for the following class tests
     private String accountInput = "12345";
-    private Double currentBalance = 27.0;
+    private double currentBalance = 27.0;
     private int balLimit = 104;
-    private Double inputBookFine = 20.0;
-    private Double inputReserve = 10.0;
-    private Double inputRate = 0.1;
-    private Double inputMonthly = 46.0;
-    private Double inputPaid = 35.6;
-    private Double emptyBal = 0.0;
+    private double inputBookFine = 20.0;
+    private double inputReserve = 10.0;
+    private double inputRate = 0.1;
+    private double inputMonthly = 46.0;
+    private double inputPaid = 35.6;
+    private double emptyBal = 0.0;
 
     // This initializes the account to be tested using the more complex constructor
     Account account = new Account(accountInput, balLimit);
@@ -34,26 +34,26 @@ public class ProjectOneTests {
     @Test
     public void balanceTest() {
         account.setBalance(currentBalance);
-        Double bal = account.getBalance();
-        assertEquals(currentBalance, bal);
+        double bal = account.getBalance();
+        assertEquals(currentBalance, bal,0);
     }
 
     // This tests the "charge" method
     @Test
     public void chargeTest() {
-        Double actualCharge = account.getBalance() + 4;
+        double actualCharge = account.getBalance() + 4;
         account.charge(4);
-        Double predCharge = account.getBalance();
-        assertEquals(actualCharge, predCharge);
+        double predCharge = account.getBalance();
+        assertEquals(actualCharge, predCharge, 0);
     }
 
     // This tests the "credit" method
     @Test
     public void creditTest() {
-        Double actualCredit = account.getBalance() - 3.6;
+        double actualCredit = account.getBalance() - 3.6;
         account.credit(3.6);
-        Double predCredit = account.getBalance();
-        assertEquals(actualCredit, predCredit);
+        double predCredit = account.getBalance();
+        assertEquals(actualCredit, predCredit, 0);
     } 
 
 // All LibraryAccount Class Tests can be found below this line
@@ -75,12 +75,12 @@ public class ProjectOneTests {
     @Test
     public void libSignatureTest() {
         String libAccountNumber = libAccount.getAccountNumber();
-        Double bookFineAmount = libAccount.getBookFine();
-        Double reserveFineAmount = libAccount.getReserveFine();
+        double bookFineAmount = libAccount.getBookFine();
+        double reserveFineAmount = libAccount.getReserveFine();
         assertEquals(accountInput, libAccountNumber);
         assertEquals(balLimit, libAccount.getBalanceLimit());
-        assertEquals(inputBookFine, bookFineAmount);
-        assertEquals(inputReserve, reserveFineAmount);
+        assertEquals(inputBookFine, bookFineAmount, 0);
+        assertEquals(inputReserve, reserveFineAmount, 0);
     }
 
     /* This tests the decrement methods for the overdue Books and Reserve fields.
@@ -144,11 +144,11 @@ public class ProjectOneTests {
             libAccount.incrementOverdueBooks();
             libAccount.incrementOverdueReserve();
         }
-        Double bookFine = libAccount.getNumberOverdueBooks() * libAccount.getBookFine();
-        Double reserveFine = libAccount.getNumberOverdueReserve() * libAccount.getReserveFine();
-        Double balanceTotal = bookFine + reserveFine + libAccount.getBalance();
+        double bookFine = libAccount.getNumberOverdueBooks() * libAccount.getBookFine();
+        double reserveFine = libAccount.getNumberOverdueReserve() * libAccount.getReserveFine();
+        double balanceTotal = bookFine + reserveFine + libAccount.getBalance();
         libAccount.endOfDay();
-        assertEquals(balanceTotal, libAccount.getBalance());
+        assertEquals(balanceTotal, libAccount.getBalance(), 0);
     }
 // All CreditAccount Class Tests can be found below this line
     // This initializes a credit account
@@ -158,30 +158,30 @@ public class ProjectOneTests {
     @Test 
     public void interestRateTest() {
         credAccount.setInterestRate(inputRate);
-        assertEquals(inputRate, credAccount.getInterestRate());
+        assertEquals(inputRate, credAccount.getInterestRate(), 0);
     }
 
     /* This tests the getter setter methods for the monthly payment */
     @Test
     public void monthlyPaymentTest() {
         credAccount.setMonthlyPayment(inputMonthly);
-        assertEquals(inputMonthly, credAccount.getMonthlyPayment());
+        assertEquals(inputMonthly, credAccount.getMonthlyPayment(), 0);
     } 
     /* This tests the getter setter methods for the amount paid this month */
     @Test 
     public void amountPaidTest() {
         credAccount.setAmountPaidThisMonth(inputPaid);
-        assertEquals(inputPaid, credAccount.getAmountPaidThisMonth());
+        assertEquals(inputPaid, credAccount.getAmountPaidThisMonth(), 0);
     }
 
     /* This tests the overridden credit method */
     @Test
     public void overCredit() {
-        Double predBal = credAccount.getBalance() - 10;
-        Double predAmountPaid = credAccount.getAmountPaidThisMonth() + 10; 
+        double predBal = credAccount.getBalance() - 10;
+        double predAmountPaid = credAccount.getAmountPaidThisMonth() + 10; 
         credAccount.credit(10);
-        assertEquals(predBal, credAccount.getBalance());
-        assertEquals(predAmountPaid, credAccount.getAmountPaidThisMonth());
+        assertEquals(predBal, credAccount.getBalance(), 0);
+        assertEquals(predAmountPaid, credAccount.getAmountPaidThisMonth(), 0);
 
     }
 
@@ -190,13 +190,13 @@ public class ProjectOneTests {
     public void endOfMonthIntTest() {
         credAccount.setMonthlyPayment(inputMonthly);
         credAccount.setAmountPaidThisMonth(inputMonthly - 1);
-        Double oldBal = credAccount.getBalance();
-        Double predBal = (credAccount.getInterestRate() * credAccount.getBalance()) / 12 + oldBal;
+        double oldBal = credAccount.getBalance();
+        double predBal = (credAccount.getInterestRate() * credAccount.getBalance()) / 12 + oldBal;
         credAccount.endOfMonth();
         
-        assertEquals(predBal, credAccount.getBalance());
-        assertEquals(emptyBal, credAccount.getAmountPaidThisMonth());
-        assertEquals(credAccount.getBalance(), credAccount.getMonthlyPayment());
+        assertEquals(predBal, credAccount.getBalance(), 0);
+        assertEquals(emptyBal, credAccount.getAmountPaidThisMonth(), 0);
+        assertEquals(credAccount.getBalance(), credAccount.getMonthlyPayment(), 0);
     }
 
     /* This tests the end of the month method without interest being applied*/
@@ -204,11 +204,11 @@ public class ProjectOneTests {
     public void endOfMonthTest() {
         credAccount.setMonthlyPayment(inputMonthly);
         credAccount.setAmountPaidThisMonth(inputMonthly);
-        Double oldBal = credAccount.getBalance();
+        double oldBal = credAccount.getBalance();
         credAccount.endOfMonth();
 
-        assertEquals(oldBal, credAccount.getBalance());
-        assertEquals(emptyBal, credAccount.getAmountPaidThisMonth());
-        assertEquals(credAccount.getBalance(), credAccount.getMonthlyPayment());
+        assertEquals(oldBal, credAccount.getBalance(), 0);
+        assertEquals(emptyBal, credAccount.getAmountPaidThisMonth(), 0);
+        assertEquals(credAccount.getBalance(), credAccount.getMonthlyPayment(), 0);
     }
 }
