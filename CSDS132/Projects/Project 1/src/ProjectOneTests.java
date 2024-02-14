@@ -11,11 +11,13 @@ public class ProjectOneTests {
     private double currentBalance = 27.0;
     private int balLimit = 104;
     private double inputBookFine = 20.0;
-    private double inputReserve = 10.0;
+    private double inputReserveFine = 10.0;
     private double inputRate = 0.1;
     private double inputMonthly = 46.0;
     private double inputPaid = 35.6;
     private double emptyBal = 0.0;
+    private String studentName = "John";
+    private String studentAddress = "11447 Juniper";
 
     // This initializes the account to be tested using the more complex constructor
     Account account = new Account(accountInput, balLimit);
@@ -61,7 +63,7 @@ public class ProjectOneTests {
     LibraryAccount simpleLibrary = new LibraryAccount(accountInput);
 
     // This initializes a library account to be tested using the complex constructor
-    LibraryAccount libAccount = new LibraryAccount(accountInput, balLimit, inputBookFine, inputReserve);
+    LibraryAccount libAccount = new LibraryAccount(accountInput, balLimit, inputBookFine, inputReserveFine);
 
     // This tests the simple LibraryAccount constructor
     @Test
@@ -80,7 +82,7 @@ public class ProjectOneTests {
         assertEquals(accountInput, libAccountNumber);
         assertEquals(balLimit, libAccount.getBalanceLimit());
         assertEquals(inputBookFine, bookFineAmount, 0);
-        assertEquals(inputReserve, reserveFineAmount, 0);
+        assertEquals(inputReserveFine, reserveFineAmount, 0);
     }
 
     /* This tests the decrement methods for the overdue Books and Reserve fields.
@@ -150,6 +152,7 @@ public class ProjectOneTests {
         libAccount.endOfDay();
         assertEquals(balanceTotal, libAccount.getBalance(), 0);
     }
+
 // All CreditAccount Class Tests can be found below this line
     // This initializes a credit account
     CreditAccount credAccount = new CreditAccount(accountInput, currentBalance);
@@ -210,5 +213,53 @@ public class ProjectOneTests {
         assertEquals(oldBal, credAccount.getBalance(), 0);
         assertEquals(emptyBal, credAccount.getAmountPaidThisMonth(), 0);
         assertEquals(credAccount.getBalance(), credAccount.getMonthlyPayment(), 0);
+    }
+
+// All StudentAccount tests can be found below this line
+    /* This initializes a new StudentAccount */
+    StudentAccount studentAccount = new StudentAccount(accountInput, studentName);
+
+    /* This initializes a new LibraryAccount for these tests */
+    LibraryAccount testLibraryAccount = new LibraryAccount(accountInput, balLimit, inputBookFine, inputReserveFine);
+
+    /* This initializes a new CreditAccount called TuitionAccount for these tests */
+    CreditAccount testTuitionAccount = new CreditAccount(accountInput, currentBalance);
+
+    /* This initializes a new CreditAccount called DiningAccount for these tests */\
+    CreditAccount testDiningAccount = new CreditAccount(accountInput, currentBalance);
+
+    /* This tests if the constructor worked properly, as well as the getter-setters for name methods from the student account class */
+    @Test
+    public void constructorTest() {
+        assertEquals(accountInput, studentAccount.getAccountNumber());
+        assertEquals(studentName, studentAccount.getName());
+    }
+
+    /* This tests the getter-setter methods for the address methods for the student account */
+    @Test
+    public void addressTest() {
+        studentAccount.setAddress(studentAddress);
+        assertEquals(studentAddress, studentAccount.getAddress());
+    }
+
+    /* This tests the getter setter methods for the LibraryAccount methods */
+    @Test
+    public void libraryGetSet() {
+        studentAccount.setLibraryAccount(testLibraryAccount);
+
+        // this creates a model library account to extract information to test
+        LibraryAccount modelLibraryAccount = studentAccount.getLibraryAccount();
+        assertEquals(accountInput, modelLibraryAccount.getAccountNumber());
+        assertEquals(balLimit, modelLibraryAccount.getBalanceLimit(), 0);
+        assertEquals(inputBookFine, modelLibraryAccount.getBookFine(), 0);
+        assertEquals(inputReserveFine, modelLibraryAccount.getReserveFine(), 0);
+    }
+
+    /* This tests the getter setter methods for the TuitionAccount Methods */
+    @Test
+    public void tuitionGetSet() {
+        studentAccount.setTuitionAccount(testTuitionAccount);
+
+        // This creates a model TuitionAccount to extract information and test
     }
 }

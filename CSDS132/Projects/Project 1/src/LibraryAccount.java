@@ -21,21 +21,21 @@ public class LibraryAccount extends Account {
 
     /** Creates an account with a desired account number
      * 
-     * @param inputNumber The desired account number as a String
+     * @param inputAccount The desired account number as a String
      */
-    public LibraryAccount(String inputNumber) {
-        super(inputNumber);
+    public LibraryAccount(String inputAccount) {
+        super(inputAccount);
     }
 
     /** Creates an account with a desired account number, balance limit, book fine, and reserved items.
      * 
-     * @param inputNumber The desired account number as a String
+     * @param inputAccount The desired account number as a String
      * @param inputLimit The desired balance limit of the account as an int
      * @param inputBookFine The desired amount to fine the student per book overdue as a double
      * @param inputReserveFine The desired amount to fine the student per overdue reserve item as a double
      */
-    public LibraryAccount(String inputNumber, int inputLimit, double inputBookFine, double inputReserve) {
-        super(inputNumber, inputLimit);
+    public LibraryAccount(String inputAccount, int inputLimit, double inputBookFine, double inputReserve) {
+        super(inputAccount, inputLimit);
         this.setBookFine(inputBookFine);
         this.setReserveFine(inputReserve);
     }

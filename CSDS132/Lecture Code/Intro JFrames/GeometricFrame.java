@@ -1,71 +1,75 @@
-/* This class represents a GeometricFrame which is 
- * an advanced version of JFrame
- */
 import javax.swing.JFrame;
 
-public class GeometricFrame extends JFrame{
-    private String originalTitle;
-    private boolean isSizeOnTitle;
-    public static void main(String[] args){
-        // Necessary code to test properly
-        GeometricFrame g = new GeometricFrame();
-        GeometricFrame h = new GeometricFrame();
-        g.setVisible(true);
-        g.setSize(200,700);
-        // h.setVisible(true);
-        // h.setSize(100, 400);
-
-        // Method tests can be found below
-        // g.transpose();
-        // g.scale(1.2);
-        // g.isSameArea(h);
-        g.addSizeToTitle(true);
-        
-    }
-    // this method transposes a window's dimensions
-    public void transpose(){
-        // you can use this.__() but it is not necessary. Java does it automatically
-        int height = this.getHeight();
-        int width = getWidth();
-        setSize(height,width);
+/* Create a class that adds new features to JFrame.
+* Add geometry-like features.
+*/
+public class GeometricFrame extends JFrame {
+    /*
+     * create a method that "transposes" the window flipping the width to
+     * height and height to width. (It returns nothing.)
+     */
+    public void transpose() {
+        this.setSize(this.getHeight(), this.getWidth());
     }
 
-    // This method scales the window size
-    public void scale(Double size) {
-        int width = (int)(this.getWidth() * size);
-        int height = (int)(this.getHeight() * size);
-        this.setSize(width, height);
+    /* scale the size of the window by a factor */
+    public void scale(double factor) {
+        this.setSize((int) (factor * this.getWidth()),
+                (int) (factor * this.getHeight()));
     }
 
-    /* Compare a window to this window and returns true if the windows have
-     * the same area and return false if they do not */
-    public boolean isSameArea(GeometricFrame myFrame) {
+    /*
+     * compare a window to this window and returns true if the windows
+     * have the same area and return false if they do not
+     */
+    public boolean sameAreaAs(JFrame frame) {
         int thisArea = this.getWidth() * this.getHeight();
-        int myArea = myFrame.getWidth() * myFrame.getHeight();
-        
-        if (thisArea == myArea) {
-            return true;
-        }
-        else { 
-            return false;
-        }
+        int otherArea = frame.getWidth() * frame.getHeight();
+        return otherArea == thisArea;
     }
 
-    /* This method adds the size to the frame title */
-    public void addSizeToTitle(boolean showSize) {
-        if (showSize) {
-            super.setTitle(this.getTitle() + "("+this.getWidth()+"x"+this.getHeight()+")");
-            this.isSizeOnTitle = true;
-        }
-        else {
-            super.setTitle(this.originalTitle);
-            this.setTitle(this.getTitle());
-        }
+    // the original title of the window
+    private String originalTitle = "";
+    // remember if the size is on the title
+    private boolean sizeOnTitle = false;
+
+    /*
+     * a method that places the dimensions of the window on to the
+     * window title. It should postfix the desired title with the
+     * dimensions
+     * The input indicates whether or not we put the size on the title
+     */
+    public void addSizeToTitle(boolean addSize) {
+        if (addSize)
+            super.setTitle(originalTitle + " (" + this.getWidth() + "x" +
+                    this.getHeight() + ")");
+        else
+            super.setTitle(originalTitle);
+        sizeOnTitle = addSize;
     }
 
-    /* this overrides the setTitle method from the parent */
+    /* Override setTitle to remember the original title */
+    @Override
     public void setTitle(String title) {
-        super.setTitle(title);
         this.originalTitle = title;
+        this.addSizeToTitle(sizeOnTitle);
+    }
+
+    /*
+     * Override setSize to adjust the title when the size changes (by the method
+     * call)
+     */
+    @Override
+    public void setSize(int width, int height) {
+        super.setSize(width, height);
+        this.addSizeToTitle(sizeOnTitle);
+    }
+
+    public static void main(String[] args) {
+        GeometricFrame g = new GeometricFrame();
+        g.setVisible(true);
+        g.setSize(600,600);
+        g.setTitle("Trevor");
+        g.addSizeToTitle(true);
     }
 }
