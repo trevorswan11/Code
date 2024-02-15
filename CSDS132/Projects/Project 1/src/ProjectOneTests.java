@@ -38,7 +38,7 @@ public class ProjectOneTests {
     public void balanceTest() {
         account.setBalance(currentBalance);
         double bal = account.getBalance();
-        assertEquals(currentBalance, bal,0);
+        assertEquals(currentBalance, bal, 0);
     }
 
     // This tests the "charge" method
@@ -156,7 +156,7 @@ public class ProjectOneTests {
 
 // All CreditAccount Class Tests can be found below this line
     // This initializes a credit account
-    CreditAccount credAccount = new CreditAccount(accountInput, currentBalance);
+    CreditAccount credAccount = new CreditAccount(accountInput, inputRate);
 
     /* This tests the getter setter methods for the interest rate */
     @Test 
@@ -171,6 +171,7 @@ public class ProjectOneTests {
         credAccount.setMonthlyPayment(inputMonthly);
         assertEquals(inputMonthly, credAccount.getMonthlyPayment(), 0);
     } 
+    
     /* This tests the getter setter methods for the amount paid this month */
     @Test 
     public void amountPaidTest() {

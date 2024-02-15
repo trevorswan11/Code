@@ -1,5 +1,7 @@
 /* Trevor Swan
- * LibraryAccount Class
+ * StudentAccount Class
+ * Represents all of the financial information and accounts of a student
+ *  Handles all the front end operations regarding created and relevant accounts
  * CSDS132 Spring 2024 - Project 1
  */
 
@@ -197,7 +199,7 @@ public class StudentAccount extends Account {
         double remainingCredit = creditAmount; 
 
         // Ensures that the code will only run if a correct value is inputted, this is for robust reasons
-        if (remainingCredit <= 0) {
+        if (remainingCredit < 0) {
             System.err.println("Please pay with a positive value!");
         }
 

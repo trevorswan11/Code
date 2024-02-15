@@ -1,5 +1,7 @@
 /* Trevor Swan
  * LibraryAccount Class
+ * Represents the financial information for a library account holder 
+ *  This information is related to their overdue items and total fines
  * CSDS132 Spring 2024 - Project 1
  */
 

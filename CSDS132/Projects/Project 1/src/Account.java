@@ -1,7 +1,9 @@
 /* Trevor Swan
  * Account Class
+ * Represents a general use account that holds financial information and dues
  * CSDS132 Spring 2024 - Project 1
  */
+
 public class Account {
     // Stores Account Number of Student. It is final as it will never change
     private final String accountNumber;

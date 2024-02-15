@@ -1,5 +1,8 @@
 /* Trevor Swan
  * CreditAccount Class
+ * Represents an account that has a balance that needs to be payed off. 
+ *  Paying off a credit account also pays off the total balance of the account.
+ *  Does all of the heavy lifting regarding interest rates and monthly dues
  * CSDS132 Spring 2024 - Project 1
  */
 
