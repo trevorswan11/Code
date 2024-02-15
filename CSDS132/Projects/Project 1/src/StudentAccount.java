@@ -1,12 +1,14 @@
+/* Trevor Swan
+ * LibraryAccount Class
+ * CSDS132 Spring 2024 - Project 1
+ */
+
 public class StudentAccount extends Account {
     // This field contains the student's name
     private String studentName = "John Doe";
     
     // This field contains the students Address
     private String studentAddress = "10900 Euclid Ave, Cleveland, OH, 44106";
-
-    // this field contains the StudentAccount's refund balance
-    private double refundBalance = 0.;
 
     // This field contains a uninitialized libraryAccount
     private LibraryAccount LibraryAccount;
@@ -125,7 +127,34 @@ public class StudentAccount extends Account {
      * @return The difference of the accounts balances explained above as a double
      */
     public double getBalance() {
+        /* The following variables are used to keep track of values in this method only:
+         * balanceSum: total balance from all existing accounts. 
+         * libraryAmt: balance of the library account, if it exists
+         * tuitionAmt: balance of the tuition account, if it exists
+         * diningAmt: balance of the dining account, if it exists 
+         * They are all stored in their respective conditionals to not take up too much balance
+        */
 
+        // This conditional performs the appropriate action if and only if there is an existing account
+        double balanceSum = 0;
+        if (LibraryAccount.getAccountNumber() != null) {
+            double libraryAmt = LibraryAccount.getBalance();
+            balanceSum = balanceSum + libraryAmt;
+        }
+        
+        // This conditional performs the appropriate action if and only if there is an existing account
+        if (TuitionAccount.getAccountNumber() != null) {
+            double tuitionAmt = TuitionAccount.getBalance();
+            balanceSum = balanceSum + tuitionAmt; 
+        }
+
+        // This conditional performs the appropriate action if and only if there is an existing account
+        if (DiningAccount.getAccountNumber() != null) {
+            double diningAmt = DiningAccount.getBalance();
+            balanceSum = balanceSum + diningAmt;
+        }
+
+        return (balanceSum - super.getBalance());
     }
 
     @Override
@@ -139,7 +168,18 @@ public class StudentAccount extends Account {
      * @return void  
     */
     public void charge(double chargeAmount) {
+        // This variable contains the accounts difference between their current balance and the input
+        double difference = this.getBalance() - chargeAmount;
 
+        // This conditional only does the nested code if the above difference is positive and a tuition account exists for the student
+        if (difference > 0 && TuitionAccount.getAccountNumber() != null) {
+            TuitionAccount.charge(difference);
+        }
+
+        // Otherwise, the actual accounts balance is set to the negation of difference
+        else {
+            super.setBalance(-1 * difference);
+        }
     }
 
     @Override
@@ -153,10 +193,95 @@ public class StudentAccount extends Account {
      * @return void
     */
     public void credit(double creditAmount) {
+        // This variable holds the remaining balance available to be paid
+        double remainingCredit = creditAmount; 
 
+        // Ensures that the code will only run if a correct value is inputted, this is for robust reasons
+        if (remainingCredit <= 0) {
+            System.err.println("Please pay with a positive value!");
+        }
+
+        // If the user inputted the right type of value, then the code proceeds as usual
+        else {
+            // Checks to see if the tuition account exists 
+            if (TuitionAccount.getAccountNumber() != null) {
+                // these variables holds the monthly payment amount and amount paid this month for the tuition account
+                double tuitionMonthlyAmt = TuitionAccount.getMonthlyPayment();
+                double tuitionMonthlyPaid = TuitionAccount.getAmountPaidThisMonth();
+                
+                // this variable holds the amount owed by the account
+                double tuitionOwed = tuitionMonthlyAmt - tuitionMonthlyPaid;
+
+                // The following only proceeds if the student has tuition to pay
+                if (tuitionOwed > 0) {
+                    // This behavior should only be exhibited if the amount remaining to credit is greater than the amount owed
+                    if (remainingCredit > tuitionOwed) {
+                        TuitionAccount.credit(tuitionOwed);
+                        remainingCredit = remainingCredit - tuitionOwed;
+                    } 
+
+                    // This behavior should only be exhibited if the remaining credit is less or equal to than the amount owed
+                    else if (remainingCredit <= tuitionOwed) {
+                        TuitionAccount.credit(remainingCredit);
+                        remainingCredit = 0;
+                    }
+                }
+            }
+
+            // Checks to see if the dining account exists and there is still available credit
+            if (DiningAccount.getAccountNumber() != null && remainingCredit > 0) {
+                // these variables holds the monthly payment amount and amount paid this month for the dining account
+                double diningMonthlyAmt = DiningAccount.getMonthlyPayment();
+                double diningMonthlyPaid = DiningAccount.getAmountPaidThisMonth();
+                
+                // this variable holds the amount owed by the account
+                double diningOwed = diningMonthlyAmt - diningMonthlyPaid;
+
+                // The following only proceeds if the student has dining fees to pay
+                if (diningOwed > 0) {
+                    // This behavior should only be exhibited if the amount remaining to credit is greater than the amount owed
+                    if (remainingCredit > diningOwed) {
+                        DiningAccount.credit(diningOwed);
+                        remainingCredit = remainingCredit - diningOwed;
+                    } 
+
+                    // This behavior should only be exhibited if the remaining credit is less or equal to than the amount owed
+                    else if (remainingCredit <= diningOwed) {
+                        DiningAccount.credit(remainingCredit);
+                        remainingCredit = 0;
+                    }
+                }
+            }
+
+            // Checks to see if a library account exists for this student and that they still have credit available
+            if (LibraryAccount.getAccountNumber() != null && remainingCredit > 0) {
+                // This variable holds the amount that is owed to the library
+                double libraryOwed = LibraryAccount.getBalance();
+
+                // The following proceeds only if there are actual fees to pay
+                if (libraryOwed > 0) {
+                    // This behavior should only be exhibited if the amount in credit is greater than the amount owed 
+                    if (remainingCredit > libraryOwed) {
+                        LibraryAccount.credit(libraryOwed);
+                        remainingCredit = remainingCredit - libraryOwed;
+                    }
+
+                    // This behavior should only be exhibited if the amount in credit is less than the amount owed
+                    else if (remainingCredit < libraryOwed) {
+                        LibraryAccount.credit(remainingCredit);
+                        remainingCredit = 0;
+                    }
+                }
+            }
+        }
+
+        // This final conditional adds any left over credit to the accounts balance if it is greater than 0
+        if (remainingCredit > 0) {
+            this.setBalance(this.getBalance() + remainingCredit);
+        }
     }
     // This is the main method
     public static void main(String[] args) {
-
+        
     }
 }

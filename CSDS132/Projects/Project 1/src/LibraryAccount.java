@@ -1,8 +1,8 @@
-/*
- * Trevor Swan
+/* Trevor Swan
  * LibraryAccount Class
  * CSDS132 Spring 2024 - Project 1
  */
+
 public class LibraryAccount extends Account {
     // This field holds the book fine information
     private double bookFine = 20.0;

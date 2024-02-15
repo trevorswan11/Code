@@ -2,6 +2,7 @@
  * Project 1 Testing
  * Formatted Differently for organization
  */
+
 import static org.junit.Assert.*;
 import org.junit.*;
 
@@ -223,10 +224,10 @@ public class ProjectOneTests {
     LibraryAccount testLibraryAccount = new LibraryAccount(accountInput, balLimit, inputBookFine, inputReserveFine);
 
     /* This initializes a new CreditAccount called TuitionAccount for these tests */
-    CreditAccount testTuitionAccount = new CreditAccount(accountInput, currentBalance);
+    CreditAccount testTuitionAccount = new CreditAccount(accountInput, inputRate);
 
-    /* This initializes a new CreditAccount called DiningAccount for these tests */\
-    CreditAccount testDiningAccount = new CreditAccount(accountInput, currentBalance);
+    /* This initializes a new CreditAccount called DiningAccount for these tests */
+    CreditAccount testDiningAccount = new CreditAccount(accountInput, inputRate);
 
     /* This tests if the constructor worked properly, as well as the getter-setters for name methods from the student account class */
     @Test
@@ -242,9 +243,14 @@ public class ProjectOneTests {
         assertEquals(studentAddress, studentAccount.getAddress());
     }
 
-    /* This tests the getter setter methods for the LibraryAccount methods */
+    /* This tests the getter setter methods for the LibraryAccount methods as well as its null initial declaration */
     @Test
     public void libraryGetSet() {
+        // This code runs before the rest in order to test the null initialization and comparison technique I used
+        LibraryAccount nullLibraryAccount = studentAccount.getLibraryAccount();
+        assertTrue(nullLibraryAccount.getAccountNumber() == null);
+        
+        // This sets the class field to the correct value for testing 
         studentAccount.setLibraryAccount(testLibraryAccount);
 
         // this creates a model library account to extract information to test
@@ -255,11 +261,222 @@ public class ProjectOneTests {
         assertEquals(inputReserveFine, modelLibraryAccount.getReserveFine(), 0);
     }
 
-    /* This tests the getter setter methods for the TuitionAccount Methods */
+    /* This tests the getter setter methods for the TuitionAccount Methods as its null initial declaration */
     @Test
     public void tuitionGetSet() {
+        // This code runs before the rest in order to test the null initialization and comparison technique I used
+        CreditAccount nullTuitionAccount = studentAccount.getTuitionAccount();
+        assertTrue(nullTuitionAccount.getAccountNumber() == null);
+
+        // This sets the class field to the correct value for testing 
         studentAccount.setTuitionAccount(testTuitionAccount);
 
         // This creates a model TuitionAccount to extract information and test
+        CreditAccount modelTuitionAccount = studentAccount.getTuitionAccount();
+        assertEquals(accountInput, modelTuitionAccount.getAccountNumber());
+        assertEquals(inputRate, modelTuitionAccount.getInterestRate(), 0);
+    }
+
+    /* This tests the getter setter methods for the DiningAccount methods as its null initial declaration */
+    @Test
+    public void diningGetSet() {
+        // This code runs before the rest in order to test the null initialization and comparison technique I used
+        CreditAccount nullDiningAccount = studentAccount.getDiningAccount();
+        assertTrue(nullDiningAccount.getAccountNumber() == null);
+
+        // This sets the class field to the correct value for testing 
+        studentAccount.setDiningAccount(testDiningAccount);
+
+        // This creates a model DiningAccount to extract information and test
+        CreditAccount modelDiningAccount = studentAccount.getDiningAccount();
+        assertEquals(accountInput, modelDiningAccount.getAccountNumber());
+        assertEquals(inputRate, modelDiningAccount.getInterestRate(), 0);
+    }
+
+    /* This is the overridden getBalance method */
+    @Test
+    public void balanceOverride() {
+        // This sets all of the manipulatable instances of classes in the parent class to usable values
+        studentAccount.setLibraryAccount(testLibraryAccount);
+        studentAccount.setTuitionAccount(testTuitionAccount);
+        studentAccount.setDiningAccount(testDiningAccount);
+
+        // This retrieves all of the previously mentioned instances
+        LibraryAccount balanceLibraryAccount = studentAccount.getLibraryAccount();
+        CreditAccount balanceTuitionAccount = studentAccount.getTuitionAccount();
+        CreditAccount balanceDiningAccount = studentAccount.getDiningAccount();
+
+        double balance = 20;
+        balanceLibraryAccount.setBalance(balance);
+        balanceDiningAccount.setBalance(balance);
+        balanceTuitionAccount.setBalance(balance);
+
+        // This prepares variables for the actual JUnit test
+        double actualBalanceSum = studentAccount.getBalance();
+        double expectedBalanceSum = balance * 3 - 20;
+
+        assertEquals(expectedBalanceSum, actualBalanceSum, 0);
+    }
+
+    /* This is the overridden charge method for the if branch */
+    @Test
+    public void chargeOverrideIf() {
+        studentAccount.setTuitionAccount(testTuitionAccount);
+        CreditAccount chargeTuitionAccount = studentAccount.getTuitionAccount();
+
+        chargeTuitionAccount.charge(10);
+        double expectedTuition = 30;
+        assertEquals(expectedTuition, chargeTuitionAccount.getBalance(), 0);
+    }
+
+    /* This is the overridden charge method for the else branch. This test works through the stage necessity of the balance override being - the super class */
+    @Test
+    public void chargeOverrideElse() {
+        double chargeReal = 120;
+        double expectedBalance = 20;
+        studentAccount.setBalance(expectedBalance);
+        assertEquals(-20, studentAccount.getBalance(), 0);
+        studentAccount.charge(chargeReal);
+        assertEquals(-140,studentAccount.getBalance(),0);
+    }
+
+    /* This tests the error message of this method */
+    @Test
+    public void creditError() {
+        studentAccount.credit(-10);
+    }
+
+    /* This first test tests the first if branch of the tuition Owed conditional */
+    @Test
+    public void tuitionTestIf() {
+        studentAccount.setTuitionAccount(testTuitionAccount);
+        CreditAccount creditTuitionAccount = studentAccount.getTuitionAccount();
+        creditTuitionAccount.setAmountPaidThisMonth(10);
+        creditTuitionAccount.setMonthlyPayment(20);
+
+        studentAccount.credit(30);
+        assertEquals(20, creditTuitionAccount.getAmountPaidThisMonth(), 0);
+    }
+
+    /* This tests the else if branch of the Tuition Account conditional */
+    @Test
+    public void tuitionTestElseIf() {
+        studentAccount.setTuitionAccount(testTuitionAccount);
+        CreditAccount creditTuitionAccount = studentAccount.getTuitionAccount();
+        creditTuitionAccount.setAmountPaidThisMonth(10);
+        creditTuitionAccount.setMonthlyPayment(20);
+
+        studentAccount.credit(5);
+        assertEquals(15, creditTuitionAccount.getAmountPaidThisMonth(), 0);
+    }
+
+    /* This tests the DiningAccount If branch by preventing the other accounts from existing */
+    @Test
+    public void diningAccountIf() {
+        studentAccount.setDiningAccount(testDiningAccount);
+        CreditAccount creditDiningAccount = studentAccount.getDiningAccount();
+        creditDiningAccount.setAmountPaidThisMonth(10);
+        creditDiningAccount.setMonthlyPayment(20);
+
+        studentAccount.credit(30);
+        assertEquals(20, creditDiningAccount.getAmountPaidThisMonth(), 0);
+    }
+
+    /* This tests the DiningAccount Else If branch by preventing the other accounts from existing */
+    @Test
+    public void diningAccountElseIf() {
+        studentAccount.setDiningAccount(testDiningAccount);
+        CreditAccount creditDiningAccount = studentAccount.getDiningAccount();
+        creditDiningAccount.setAmountPaidThisMonth(10);
+        creditDiningAccount.setMonthlyPayment(20);
+
+        studentAccount.credit(5);
+        assertEquals(15, creditDiningAccount.getAmountPaidThisMonth(), 0);
+    }
+
+    /* This tests the possibility of not having any remaining credit from the call */
+    @Test
+    public void diningAccountNone() {
+        studentAccount.setDiningAccount(testDiningAccount);
+        CreditAccount creditDiningAccount = studentAccount.getDiningAccount();
+        creditDiningAccount.setAmountPaidThisMonth(10);
+        creditDiningAccount.setMonthlyPayment(20);
+
+        studentAccount.credit(0);
+        assertEquals(10, creditDiningAccount.getAmountPaidThisMonth(), 0);
+    }
+
+    /* This tests the LibraryAccount If branch by preventing the other accounts from existing */
+    @Test
+    public void libraryAccountIf() {
+        studentAccount.setLibraryAccount(testLibraryAccount);
+        LibraryAccount creditLibraryAccount = studentAccount.getLibraryAccount();
+        creditLibraryAccount.setBalance(20);
+
+        studentAccount.credit(30);
+        assertEquals(0, creditLibraryAccount.getBalance(), 0);
+    }
+
+    /* This tests the LibraryAccount Else bIf ranch by preventing the other accounts from existing */
+    @Test
+    public void libraryAccountElseIf() {
+        studentAccount.setLibraryAccount(testLibraryAccount);
+        LibraryAccount creditLibraryAccount = studentAccount.getLibraryAccount();
+        creditLibraryAccount.setBalance(20);
+
+        studentAccount.credit(15);
+        assertEquals(5, creditLibraryAccount.getBalance(), 0);
+    }
+
+    /* This tests the possibility of not having any remaining credit from the method call */
+    @Test
+    public void libraryAccountNone() {
+        studentAccount.setLibraryAccount(testLibraryAccount);
+        LibraryAccount creditLibraryAccount = studentAccount.getLibraryAccount();
+        creditLibraryAccount.setBalance(20);
+
+        studentAccount.credit(0);
+        assertEquals(20, creditLibraryAccount.getBalance(), 0);
+    }
+
+    /* Finally, this tests the possibility of all accounts existing and extra money being put into the call */
+    @Test
+    public void testAllBranches() {
+        // This preps the original balance for the final test
+        double originalBalance = studentAccount.getBalance();
+
+        // This sets a TuitionAccount with reasonable values
+        studentAccount.setTuitionAccount(testTuitionAccount);
+        CreditAccount creditTuitionAccount = studentAccount.getTuitionAccount();
+        creditTuitionAccount.setAmountPaidThisMonth(10);
+        creditTuitionAccount.setMonthlyPayment(20);
+
+        // This sets a DiningAccount with reasonable values
+        studentAccount.setDiningAccount(testDiningAccount);
+        CreditAccount creditDiningAccount = studentAccount.getDiningAccount();
+        creditDiningAccount.setAmountPaidThisMonth(10);
+        creditDiningAccount.setMonthlyPayment(20);
+
+        // This sets a LibraryAccount with reasonable values
+        studentAccount.setLibraryAccount(testLibraryAccount);
+        LibraryAccount creditLibraryAccount = studentAccount.getLibraryAccount();
+        creditLibraryAccount.setBalance(20);
+
+        studentAccount.credit(1000);
+        
+        // This tests to see if the money want through all accounts
+        assertEquals(20, creditTuitionAccount.getAmountPaidThisMonth(), 0);
+        assertEquals(20, creditDiningAccount.getAmountPaidThisMonth(), 0);
+        assertEquals(0, creditLibraryAccount.getBalance(), 0);
+
+        // This tests the final conditional that adds the remaining credit to the account itself
+        double remainingCredit = 1000 - (10 + 10 + 20);
+
+        /*  Note: the value in the expected position is negated because the instructions say that the overridden "getBalance"
+         * method should subtract the current refund amount, or the parent class's balance, from the summation of the balances
+         * in the rest of the class instances. Because the initial value is 0 and I am crediting all of the money i possibly can
+         * the ending balance in the class instances will be 0, leaving me with the negated remainder of the credit
+         */
+        assertEquals(-(remainingCredit + originalBalance), studentAccount.getBalance(), 0);
     }
 }
