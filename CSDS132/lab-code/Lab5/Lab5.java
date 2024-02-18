@@ -32,6 +32,7 @@ public class Lab5 {
     } 
 
     public static String everyNthChar(String s, int n) {
+        s = s.trim();
         StringBuilder nthCharacters = new StringBuilder();
         for (int i = 0; i < s.length(); i = i + n) {
             nthCharacters.append(s.charAt(i));

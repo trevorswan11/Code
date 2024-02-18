@@ -10,7 +10,11 @@ public class HW2Tests {
     /* This tests the samePrefix method */
     @Test
     public void testSamePrefix() {
-        
+        assertTrue(HW2.samePrefix("hello", "hey", 0));
+        assertTrue(HW2.samePrefix("","",0));
+        assertTrue(HW2.samePrefix("hello","hey",0));
+        assertFalse(HW2.samePrefix("","",100));
+
     }
 
     /* This tests the matchingParentheses method */

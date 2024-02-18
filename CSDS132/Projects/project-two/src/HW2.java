@@ -19,7 +19,31 @@ public class HW2 {
      *         values of the strings are equivalent
      */
     public static boolean samePrefix(String stringOne, String stringTwo, int compareStr) {
-        return true;
+        // First check if the amount to compare exceeds the length of either inputted string
+        if (compareStr > stringOne.length() || compareStr > stringTwo.length()) {
+            return false;
+        }
+
+        // If the comparison lies within the bounds of both strings, continue
+        else {
+            // These instances of the StringBuilder API assist in the creation of strings for comparison
+            StringBuilder newStringOne = new StringBuilder("");
+            StringBuilder newStringTwo = new StringBuilder("");
+
+            /* This loops aims to make the newStringOne and newStringTwo instances
+             * contain the first 'compareStr' characters of their respective string inputs */
+            for (int i = 0; i < compareStr; i++) {
+                newStringOne.append(stringOne.charAt(i));
+                newStringTwo.append(stringTwo.charAt(i));
+            }
+
+            // These statements convert the StringBuilder instances into actual strings
+            String compStrOne = newStringOne.toString();
+            String compStrTwo = newStringTwo.toString(); 
+
+            // This return statement indicates whether or not the two prefixes are equal
+            return compStrOne.equals(compStrTwo);
+        }
     }
 
     /**
@@ -36,7 +60,45 @@ public class HW2 {
      *         matched correctly
      */
     public static boolean matchingParentheses(String statement) {
-        return true;
+        // First check to see if the first or last character is a closed or open parentheses, respectively
+        if (statement.charAt(0) == ')' || statement.charAt(statement.length() - 1) == '(') {
+            // The result must be false if either condition is met
+            return false;
+        }
+
+        // If there are no mismatched parentheses at the start or end, continue
+        else {
+            // These variables initialize a counter for the parentheses and index for the loop
+            int counter = 0;
+            int i = 0;
+
+            /* The goal of this loop is to determine if there are mismatched parentheses by treating '(' as +1 and ')' as -1 
+             * The loop stops if the index exceeds the input String or the count becomes negative, indicating a ')' coming
+             * before a '('
+            */
+            while (counter >= 0 && i < statement.length()) {
+                // Add one to the counter if an open parentheses is found
+                if (statement.charAt(i) == '(') {
+                    counter = counter + 1;
+                }
+
+                // Subtract one from the counter if a closed parentheses is found
+                else if (statement.charAt(i) == ')') {
+                    counter = counter - 1;
+                }
+                i = i + 1;
+            }
+
+            // If there are an equal number of open and closed parentheses, the counter should be 0
+            if (counter == 0) {
+                return true;
+            }
+
+            // If the counter is not exactly 0, there is a mismatch
+            else {
+                return false;
+            }
+        }
     }
 
     /**
@@ -54,7 +116,96 @@ public class HW2 {
      *         positive integer
      */
     public static String removeEveryKthWord(String sentence, int k) {
-        return null;
+        // Only remove the Kth word if the input is positive
+        if (k > 0) {
+            // If the user desires every 1st word removed, returns null to the user
+            if (k == 1) {
+                return null;
+            }
+
+            // If the user inputs any other positive value, continue as usual
+            else {
+                // The user may accidentally have whitespace leading or trailing, this takes care of that
+                if (sentence.charAt(0) == ' ' || sentence.charAt(sentence.length() - 1) == ' ') {
+                    // Loop through the input and determine where the first non-space character is
+                    int startIdx = 0;
+                    while (sentence.charAt(startIdx) == ' ') {
+                        startIdx = startIdx + 1;
+                    }
+
+                    /* Loop through the input to determine where the last non-space character is 
+                    * Examination must start at the very end of the input and go backwards
+                    */
+                    int endIdx = sentence.length() - 1;
+                    while (sentence.charAt(endIdx) == ' ') {
+                        endIdx = endIdx - 1;
+                    }
+
+                    // Create a new StringBuilder in order to create a string without any whitespace
+                    StringBuilder stripped = new StringBuilder("");
+
+                    // Append the characters from the input to the builder that lie in between the bounds found above
+                    for (int i = startIdx; i <= endIdx; i++) {
+                        stripped.append(sentence.charAt(i));
+                    }
+
+                    // Return the Modified string to the same address to prevent too much confusion
+                    sentence = stripped.toString();
+                }
+
+                // Creates a new StringBuilder to  assist in creating a modified string in loops
+                StringBuilder newString = new StringBuilder("");
+
+                // Create an omit variable to indicate when a word should be ignored
+                boolean omit = false;
+
+                // Because the first word in the string is counted, we must start at 1 space
+                int spaces = 1;
+
+                // Loop through the inputted string until fully filtered
+                int i = 0;                
+                while (i < sentence.length()) {
+                    // Include words if omit is false
+                    if (omit == false) {
+                        newString.append(sentence.charAt(i));
+                        
+                        // If a space is found added to the builder, add one to the counter
+                        if (sentence.charAt(i) == ' ') {
+                            spaces = spaces + 1;
+                        } 
+                    }
+
+                    // Disregard words otherwise
+                    else {
+                        /* Increase the index to the next word if it is time to omit 
+                         * The loop should stop if the idex exceeds the length of the inputted string
+                        */
+                        while (sentence.charAt(i) != ' ' && i < sentence.length() - 1) {
+                            i = i + 1;
+                        }
+
+                        // The loop above stops at a space, so indicate it with the counter and switch back to word inclusion
+                        spaces = spaces + 1;
+                        omit = false;
+                    }
+
+                    // If the number of spaces passed by is divisible by k, omit the next word
+                    if (spaces != 0 && spaces % k == 0) {
+                        omit = true;
+                    }
+                    i = i + 1;
+                }
+
+                // Convert the newString to an actual string and return it to the user
+                return newString.toString();
+            }
+        }
+
+        // If the user inputted a negative number, return the original string
+        else {
+            return sentence;
+        }
+
     }
 
     /**
@@ -92,7 +243,56 @@ public class HW2 {
      *         the digits present are in reverse order.
      */
     public static String reverseDigits(String statement) {
-        return null;
+        // Create a StringBuilder that will contain all of the digits in the input
+        StringBuilder digits = new StringBuilder();
+
+        // Create an index for a while loop goes through the input, storing Digits that are found
+        int i = 0;
+        while (i < statement.length()) {
+            // Appends a character to the builder if it is a digit, ignores otherwise
+            if (Character.isDigit(statement.charAt(i))) {
+                digits.append(statement.charAt(i));
+            }
+            i = i + 1;
+        }
+
+        // Convert the digits builder to a string for proper interactions
+        String digitsStr = digits.toString(); 
+
+        // If the digits builder is empty, return the original string, otherwise continue with replacement
+        if (digitsStr.length() == 0) {
+            return statement;
+        }
+        
+        // Continue altering the string if there are digits to change
+        else {
+            // Create a StringBuilder that will contain the original loop with reversed digits
+            StringBuilder reverse = new StringBuilder();
+
+            // Create a variable that keeps track of the index of the digits replacement builder
+            int digitsIdx = digitsStr.length() - 1;
+
+            // Reset the while loop index, and start going creating the new string with altered digits
+            i = 0;
+            while (i < statement.length()) {
+                // Append a replaced digit if there is one present in the current index
+                if (Character.isDigit(statement.charAt(i))) {
+                    reverse.append(digitsStr.charAt(digitsIdx));
+
+                    // Decrement the index of the digits as they are going in reverse order
+                    digitsIdx = digitsIdx - 1;
+                }
+                
+                // Append the old string index otherwise
+                else {
+                    reverse.append(statement.charAt(i));
+                }
+                i = i + 1;
+            }
+
+            // Return the altered statement
+            return reverse.toString();
+        }
     }
 
     /**

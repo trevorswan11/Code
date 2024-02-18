@@ -27,9 +27,10 @@ public class HW2Main extends HW2 {
         // Starts a while loop to run until the user wants to quit
         boolean run = true;
         while (run) {
-            // Asks the user what they would like to do, the adds a space for formatting
+            // Asks the user what they would like to do, then adds a space for formatting
+            System.out.println("");
             System.out.print("What would you like to do (1-8): ");
-            String option = input.next();
+            String option = input.nextLine();
             System.out.println("");
 
             // Runs the first method - samePrefix
@@ -39,14 +40,15 @@ public class HW2Main extends HW2 {
 
                 // Asks for the required inputs from the user
                 System.out.print("String One: "); 
-                String stringOne = input.next();
+                String stringOne = input.nextLine();
                 System.out.print("String Two: ");
-                String stringTwo = input.next();
+                String stringTwo = input.nextLine();
                 System.out.print("Comparison Value = ");
                 int compareStr = input.nextInt();
 
                 // Gives the output from the method
-                System.out.println("Output: " + HW2.samePrefix(stringOne, stringTwo, compareStr) + "\n");
+                System.out.println("Output: " + HW2.samePrefix(stringOne, stringTwo, compareStr));
+                input.nextLine();
             }
 
             // Runs the second method - matchingParentheses
@@ -56,10 +58,10 @@ public class HW2Main extends HW2 {
 
                 // Asks for the required inputs from the user
                 System.out.print("Statement: ");
-                String statement = input.next();
+                String statement = input.nextLine();
 
                 // Gives the output of the method
-                System.out.println("Output: " + HW2.matchingParentheses(statement) + "\n");
+                System.out.println("Output: " + HW2.matchingParentheses(statement));
             }
 
             // Runs the third method - removeEveryKthWord
@@ -69,12 +71,13 @@ public class HW2Main extends HW2 {
 
                 // Asks for the required inputs from the user
                 System.out.print("Sentence: ");
-                String sentence = input.next();
+                String sentence = input.nextLine();
                 System.out.print("k = ");
                 int k = input.nextInt();
 
                 // Gives the output of the method
-                System.out.println("Output: " + HW2.removeEveryKthWord(sentence, k) + "\n");
+                System.out.println("Output: " + HW2.removeEveryKthWord(sentence, k));
+                input.nextLine();
             }
 
             // Runs the fourth method - flipEachK
@@ -84,12 +87,13 @@ public class HW2Main extends HW2 {
 
                 // Asks for the required inputs from the user
                 System.out.print("Statement: ");
-                String statement = input.next();
+                String statement = input.nextLine();
                 System.out.print("k = ");
                 int k = input.nextInt();
 
                 // Gives the output of the method
-                System.out.println("Output: " + HW2.flipEachK(statement, k) + "\n");
+                System.out.println("Output: " + HW2.flipEachK(statement, k));
+                input.nextLine();
             }
 
             // Runs the fifth method - reverseDigits
@@ -99,10 +103,10 @@ public class HW2Main extends HW2 {
 
                 // Asks for the required inputs from the user
                 System.out.print("Statement: ");
-                String statement = input.next();
+                String statement = input.nextLine();
 
                 // Gives the output of the method
-                System.out.println("Output: " + HW2.reverseDigits(statement) + "\n");
+                System.out.println("Output: " + HW2.reverseDigits(statement));
             }
 
             // Runs the sixth method - replaceText
@@ -112,12 +116,12 @@ public class HW2Main extends HW2 {
 
                 // Asks for the required inputs from the user
                 System.out.print("Base String: ");
-                String baseString = input.next();
+                String baseString = input.nextLine();
                 System.out.print("Replacements: ");
-                String replacements = input.next();
+                String replacements = input.nextLine();
 
                 // Gives the output of the method
-                System.out.println("Output: " + HW2.replaceText(baseString, replacements) + "\n");
+                System.out.println("Output: " + HW2.replaceText(baseString, replacements));
             }
 
             // Runs the seventh method - replaceAll
@@ -127,10 +131,10 @@ public class HW2Main extends HW2 {
 
                 // Asks for the required inputs from the user
                 System.out.print("Original String: ");
-                String originalString = input.next();
+                String originalString = input.nextLine();
 
                 // Gives the output of the method
-                System.out.println("Output: " + HW2.reverseAll(originalString) + "\n");
+                System.out.println("Output: " + HW2.reverseAll(originalString));
             }
 
             // Quits the program
@@ -141,7 +145,7 @@ public class HW2Main extends HW2 {
 
             // Indicates invalid input and continues loop
             else {
-                System.out.println("Invalid Input :(\n");
+                System.out.println("Invalid Input :(");
             }
         }
 
