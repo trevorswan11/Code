@@ -5,6 +5,51 @@
 
 public class HW2 {
     /**
+     * This is a 'helper' method. It cannot be accessed outside of this class, and
+     * exists solely to remove large block of code in the methods below. It's only
+     * purpose is to trim any leading or trailing spaces in a string and then return
+     * the trimmed string. For ease of grading, this method is called 'strTrim',
+     * similar to MATLAB's trim method. This project does not make use of the trim
+     * method of the string class to align with the project's guidelines.
+     * 
+     * @param s A string that represents the users input
+     * 
+     * @return A string that represents the user's input, devoid of any leading or
+     *         trailing spaces. The same string is returned with no other
+     *         alterations
+     */
+    private static String strTrim(String s) {
+        // The user may accidentally have whitespace leading or trailing, this takes care of that
+        if (s.charAt(0) == ' ' || s.charAt(s.length() - 1) == ' ') {
+            // Loop through the input and determine where the first non-space character is
+            int startIdx = 0;
+            while (s.charAt(startIdx) == ' ') {
+                startIdx = startIdx + 1;
+            }
+
+            /* Loop through the input to determine where the last non-space character is 
+            * Examination must start at the very end of the input and go backwards
+            */
+            int endIdx = s.length() - 1;
+            while (s.charAt(endIdx) == ' ') {
+                endIdx = endIdx - 1;
+            }
+
+            // Create a new StringBuilder in order to create a string without any whitespace
+            StringBuilder stripped = new StringBuilder("");
+
+            // Append the characters from the input to the builder that lie in between the bounds found above
+            for (int i = startIdx; i <= endIdx; i++) {
+                stripped.append(s.charAt(i));
+            }
+
+            // Return the Modified string to the same address to prevent too much confusion
+            return stripped.toString();
+        }
+        return s;
+
+    }
+    /**
      * Asserts whether the first 'compareStr' values of a string are equal to each
      * other. This is case sensitive, and if the desired int value exceeds the
      * length of either string, then the result is false.
@@ -125,33 +170,8 @@ public class HW2 {
 
             // If the user inputs any other positive value, continue as usual
             else {
-                // The user may accidentally have whitespace leading or trailing, this takes care of that
-                if (sentence.charAt(0) == ' ' || sentence.charAt(sentence.length() - 1) == ' ') {
-                    // Loop through the input and determine where the first non-space character is
-                    int startIdx = 0;
-                    while (sentence.charAt(startIdx) == ' ') {
-                        startIdx = startIdx + 1;
-                    }
-
-                    /* Loop through the input to determine where the last non-space character is 
-                    * Examination must start at the very end of the input and go backwards
-                    */
-                    int endIdx = sentence.length() - 1;
-                    while (sentence.charAt(endIdx) == ' ') {
-                        endIdx = endIdx - 1;
-                    }
-
-                    // Create a new StringBuilder in order to create a string without any whitespace
-                    StringBuilder stripped = new StringBuilder("");
-
-                    // Append the characters from the input to the builder that lie in between the bounds found above
-                    for (int i = startIdx; i <= endIdx; i++) {
-                        stripped.append(sentence.charAt(i));
-                    }
-
-                    // Return the Modified string to the same address to prevent too much confusion
-                    sentence = stripped.toString();
-                }
+                // Uses my helper method to strip the input's leading/trailing zeros 
+                sentence = strTrim(sentence);
 
                 // Creates a new StringBuilder to  assist in creating a modified string in loops
                 StringBuilder newString = new StringBuilder("");
