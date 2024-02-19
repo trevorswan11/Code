@@ -19,36 +19,48 @@ public class HW2 {
      *         alterations
      */
     private static String strTrim(String s) {
-        // The user may accidentally have whitespace leading or trailing, this takes care of that
-        if (s.charAt(0) == ' ' || s.charAt(s.length() - 1) == ' ') {
-            // Loop through the input and determine where the first non-space character is
-            int startIdx = 0;
-            while (s.charAt(startIdx) == ' ') {
-                startIdx = startIdx + 1;
-            }
-
-            /* Loop through the input to determine where the last non-space character is 
-            * Examination must start at the very end of the input and go backwards
-            */
-            int endIdx = s.length() - 1;
-            while (s.charAt(endIdx) == ' ') {
-                endIdx = endIdx - 1;
-            }
-
-            // Create a new StringBuilder in order to create a string without any whitespace
-            StringBuilder stripped = new StringBuilder("");
-
-            // Append the characters from the input to the builder that lie in between the bounds found above
-            for (int i = startIdx; i <= endIdx; i++) {
-                stripped.append(s.charAt(i));
-            }
-
-            // Return the Modified string to the same address to prevent too much confusion
-            return stripped.toString();
+        /* The user may input a string that is devoid of any characters (an empty string). 
+         * The code should run regardless 
+         */
+        if (s.length() == 0) {
+            return s;
         }
-		else {
-        	return s;
-		}
+
+        else {
+            /* The user may accidentally have whitespace leading or trailing, this takes
+             * care of that 
+             */
+            if (s.charAt(0) == ' ' || s.charAt(s.length() - 1) == ' ') {
+                // Loop through the input and determine where the first non-space character is
+                int startIdx = 0;
+                while (s.charAt(startIdx) == ' ') {
+                    startIdx = startIdx + 1;
+                }
+
+                /* Loop through the input to determine where the last non-space character is
+                 * Examination must start at the very end of the input and go backwards
+                 */
+                int endIdx = s.length() - 1;
+                while (s.charAt(endIdx) == ' ') {
+                    endIdx = endIdx - 1;
+                }
+
+                // Create a new StringBuilder in order to create a string without any whitespace
+                StringBuilder stripped = new StringBuilder("");
+
+                /* Append the characters from the input to the builder that lie in between the
+                 * bounds found above
+                 */
+                for (int i = startIdx; i <= endIdx; i++) {
+                    stripped.append(s.charAt(i));
+                }
+
+                // Return the Modified string to the same address to prevent too much confusion
+                return stripped.toString();
+            } else {
+                return s;
+            }
+        }
 
     }
     /**
@@ -248,7 +260,72 @@ public class HW2 {
      *         just in a new order
      */
     public static String flipEachK(String statement, int k) {
-        return null;
+        // Return the original string if k is less than or equal to 1 or is greater than the length
+        if (k <= 1 || k >= statement.length()) {
+            return statement;
+        }
+
+        // If neither of the above conditions are met, there must be real work done on the input
+        else {
+            // Create a new StringBuilder to assist in the flipping of the input
+            StringBuilder flipped = new StringBuilder("");
+
+            // This variable determines whether or not the next characters will be flipped or not
+            boolean flip = false;
+            
+            // Loop through the input string to build a new string with flipped indices
+            int i = 0;
+            while (i < statement.length()) {
+                // If flip is currently true, 
+                if (flip == true) {
+                    // Reduce i by one to prevent skipping of a character
+                    i = i - 1;
+
+                    // Set a variable to keep track of where to stop flipping
+                    int stop = i;
+
+                    // Set a variable that will determine where the reversed part will start
+                    int flipIdx = i + k;
+
+                    // Add to the StringBuilder if flipIdx is greater than the stopping index
+                    while (flipIdx > stop) {
+                        // If the flipIdx is outside the bounds of the string, decrement to ensure ending characters aren't lost
+                        if (flipIdx > statement.length()) {
+                            flipIdx = flipIdx - 1;
+                        }
+
+                        // If the flipIdx isn't out of the bounds of the string, continue as usual
+                        else {
+                            // Each iteration, append the reversed character, increase the methods index, and Subtract one from the the flipIdx
+                            flipped.append(statement.charAt(flipIdx));
+                            flipIdx = flipIdx - 1; 
+                        }
+                    }
+
+                    // Set the new index for the larger loop to the one after the flipped part of the original
+                    i = stop + k + 1;
+
+                    // Change flip back to false to go back to correct appending
+                    flip = false;
+                }
+
+                // If flip is not currently true, build the new string as normal
+                else {
+                    flipped.append(statement.charAt(i));
+                    i = i + 1;
+
+                    /* Turn flip on if the index is non-zero and divisible by k.
+                     * i + 1 is stated as k treats 1 as the first index
+                     */
+                    if ((i) % k == 0 && i != 0) {
+                        flip = true;
+                    }
+                }
+            }
+            
+            // Return the flipped string to the user
+            return flipped.toString();
+        }
     }
 
     /**
