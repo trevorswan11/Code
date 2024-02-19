@@ -46,7 +46,9 @@ public class HW2 {
             // Return the Modified string to the same address to prevent too much confusion
             return stripped.toString();
         }
-        return s;
+		else {
+        	return s;
+		}
 
     }
     /**
