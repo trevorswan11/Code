@@ -290,7 +290,7 @@ public class HW2 {
                     // Add to the StringBuilder if flipIdx is greater than the stopping index
                     while (flipIdx > stop) {
                         // If the flipIdx is outside the bounds of the string, decrement to ensure ending characters aren't lost
-                        if (flipIdx > statement.length()) {
+                        if (flipIdx > statement.length() - 1) {
                             flipIdx = flipIdx - 1;
                         }
 
