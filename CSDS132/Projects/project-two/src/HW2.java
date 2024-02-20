@@ -413,7 +413,106 @@ public class HW2 {
      *         substrings replaced in the manner indicated above.
      */
     public static String replaceText(String baseString, String replacements) {
-        return null;
+        // Create a StringBuilder to assist in the creation of the modified result
+        StringBuilder newString = new StringBuilder("");
+        
+        // Loop through the strings until there aren't any more characters to be appended
+        int baseIdx = 0;
+        int repIdx = 0;
+        while (baseIdx < baseString.length() && repIdx < replacements.length()) {
+            
+        } 
+    }
+
+    public static String replaceTextNULL(String baseString, String replacements) {
+        // Create a new StringBuilder instance to assist in creating the replaced string
+        StringBuilder newString = new StringBuilder("");
+
+        // Loop through the original string while the index variables are less than their respective strings
+        int indexOne = 0;
+        int indexTwo = 0;
+        while (indexOne < baseString.length() && indexTwo < replacements.length()) {
+            // Start the replacement brach of the loop if there is an open parenthesis found
+            if (baseString.charAt(indexOne) == '(') {
+                // Create a variable that will contain the starting index of the replacement in the base
+                int baseStart = indexOne;
+
+                // Determine an ending index if the substring by looping through until a closing parenthesis is found
+                int baseEnd = baseStart;
+                while (baseEnd < baseString.length() && baseString.charAt(baseEnd) != ')') {
+                    baseEnd = baseEnd + 1;
+                }
+
+                // Determine the starting index of the first substring replacement
+                int repStart = indexTwo;
+                while (indexTwo < replacements.length() && replacements.charAt(indexTwo) != '(') {
+                    repStart = repStart + 1;
+                } 
+
+                // If the first character in the replacements is a ( or their is a ( in another not-base index, step into this branch
+                if (repStart != indexTwo || replacements.charAt(indexTwo) == '(') {
+                    // Set the second index to the index of where the parentheses start
+                    indexTwo = repStart;
+
+                    // Initialize a counter to keep track of the sum of parentheses
+                    int parenSum = 1;
+
+                    /* Loop through the replacements until the end of an entire substring is found 
+                     * As with matchingParentheses, ( is treated as +1 and ) is treated as -1
+                     */
+                    while (parenSum != 0 && indexTwo < replacements.length()) {
+                        // If another opening parentheses is found, add one
+                        if (replacements.charAt(indexTwo) == '(') {
+                            parenSum = parenSum + 1;
+                        }
+
+                        // If a closed parentheses is found, subtract 1
+                        else if (replacements.charAt(indexTwo) == ')') {
+                            parenSum = parenSum - 1;
+                        }
+
+                        // Increment the second index by one
+                        indexTwo = indexTwo + 1;
+                    }
+
+                    // Set the ending index of the replacement to the second index value
+                    int repEnd = indexTwo;
+
+                    // Finally, append the substring to the modified string without the opening or closing parentheses
+                    int i = repStart;
+                    while (i < repEnd) {
+                        // if an opening parentheses is found at the start, omit
+                        if (replacements.charAt(i) == '(' && i == repStart) {
+                            i = i + 1;
+                        }
+
+                        // Do the same with closing parentheses at the end
+                        else if (replacements.charAt(i) == ')' && i == repEnd) {
+                            i = i + 1;
+                        }
+
+                        // Otherwise, append the replacement to the StringBuilder
+                        else {
+                            newString.append(replacements.charAt(i));
+                            i = i + 1;
+                        }
+                    }
+
+                    // Set Index one to the end of the substring
+                    indexOne = baseEnd + 2;
+                }
+            }
+
+            // Build the string with the baseString's contents otherwise
+            else {
+                newString.append(baseString.charAt(indexOne));
+                indexOne = indexOne + 1;
+            }
+
+        }
+
+        // Return the converted string with replacements
+        return newString.toString();
     }
 
     /**
@@ -435,6 +534,7 @@ public class HW2 {
 
     // This is the unused main method
     public static void main(String[] args) {
-        
+        String result = HW2.replaceText("this (is a) test" , "this (was) a (test)");
+        System.out.println(result);
     }
 }
