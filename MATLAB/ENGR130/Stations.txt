@@ -1,0 +1,5 @@
+Stations	Hrs	Thumbs_Up	Thumbs_Down
+Styx	32	14	4
+Beatles	24.5	31	6
+Simon&Garfunkle	15.2	40	3
+#

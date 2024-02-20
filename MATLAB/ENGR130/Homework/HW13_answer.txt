@@ -1,0 +1,4 @@
+The current user has a favorite player with the following stats:
+Number of Sacks: 0.781250
+Games Played: 1
+Sacks per Game: 0.781250

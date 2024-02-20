@@ -1,0 +1,11 @@
+Case	Velocity 	Density	NPS	Schedule	Stiffness
+-	(m/s)	 (kg/m^3)	-	-	-
+1	16	1.7	16	40	Medium
+2	16	2	16	20	Medium
+3	16	4	16	10	Medium
+4	20	1.7	12	40	Med_Stiff
+5	20	3	12	40	Med_Stiff
+6	20	5	12	80	Med_Stiff
+7	60	4	8	40	Stiff
+8	50	6	8	80	Stiff
+#
