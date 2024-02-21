@@ -420,8 +420,72 @@ public class HW2 {
         int baseIdx = 0;
         int repIdx = 0;
         while (baseIdx < baseString.length() && repIdx < replacements.length()) {
-            
+            // Check for a replacement that needs to be done in the baseString
+            if (baseString.charAt(baseIdx) == '(') {
+                // Create a variable that will keep track of the replacement index
+                int baseReplace = baseIdx;
+
+                /* While there are still characters in the baseString and a closing parenthesis hasn't been found
+                 * Each iteration should increase the ending index of the replacement until a ) is found
+                 */
+                while (baseReplace < baseString.length() && baseString.charAt(baseReplace) != ')') {
+                    baseReplace = baseReplace + 1;
+                }
+
+                // If a replacement is to be done, then baseReplace will be a different value than the starting index
+                if (baseReplace != baseIdx) {
+                    // since a replacement should be done, find the first set of matching parenthesis in the replacements
+                    while (repIdx < replacements.length() && replacements.charAt(repIdx) != '(') {
+                        repIdx = repIdx + 1;
+                    }
+
+                    // if the replacement index contains an open parenthesis, look for a closing parenthesis
+                    if (replacements.charAt(repIdx) == '(') {
+                        // create a variable to store the index of the closing parenthesis
+                        int closing = repIdx;
+
+                        // while the closing index is smaller than the replacement length and ) is not found, increase the idx
+                        while (closing < replacements.length() && replacements.charAt(closing) != ')') {
+                            closing = closing + 1;
+                        }
+
+                        // If there are no characters in the current replacement, replace the base String characters with nothing
+                        if (repIdx == closing - 1) {
+                            newString.append("");
+                            // Increase the baseString index by one more than the end of the replacement to start the next append cycle
+                            baseIdx = baseReplace;
+                        }
+
+                        // Otherwise, append the replacement
+                        else {
+                            // Now append the replacement to the StringBuilder omitting the opening and closing parentheses
+                            for (int i = repIdx + 1; i < closing; i++) {
+                                newString.append(replacements.charAt(i));
+                            }
+
+                            // Increase the base index by 1 more than the replacement index to start next appending
+                            baseIdx = baseReplace;
+                        }
+                    }
+                }
+
+                // Otherwise, Increase the basIdx by 1
+                else {
+                    baseIdx = baseIdx + 1;
+                }
+            }
+
+            // Otherwise, append the next character in the baseString
+            else {
+                newString.append(baseString.charAt(baseIdx));
+            }
+
+            // Increase the baseIdx by 1
+            baseIdx = baseIdx + 1;
         } 
+
+        // Finally, return the modified String
+        return newString.toString();
     }
 
     public static String replaceTextNULL(String baseString, String replacements) {

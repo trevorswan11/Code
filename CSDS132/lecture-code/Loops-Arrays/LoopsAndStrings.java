@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Arrays;
 
 public class LoopsAndStrings {
     
@@ -13,6 +14,11 @@ public class LoopsAndStrings {
 
         // The entire loop completed without finding a mismatch
         return true;
+    }
+
+    /* This is a better palindrome checker that ignores non-letter characters */
+    public static boolean betterPalindrome(String s) {
+        return false;
     }
 
     /* This method capitalizes a string without the built-in function */
@@ -30,10 +36,59 @@ public class LoopsAndStrings {
         return result.toString();
     }
 
+    /* This method takes an array ints and reverses them */
+    public static int[] reverse(int[] array) {
+        for (int left = 0, right = array.length - 1; left < right; left = left + 1, right = right - 1) {
+            // Remember the left
+            int temp = array[left];
+
+            // Swap
+            array[left] = array[right]; 
+
+            // place the temp
+            array[right] = temp;
+        }
+
+        return array;
+    }
+
+    public static int[] betterReverse(int[] array) {
+        for (int index = 0; index < array.length / 2; index++) {
+            // remember the left
+            int temp = array[index];
+
+            // swap
+            array[index] = array[array.length - 1 - index];
+
+            // place the temp
+            array[array.length - 1 - index] = temp;
+        }
+        return array;
+    }
+
+    /* This method will take an array as an it and an integer value
+     * it adds the element to the back of the array adn returns the new array
+     */
+    public static int[] addToEnd(int[] array, int x) {
+        // Create a new array which is one bigger than the input
+        int[] newArray = new int[array.length + 1];
+
+        // Place all of the elements in the input array to the newArray
+        for (int i = 0; i < array.length; i++) {
+            newArray[i] = array[i];
+        }
+
+        // Place the input element at the end
+        newArray[newArray.length - 1] = x; 
+
+        // return the new array
+        return newArray;
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         boolean run = true;
-        System.out.println("Welcome to String Practice:\n\t1. Palindrome\n\t2. Capitalize\n\t3. Quit");
+        System.out.println("Welcome to String Practice:\n\t1. Palindrome\n\t2. Capitalize\n\t3. Reverse Array\n\t4. Add to Array\n\t5. Better Palindrome\n\t6. Quit");
         while (run) {
             System.out.print("What would you like to do: ");
             String input = sc.next();
@@ -49,8 +104,35 @@ public class LoopsAndStrings {
                 String s = sc.next();
                 System.out.println(LoopsAndStrings.allCapitalized(s));
             }
-            // Quits the program if the user doesn't want to continue
+
+            // Runs the array swap
             else if (input.equals("3")) {
+                int[] x = {1, 2, 3, 4, 5};
+                int[] y = LoopsAndStrings.reverse(x);
+                int[] z = LoopsAndStrings.betterReverse(x);
+                System.out.printf("Reverse: %s", Arrays.toString(y));
+                System.out.println();
+                System.out.printf("Better: %s", Arrays.toString(z));
+                System.out.println();
+            }
+
+            // Adds an input element to an array
+            else if (input.equals("4")) {
+                int[] x = {1, 2, 3, 4, 5, 6};
+                int y = sc.nextInt();
+                int[] addition = LoopsAndStrings.addToEnd(x, y);
+                System.out.println(Arrays.toString(addition));
+            }
+
+            // Asks for a string input and checks it with the better palindrome method
+            else if (input.equals("5")) {
+                System.out.println("What would you like to check: ");
+                String palindrome = sc.next();
+                System.out.println(LoopsAndStrings.betterPalindrome(palindrome));
+            }
+
+            // Quits the program if the user doesn't want to continue
+            else if (input.equals("6")) {
                 System.out.println("Thank you!");
                 run = false;
             }
