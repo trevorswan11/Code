@@ -393,7 +393,7 @@ public class HW2 {
             return reverse.toString();
         }
     }
-
+    
     /**
      * Replaces substrings of an inputted string, indicated by parentheses (...)
      * with substrings from another string using the same nomenclature. The second
@@ -406,14 +406,50 @@ public class HW2 {
      * 
      * @param baseString   A string with zero or more indicated substrings to be
      *                     replaced
-     * @param replacements A string with indicated substrings that will replace
+     * @param replacement A string with indicated substrings that will replace
      *                     those indicated in the baseString
      * 
      * @return A string that is an altered version of the baseString with the
      *         substrings replaced in the manner indicated above.
      */
-    public static String replaceText(String baseString, String replacements) {
-        return null;
+    public static String replaceText(String baseString, String replacement) {
+        // Create a new StringBuilder to assist in the modification of the baseString
+        StringBuilder newString = new StringBuilder("");
+
+        // Create indexes for both the baseString and replacement string 
+        int replacementIdx = 0;
+        int baseIdx = 0;
+        int pIss = 0;
+        boolean activated = false;
+
+        // Loop through the entire baseString and replacement String until the indices are exhausted
+        while (baseIdx < baseString.length() && replacementIdx < replacement.length()) {
+            if (baseString.charAt(baseIdx) == '(') {
+                while (baseString.charAt(baseIdx) != ')' && baseIdx < baseString.length()) {
+
+                }
+            }
+
+            if (baseString.charAt(baseIdx) == '(') {
+                pIss = baseIdx;
+                activated = true;
+            }
+            if (baseString.charAt(baseIdx) == ')' && activated) {
+                
+                
+                replacementIdx += 1;
+
+                // replace from pIss to baseIdx 
+                activated = false;
+
+            }
+            baseIdx += 1;
+
+            
+        }
+
+        // Return the StringBuilder to the user as a String
+        return newString.toString();
     }
 
     /**
