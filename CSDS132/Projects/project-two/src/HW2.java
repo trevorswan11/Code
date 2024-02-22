@@ -429,13 +429,15 @@ public class HW2 {
 
                 }
             }
+        }
 
+        while (baseIdx < baseString.length())
             if (baseString.charAt(baseIdx) == '(') {
                 pIss = baseIdx;
                 activated = true;
             }
             if (baseString.charAt(baseIdx) == ')' && activated) {
-                
+                //loop through replacement for next pair with same if statments as baseString core 
                 
                 replacementIdx += 1;
 
