@@ -119,43 +119,49 @@ public class HW2 {
      *         matched correctly
      */
     public static boolean matchingParentheses(String statement) {
-        // First check to see if the first or last character is a closed or open parentheses, respectively
-        if (statement.charAt(0) == ')' || statement.charAt(statement.length() - 1) == '(') {
-            // The result must be false if either condition is met
-            return false;
+        // If the string is empty, return true, otherwise continue with the checking part
+        if (statement.equals("")) {
+            return true;
         }
-
-        // If there are no mismatched parentheses at the start or end, continue
         else {
-            // These variables initialize a counter for the parentheses and index for the loop
-            int counter = 0;
-            int i = 0;
-
-            /* The goal of this loop is to determine if there are mismatched parentheses by treating '(' as +1 and ')' as -1 
-             * The loop stops if the index exceeds the input String or the count becomes negative, indicating a ')' coming
-             * before a '('
-            */
-            while (counter >= 0 && i < statement.length()) {
-                // Add one to the counter if an open parentheses is found
-                if (statement.charAt(i) == '(') {
-                    counter = counter + 1;
-                }
-
-                // Subtract one from the counter if a closed parentheses is found
-                else if (statement.charAt(i) == ')') {
-                    counter = counter - 1;
-                }
-                i = i + 1;
-            }
-
-            // If there are an equal number of open and closed parentheses, the counter should be 0
-            if (counter == 0) {
-                return true;
-            }
-
-            // If the counter is not exactly 0, there is a mismatch
-            else {
+            // First check to see if the first or last character is a closed or open parentheses, respectively
+            if (statement.charAt(0) == ')' || statement.charAt(statement.length() - 1) == '(') {
+                // The result must be false if either condition is met
                 return false;
+            }
+
+            // If there are no mismatched parentheses at the start or end, continue
+            else {
+                // These variables initialize a counter for the parentheses and index for the loop
+                int counter = 0;
+                int i = 0;
+
+                /* The goal of this loop is to determine if there are mismatched parentheses by treating '(' as +1 and ')' as -1 
+                * The loop stops if the index exceeds the input String or the count becomes negative, indicating a ')' coming
+                * before a '('
+                */
+                while (counter >= 0 && i < statement.length()) {
+                    // Add one to the counter if an open parentheses is found
+                    if (statement.charAt(i) == '(') {
+                        counter = counter + 1;
+                    }
+
+                    // Subtract one from the counter if a closed parentheses is found
+                    else if (statement.charAt(i) == ')') {
+                        counter = counter - 1;
+                    }
+                    i = i + 1;
+                }
+
+                // If there are an equal number of open and closed parentheses, the counter should be 0
+                if (counter == 0) {
+                    return true;
+                }
+
+                // If the counter is not exactly 0, there is a mismatch
+                else {
+                    return false;
+                }
             }
         }
     }
@@ -176,19 +182,45 @@ public class HW2 {
      */
     public static String removeEveryKthWord(String sentence, int k) {
         // Only remove the Kth word if the input is positive
-        if (k > 0) {
+        if (k > 0 && k < sentence.length()) {
             // If the user desires every 1st word removed, returns null to the user
             if (k == 1) {
-                return null;
+                return "";
             }
 
             // If the user inputs any other positive value, continue as usual
             else {
-                // Uses my helper method to strip the input's leading/trailing zeros 
-                sentence = strTrim(sentence);
-
                 // Creates a new StringBuilder to  assist in creating a modified string in loops
                 StringBuilder newString = new StringBuilder("");
+
+                // If there is a space at the start of the string, then run this conditional
+                if (sentence.charAt(0) == ' ') {
+                    // Spaces before the sentence should be included, so count how many spaces there are
+                    int leading = 0;
+                    int leadIdx = 0;
+
+                    // Every time this loop runs, it adds to the number of leading spaces until an actual character is found
+                    while (sentence.charAt(leadIdx) == ' ') {
+                        leading++;
+                        leadIdx++;
+                    }
+
+                    // If there were leading spaces found, add the number of spaces to a string builder
+                    if (leading != 1) {
+                        // Add the number of spaces spaces to the newString builder 
+                        for (int i = 0; i < leading; i++) {
+                            newString.append(' ');
+                        }
+                    }
+
+                    // Otherwise just append one space and move on
+                    else {
+                        newString.append(' ');
+                    }
+                }
+            
+                // Uses my helper method to strip the input's leading/trailing zeros 
+                sentence = strTrim(sentence);
 
                 // Create an omit variable to indicate when a word should be ignored
                 boolean omit = false;
@@ -413,45 +445,7 @@ public class HW2 {
      *         substrings replaced in the manner indicated above.
      */
     public static String replaceText(String baseString, String replacement) {
-        // Create a new StringBuilder to assist in the modification of the baseString
-        StringBuilder newString = new StringBuilder("");
-
-        // Create indexes for both the baseString and replacement string 
-        int replacementIdx = 0;
-        int baseIdx = 0;
-        int pIss = 0;
-        boolean activated = false;
-
-        // Loop through the entire baseString and replacement String until the indices are exhausted
-        while (baseIdx < baseString.length() && replacementIdx < replacement.length()) {
-            if (baseString.charAt(baseIdx) == '(') {
-                while (baseString.charAt(baseIdx) != ')' && baseIdx < baseString.length()) {
-
-                }
-            }
-        }
-
-        while (baseIdx < baseString.length())
-            if (baseString.charAt(baseIdx) == '(') {
-                pIss = baseIdx;
-                activated = true;
-            }
-            if (baseString.charAt(baseIdx) == ')' && activated) {
-                //loop through replacement for next pair with same if statments as baseString core 
-                
-                replacementIdx += 1;
-
-                // replace from pIss to baseIdx 
-                activated = false;
-
-            }
-            baseIdx += 1;
-
-            
-        }
-
-        // Return the StringBuilder to the user as a String
-        return newString.toString();
+        return null;
     }
 
     /**

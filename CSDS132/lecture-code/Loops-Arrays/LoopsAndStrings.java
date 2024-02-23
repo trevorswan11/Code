@@ -18,7 +18,42 @@ public class LoopsAndStrings {
 
     /* This is a better palindrome checker that ignores non-letter characters */
     public static boolean betterPalindrome(String s) {
-        return false;
+        StringBuilder b = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            if (Character.isLetter(s.charAt(i))) {
+                b.append(Character.toUpperCase(s.charAt(i)));
+            }
+        }
+        return isPalindrome(b.toString());
+    }
+
+    public static boolean bestPalindrome(String s) {
+        int front = 0;
+        int back = s.length() - 1;
+
+        while (front < back) {
+            // Find the letter from front
+            if (Character.isLetter(s.charAt(front)) != true) {
+                front = front + 1;
+            }
+
+            // Find the letter from back
+            else if (Character.isLetter(s.charAt(back)) != true) {
+                back = back - 1;
+            }
+
+            // Compare
+            else if (Character.toUpperCase(s.charAt(front)) == Character.toUpperCase(s.charAt(back))) {
+                front = front + 1;
+                back = back - 1;
+            }
+
+            else {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /* This method capitalizes a string without the built-in function */
@@ -88,7 +123,7 @@ public class LoopsAndStrings {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         boolean run = true;
-        System.out.println("Welcome to String Practice:\n\t1. Palindrome\n\t2. Capitalize\n\t3. Reverse Array\n\t4. Add to Array\n\t5. Better Palindrome\n\t6. Quit");
+        System.out.println("Welcome to String Practice:\n\t1. Palindrome\n\t2. Capitalize\n\t3. Reverse Array\n\t4. Add to Array\n\t5. Better Palindrome\n\t6. Best Palindrome\n\t7. Quit");
         while (run) {
             System.out.print("What would you like to do: ");
             String input = sc.next();
@@ -131,8 +166,14 @@ public class LoopsAndStrings {
                 System.out.println(LoopsAndStrings.betterPalindrome(palindrome));
             }
 
-            // Quits the program if the user doesn't want to continue
             else if (input.equals("6")) {
+                System.out.println("What would you like to check: ");
+                String palindrome = sc.next();
+                System.out.println(LoopsAndStrings.bestPalindrome(palindrome));
+            }
+
+            // Quits the program if the user doesn't want to continue
+            else if (input.equals("7")) {
                 System.out.println("Thank you!");
                 run = false;
             }
