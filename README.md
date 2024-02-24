@@ -10,4 +10,3 @@ _Also, all code in the CSDS132 folder is designed to run with Java 8, and I used
 #### Note: the lib folder contains the necessary .jar files for using JUnit in VS Code
 
 Whoever you are, I'm glad you're here and I hope you have a great day today <3
-$4\to 5$
