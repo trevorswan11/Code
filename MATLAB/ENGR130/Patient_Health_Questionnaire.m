@@ -1,6 +1,6 @@
 %% load/alter/save question/response items
 clear;
-% clc;
+clc;
 close all;
 
 GAD_PHQ = ["Feeling nervous, anxious, or on edge." "Little interest or pleasure in doing things."; 
@@ -19,7 +19,7 @@ load('health_data.mat')
 
 scores_GAD = zeros(1,7);
 for GAD_Q = 1:7
-    % clc;
+    clc;
     fprintf(['The following pertain to the GAD portion of this assessment.\nPlease indicate your responses to the following based on this scale:\n' ...
         '<strong>0</strong> - Not at all\n<strong>1</strong> - Moderately annoyed\n<strong>2</strong> - Noticably Perturbed\n' ...
         '<strong>3</strong> - Distressed\n\n'])
@@ -33,7 +33,7 @@ responses_GAD(1,col_idx_GAD) = col_idx_GAD;
 responses_GAD(2,col_idx_GAD) = sum(scores_GAD);
 
 if sum(scores_GAD) > 0
-    % clc;
+    clc;
     fprintf(['The following pertain to the GAD portion of this assessment.\nHow difficult have these problems made it for you to do your work, ' ...
         'take care of things at home, or get along with other people?\nPlease indicate your response based on this scale:\n'])
     fprintf(['<strong>0</strong> - Not difficult at all\n<strong>1</strong> - Somewhat difficult\n<strong>2</strong> - Very difficult\n' ...
@@ -45,7 +45,7 @@ end
 
 scores_PHQ = zeros(1,9);
 for PHQ_Q = 1:9
-    % clc;
+    clc;
     fprintf(['The following pertain to the PHQ portion of this assessment.\nPlease indicate your responses to the following based on this scale:\n' ...
         '<strong>0</strong> - Not at all\n<strong>1</strong> - Moderately annoyed\n<strong>2</strong> - Noticably perturbed\n' ...
         '<strong>3</strong> - Distressed\n\n'])
@@ -58,7 +58,7 @@ responses_PHQ(1,col_idx_PHQ) = col_idx_PHQ;
 responses_PHQ(2,col_idx_PHQ) = sum(scores_PHQ);
 
 if sum(scores_PHQ) > 0
-    % clc;
+    clc;
     fprintf(['The following pertain to the PHQ portion of this assessment.\nHow difficult have these problems made it for you to do your work, ' ...
         'take care of things at home, or get along with other people?\nPlease indicate your response based on this scale:\n'])
     fprintf(['<strong>0</strong> - Not difficult at all\n<strong>1</strong> - Somewhat difficult\n<strong>2</strong> - Very difficult\n' ...

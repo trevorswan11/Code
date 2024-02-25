@@ -291,12 +291,12 @@ for spin_num = 1:spins
                 clc;
                 % Display title and spin number every time
                 fprintf('<strong>MATLAB Slots</strong>\n')
-                fprintf('---%i---\n',spin_num)
+                fprintf('----%i----\n',spin_num)
                 if letter_display == 1
-                    fprintf('%s',options(letter_display))
+                    fprintf('%s\t',options(letter_display))
                 else
-                    fprintf('%s  ',current)
-                    fprintf('%s',options(letter_display))
+                    fprintf('%s\t',current)
+                    fprintf('%s\t',options(letter_display))
                     % Computers run extremly quickly and this pause command
                     % allows the user to see the numbers flying by
                     pause(0.05)
@@ -306,11 +306,11 @@ for spin_num = 1:spins
         clc;
         % These print statements are here for appearance sake once again
         fprintf('<strong>MATLAB Slots</strong>\n')
-        fprintf('---%i---\n',spin_num)
+        fprintf('----%i----\n',spin_num)
         % Assign a slot in the current vector the actual spin data to
         % display for the next time a spin is displayed
         current(slot_num) = spin_matrix(spin_num,slot_num);
-        fprintf('%s  ',current)
+        fprintf('%s\t',current)
     end
     % check to see if the current spin is a win (AAA) or not, and add 1 to
     % a counter if a spin is detected
