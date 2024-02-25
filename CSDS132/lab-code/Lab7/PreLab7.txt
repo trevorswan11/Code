@@ -1,0 +1,33 @@
+This was the class I wrote in order to perform this PreLab in VSCode:
+    import javax.swing.JFrame;
+
+    public class PreLab7 {
+        public static void main(String[] args) {
+            // Create a multidimensional JFrame array with 4 rows and 5 columns
+            JFrame[][] frame = new JFrame[4][5];
+
+            // Use a for loop to loop through the rows
+            for (int i = 0; i < 4; i++) {
+                // Go through each column of the current row
+                for (int j = 0; j < 5; j++) {
+                    // Create a JFrame in the current index
+                    frame[i][j] = new JFrame();
+
+                    // Set the size of the current frame index to 200x200
+                    frame[i][j].setSize(200, 200);
+
+                    // Set the location of the current frame index to 200 times its indices
+                    frame[i][j].setLocation(200 *i, 200 *j);
+                    
+                    // Make the current indexed JFrame visible
+                    frame[i][j].setVisible(true);
+                }
+            }
+        }
+    }
+
+This was the my command line input:
+    $ javac PreLab6.java
+    $ java PreLab6
+
+As expected, 20 JFrames appeared in an organized 4x5 grid, with all Frames being the same size.

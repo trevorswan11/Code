@@ -83,6 +83,11 @@ public class HW2 {
             return false;
         }
 
+        // If the input is less than or equal to 0, return true
+        else if (compareStr <= 0) {
+            return true;
+        }
+
         // If the comparison lies within the bounds of both strings, continue
         else {
             // These instances of the StringBuilder API assist in the creation of strings for comparison
@@ -181,8 +186,8 @@ public class HW2 {
      *         positive integer
      */
     public static String removeEveryKthWord(String sentence, int k) {
-        // Only remove the Kth word if the input is positive
-        if (k > 0 && k < sentence.length()) {
+        // Only remove the Kth word if the input is positive and in range
+        if (k > 0  && k <= sentence.length()) {
             // If the user desires every 1st word removed, returns null to the user
             if (k == 1) {
                 return "";

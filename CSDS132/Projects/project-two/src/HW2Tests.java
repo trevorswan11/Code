@@ -13,8 +13,20 @@ public class HW2Tests {
         // Test string lengths of 0
         assertTrue(HW2.samePrefix("","",0));
 
-        // Test string lengths of 0 with Large comparison index
+        // Test string lengths of 0 with comparison 1
         assertFalse(HW2.samePrefix("","",1));
+
+        // Test string lengths of 0 with large comparison
+        assertFalse(HW2.samePrefix("","",100));
+
+        // Test a character amount of 1 with identical first letters
+        assertTrue(HW2.samePrefix("h", "h", 0));
+
+        // Test a character amount of 1 with different first letters and 0 comparison
+        assertTrue(HW2.samePrefix("m", "h", 0));
+
+        // Test a character amount of 1 with different first letters and negative comparison
+        assertTrue(HW2.samePrefix("m", "h", -1));
 
         // Test a character amount of 1 with identical first letters
         assertTrue(HW2.samePrefix("h", "h", 1));
@@ -74,6 +86,9 @@ public class HW2Tests {
         // Test a string with one set of matching parentheses
         assertTrue(HW2.matchingParentheses("(this) is a test"));
 
+        // Test a string with one set of mismatching parentheses
+        assertFalse(HW2.matchingParentheses("this )is( a test"));
+
         // Test a string with multiple sets of matching parentheses
         assertTrue(HW2.matchingParentheses("(this) is a ((test) of parentheses)"));
 
@@ -111,23 +126,23 @@ public class HW2Tests {
         // Test an empty string
         assertEquals("",HW2.removeEveryKthWord("", 0));
 
-        // Test a long string with k = 1, removing every single word
+        // Test an empty string with k = 1
         assertEquals("", HW2.removeEveryKthWord("", 1));
 
         // Test an empty string with a positive k
         assertEquals("",HW2.removeEveryKthWord("", 100));
 
-        // Test a single word string with a negative k
-        assertEquals("this", HW2.removeEveryKthWord("this", -10));
+        // Test a single character string with a negative k
+        assertEquals("h", HW2.removeEveryKthWord("h", -10));
 
-        // Test a single word string with 0 k
-        assertEquals("this",HW2.removeEveryKthWord("this", 0));
+        // Test a single character string with 0 k
+        assertEquals("h",HW2.removeEveryKthWord("h", 0));
 
-        // Test a single word string with k = 1, removing every single word
-        assertEquals("", HW2.removeEveryKthWord("this", 1));
+        // Test a single character string with k = 1, removing every single word
+        assertEquals("", HW2.removeEveryKthWord("h", 1));
 
-        // Test a single word string with a positive k
-        assertEquals("this",HW2.removeEveryKthWord("this", 100));
+        // Test a single character string with a positive k
+        assertEquals("h",HW2.removeEveryKthWord("h", 100));
 
         // Test a long string with a negative k
         assertEquals("Testing this method", HW2.removeEveryKthWord("Testing this method", -10));
@@ -138,21 +153,26 @@ public class HW2Tests {
         // Test a long string with k = 1, removing every single word
         assertEquals("", HW2.removeEveryKthWord("Testing this method", 1));
 
+        // Test a long string with k > number of words, changing nothing
+        assertEquals("Testing this method", HW2.removeEveryKthWord("Testing this method", 100));
+
         // Tests removing the last word in a string
         assertEquals("This is a test ", HW2.removeEveryKthWord("This is a test yeah!", 5));
 
         // Test removing every 4 in a string with 8 words
         assertEquals("This is such a test wow! ", HW2.removeEveryKthWord("This is such womp a test wow! womp", 4));
 
-        // Test if trailing zeros are dropped completely
+        // Test if trailing spaces are dropped completely
         assertEquals("This is a funky little trial",
             HW2.removeEveryKthWord("This womp is womp a womp funky womp little womp trial        ", 2));
 
         // Test the first example from the instructions 
-        assertEquals("Four score seven years our fore ", HW2.removeEveryKthWord("Four score and seven years ago our fore fathers", 3));
+        assertEquals("Four score seven years our fore ", 
+            HW2.removeEveryKthWord("Four score and seven years ago our fore fathers", 3));
 
         // Test the second example from the instructions - leading zeros
-        assertEquals(" Every down Whoville Christmas lot!",HW2.removeEveryKthWord(" Every Who down in Whoville liked Christmas a lot!", 2));
+        assertEquals(" Every down Whoville Christmas lot!", 
+            HW2.removeEveryKthWord(" Every Who down in Whoville liked Christmas a lot!", 2));
     }
 
     /* This test the flipEachK method */
