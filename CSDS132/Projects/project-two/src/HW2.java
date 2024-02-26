@@ -523,6 +523,105 @@ public class HW2 {
             return baseString;
         }
 
+        /* Notes:
+         * Cases to consider
+         *      Matched parentheses everywhere
+         *      Mismatched parentheses in Base or replacements
+         *      Nested matched parentheses
+         */
+
+        // Otherwise proper inspection of the strings is necessary
+        else {  
+            // Create a new StringBuilder to create the modified string
+            StringBuilder newString = new StringBuilder();
+
+            // Create a boolean and int variable to indicate a repeated ( in the base that is mismatched
+            boolean mismatch = false;
+            int mismatchIdx = 0;
+
+            // Create indices for the the base and the replacements
+            int baseIdx = 0;
+            int replaceIdx = 0;
+
+            // Create a sum variable to keep track of the number of parentheses found down the line
+            int sum = 0;
+
+            // Create a temporary index to keep track of where substrings end
+            int temp = 0;
+
+            /* Iterate through the base index until all indices have been exhausted
+             * Each iteration appends a base/replacement character to the StringBuilder
+             */
+            while (baseIdx < baseString.length()) {
+                // if there is an open parentheses found at the current index, look for a closing parentheses
+                if (baseString.charAt(baseIdx) == '(') {
+                    temp = baseIdx + 1;
+                    sum = 1;
+                    /* Loop through the baseString until a closing parentheses is found and store it in temp
+                     * Each iteration ends with a value of the current index
+                     */
+                    while (baseString.charAt(temp) != ')' && temp < baseString.length()) {
+                        // If another ( is found, then there is a possible mismatch
+                        if (baseString.charAt(temp) == '(') {
+                            mismatch = true;
+                            mismatchIdx = temp;
+                        }
+                        temp++;
+                    }
+
+                    // If there is a potential mismatch, then check if there are nested parentheses 
+                    if (mismatch) {
+                        /* Loop through the baseString and stop when there is an equal number of parentheses indicating nested parentheses
+                         * Each iteration of the loop results in a value pertaining to the sum of the number of each parenthesis found
+                         */
+                        int i = baseIdx + 1;
+                        while (sum >= 0 && i < baseString.length()) {
+                            // If an open parentheses is found at i, add 1
+                            if (baseString.charAt(i) == '(') {
+                                sum = sum + 1;
+                            }
+
+                            // If a closed parentheses is found at 1, subtract 1
+                            else if (baseString.charAt(i) == ')') {
+                                sum = sum - 1;
+                            }
+                        }
+
+                        // If sum is 0 after going through the loop above, then there is no mismatch
+                        if (sum == 0) {
+                            mismatch = false;
+
+                            // This means the substring is contained between baseIdx and i; temp should be used instead of i
+                            temp = i;
+                        }
+
+                        // If the sum is anything else, then the substring is between the mismatchIdx and temp
+                        else {
+                            /* Any characters before the mismatched index should be appended 
+                             * Each iteration appends a character from the base string until the mismatch index is met
+                            */
+                            for (int j = baseIdx; j < mismatchIdx; j = j + 1) {
+                                newString.append(baseString.charAt(j));
+                            }
+                        }
+                    }
+
+                    // If there is not a closing parentheses found, append the rest of the baseString to the StringBuilder and return
+                    if (baseString.charAt(temp) != ')') {
+                        /* Each loop iteration appends the next character in the base to the builder */
+                        for (int i = baseIdx; i < baseString.length(); i++) {
+                            newString.append(baseString.charAt(i));
+                        }
+
+                        // Return the string builder as a string
+                        return newString.toString();
+                    }
+
+                    // If there is a closing parentheses found, then it is time to look for a replacement
+                    else if (baseString.charAt(temp) == ')');
+                }
+            }
+        }
         return null;
     }
 
