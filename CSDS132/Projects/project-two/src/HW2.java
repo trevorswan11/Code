@@ -447,18 +447,17 @@ public class HW2 {
     
     /**
      * Replaces substrings of an inputted string, indicated by parentheses (...)
-     * with substrings from another string using the same nomenclature. The second
-     * string's substrings can contains parentheses inside of them and they will be
-     * treated like any other character. If the first string contains more
-     * substrings than the second, they are removed. If the second string contains
-     * more substrings than the first, then they are ignored. Mismatched parentheses
-     * will be ignored. Substrings are replaced in the exact same order as they
-     * appeared originally.
+     * with substrings from another string using the same nomenclature. If the first
+     * string contains more substrings than the second, they are removed. If the
+     * second string contains more substrings than the first, then they are ignored.
+     * Mismatched parentheses will be ignored in a way that they are still included
+     * in the output, but are not considered for replacement. Substrings are
+     * replaced in the exact same order as they appeared originally.
      * 
-     * @param baseString   A string with zero or more indicated substrings to be
-     *                     replaced
+     * @param baseString  A string with zero or more indicated substrings to be
+     *                    replaced
      * @param replacement A string with indicated substrings that will replace
-     *                     those indicated in the baseString
+     *                    those indicated in the baseString
      * 
      * @return A string that is an altered version of the baseString with the
      *         substrings replaced in the manner indicated above.
