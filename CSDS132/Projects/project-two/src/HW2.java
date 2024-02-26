@@ -3,6 +3,20 @@
  * CSDS132 - Project 2
  */
 
+/**
+ * This class is the singular class for the second project in the spring of 2024
+ * for CSDS132. The methods included are the ones required on the instructions
+ * as well as one 'helper' method to remove leading and trailing spaces. The
+ * helper method is private, but all other methods are public and have their
+ * own javadoc. I was only allowed to use the methods in the API listed below:
+ * 
+ * @apiNote String Class:
+ *          length, charAt
+ * @apiNote StringBuilder Class:
+ *          length, charAt, append, toString
+ * @apiNote Character Class:
+ *          any method
+ */
 public class HW2 {
     /**
      * This is a 'helper' method. It cannot be accessed outside of this class, and

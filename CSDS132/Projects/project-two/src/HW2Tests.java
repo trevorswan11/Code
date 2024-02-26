@@ -266,8 +266,20 @@ public class HW2Tests {
         // Test strings of length 1 with no replacements
         assertEquals("h", HW2.replaceText("h", "h"));
 
+        // Test strings of length 5 with no replacements
+        assertEquals("hello", HW2.replaceText("hello", "hello"));
+
+        // Test strings of length 2 indicated with only the replacements
+        assertEquals("", HW2.replaceText("()", "()"));
+
         // Test strings of length one with indicated replacements
-        assertEquals("hello", HW2.replaceText("(goodbye)", "(hello)"));
+        assertEquals("e", HW2.replaceText("(a)", "(e)"));
+
+        // Test a base with no indicated substrings, but with ones indicated in replacements
+        assertEquals("this is a test", HW2.replaceText("this is a test", "(this)"));
+
+        // Test a base with indicated substrings but none indicated in replacements
+        assertEquals("this test", HW2.replaceText("this (is a) test", "nope"));
 
         // Test strings with 1 substring in the base and 2 substrings in the replacements
         assertEquals("hello", HW2.replaceText("(goodbye)", "(hello) (world)"));
@@ -281,9 +293,13 @@ public class HW2Tests {
         // Test strings with equal amounts of substrings in the two strings, but more than 1 substring per input
         assertEquals("hello world", HW2.replaceText("(goodbye) (globe)", "(hello) (world)"));
 
-        /* Test strings with equal amounts of substrings in the two strings, but more than 1 substring per input 
+        /* Test strings with equal amounts of substrings in the two strings, but with nested matched parentheses in the replacements
          * This is identical to the previous test but along with nested matched parentheses */
         assertEquals("hell()o wor()ld", HW2.replaceText("(goodbye) (globe)", "(hell()o) (wor()ld)"));
+
+        /* Test strings with equal amounts of substrings in the two strings, but with nested matched parentheses in the base
+         * This is identical to the previous test but along with nested matched parentheses */
+        assertEquals("hello world", HW2.replaceText("(good()bye) (glo()be)", "(hello) (world)"));
 
         // Test strings with mismatched parentheses in the base but matched in the replacements
         assertEquals("this tests (a mismatched in the base",
@@ -294,12 +310,12 @@ public class HW2Tests {
             HW2.replaceText("this tests (mismatched parentheses) in the replacements", "(a thing))"));
 
         // Test mismatched parentheses in the base with mismatched parentheses in the replacements
-        assertEquals("testing (mismatches))", HW2.replaceText("testing (mis()matches))", "((mismatches)"));
+        assertEquals("testing mismatches)", HW2.replaceText("testing (mis()matches))", "((mismatches)"));
 
         // Test a base with too many substrings that are also  mismatched, replacements are not mismatched
-        assertEquals("hello (globworld", HW2.replaceText("hello (glob(e)", "(world)"));
+        assertEquals("hello (globworld", HW2.replaceText("hello (glob(e) (nope)", "(world)"));
 
-        // Test a base with correct everything but replacements with too many substrings that are mismatched
+        // Test a base with correct everything but replacements with too many substrings that are also mismatched
         assertEquals("this is a trial of robustness", 
             HW2.replaceText("this is a (test) of robust()", "(trial)) (ness) (do not include)"));
 
@@ -308,7 +324,12 @@ public class HW2Tests {
             HW2.replaceText("this is a (test) of robust() (do not include) me", "((trial) of (ness from)"));
         
         // Test a base with mismatched parentheses with not enough substrings for mismatched replacements
-        assertEquals("", HW2.replaceText("this is (a (test) of robust() me", "(TRIAL) (ness) (please don't include me)"));
+        assertEquals("this is (a TRIAL of robustness from me", 
+            HW2.replaceText("this is (a (test) of robust() me", "(TRIAL) (ness from) (please don't include me)"));
+
+        // Test a base with mismatched parentheses with not enough substrings for mismatched replacements
+        assertEquals("this is (a TRIAL of robustness from me", 
+            HW2.replaceText("this is (a (test) of robust() me (please don't include me)", "(TRIAL) (ness from)"));
 
         // Test the first example from the instructions
         assertEquals("a cool programming problem", 
