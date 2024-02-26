@@ -120,10 +120,45 @@ public class LoopsAndStrings {
         return newArray;
     }
 
+    /* This method is a basic linear search algorithm */
+    public static int linearSearch(double x, double[] array) {
+        for (int i = 0; i < array.length; i++) {
+            if (x == array[i]) {
+                return i;
+            }
+        }
+
+        // At this point, the index of the element was not found, so return an impossible index
+        return -1;
+    }
+
+    /* This is a binary search algorithm 
+     * array must be sorted!
+    */
+    public static int binarySearch(int x, int[] array) {
+        int start = 0; // smallest element index
+        int end = array.length - 1; // index of the largest element
+
+        while (start < end) {
+            int mid = (start + end) / 2; // auto typecasting
+            if (x < array[mid]) {
+                end = mid;
+            }
+            else if (x > array[mid]) {
+                start = mid;
+            }
+            else{
+                return mid;
+            }
+        }
+        return -1;
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         boolean run = true;
-        System.out.println("Welcome to String Practice:\n\t1. Palindrome\n\t2. Capitalize\n\t3. Reverse Array\n\t4. Add to Array\n\t5. Better Palindrome\n\t6. Best Palindrome\n\t7. Quit");
+        System.out.println("Welcome to String Practice:\n\t1. Palindrome\n\t2. Capitalize\n\t3. Reverse Array\n\t4. Add to Array");
+        System.out.println("\t5. Better Palindrome\n\t6. Best Palindrome\n\t7. Linear Search\n\t8. Quit");
         while (run) {
             System.out.print("What would you like to do: ");
             String input = sc.next();
@@ -166,14 +201,25 @@ public class LoopsAndStrings {
                 System.out.println(LoopsAndStrings.betterPalindrome(palindrome));
             }
 
+            // Asks for an input to use in the best palindrome method ever
             else if (input.equals("6")) {
                 System.out.println("What would you like to check: ");
                 String palindrome = sc.next();
                 System.out.println(LoopsAndStrings.bestPalindrome(palindrome));
             }
 
-            // Quits the program if the user doesn't want to continue
+            // Display the output of defined variables in main passed through method
             else if (input.equals("7")) {
+                double x = 1.2;
+                double[] array = {1.2, 2.3, 4.5, 2.7};
+                System.out.println("Brute Force Method:");
+                System.out.println(LoopsAndStrings.linearSearch(x, array));
+                System.out.println("Binary Search Method:");
+                System.out.println();
+            }
+
+            // Quits the program if the user doesn't want to continue
+            else if (input.equals("8")) {
                 System.out.println("Thank you!");
                 run = false;
             }

@@ -75,8 +75,56 @@ public class HW2 {
                 return s;
             }
         }
-
     }
+
+    /**
+     * This is the second helper method used to assist in method involving
+     * parentheses in this project. The only purpose of this method is to determine
+     * whether or not an inputted string contains parentheses or not. The string can
+     * be any length, and a boolean value will always be returned.
+     * 
+     * @param s A string as the users input
+     * 
+     * @return A boolean value indicating true only if there are present parentheses
+     *         in the inputted string
+     */
+    private static boolean containsParentheses(String s) {
+        // If an empty string is in s, then return false
+        if (s.equals("")) {
+            return false;
+        }
+
+        // Otherwise continue through the loop
+        else {
+            // This boolean variable contains the information regarding the inclusion of parentheses
+            boolean contains = false;
+
+            // Loop through the string s until all characters are exhausted or a parentheses is found
+            int start = 0;
+            int end = s.length() - 1;
+            while (start <= end && contains == false) {
+                // Check the current start against open or closed parentheses, if either is found, contains is true
+                if (s.charAt(start) == '(' || s.charAt(start) == ')') {
+                    contains = true;
+                }
+
+                // Check the current end against open or closed parentheses, if either is found, contains is true
+                else if (s.charAt(end) == '(' || s.charAt(end) == ')') {
+                    contains = true;
+                }
+
+                // Otherwise increment the start and decrement the end
+                else {
+                    start = start + 1;
+                    end = end - 1;
+                }
+            }
+
+            // Return the boolean result
+            return contains;
+        }
+    }
+
     /**
      * Asserts whether the first 'compareStr' values of a string are equal to each
      * other. This is case sensitive, and if the desired int value exceeds the
@@ -142,6 +190,13 @@ public class HW2 {
         if (statement.equals("")) {
             return true;
         }
+
+        // Using my helper method, If there are no parentheses in the input, return true 
+        else if (!containsParentheses(statement)) {
+            return true;
+        }
+
+        // Otherwise the data must be traversed as normal
         else {
             // First check to see if the first or last character is a closed or open parentheses, respectively
             if (statement.charAt(0) == ')' || statement.charAt(statement.length() - 1) == '(') {
@@ -463,6 +518,11 @@ public class HW2 {
      *         substrings replaced in the manner indicated above.
      */
     public static String replaceText(String baseString, String replacement) {
+        // If there are no parentheses in the baseString, return it unaltered
+        if (!containsParentheses(baseString)) {
+            return baseString;
+        }
+
         return null;
     }
 
@@ -485,7 +545,8 @@ public class HW2 {
 
     // This is the unused main method
     public static void main(String[] args) {
-        String result = HW2.replaceText("this (is a) test" , "this (was) a (test)");
+        String result = HW2.replaceText("this test" , "this was a test");
         System.out.println(result);
+        System.out.println(containsParentheses(""));
     }
 }
