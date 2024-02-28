@@ -323,11 +323,11 @@ public class HW2Tests {
         assertEquals("this is a trial of robustness from  me", 
             HW2.replaceText("this is a (test) of robust() (do not include) me", "((trial) of (ness from)"));
         
-        // Test a base with mismatched parentheses with not enough substrings for mismatched replacements
+        // Test a base with mismatched parentheses with not enough substrings for matched replacements
         assertEquals("this is (a TRIAL of robustness from me", 
             HW2.replaceText("this is (a (test) of robust() me", "(TRIAL) (ness from) (please don't include me)"));
 
-        // Test a base with mismatched parentheses with not enough substrings for mismatched replacements
+        // Test a base with mismatched parentheses with too many substrings for matched replacements
         assertEquals("this is (a TRIAL of robustness from me ", 
             HW2.replaceText("this is (a (test) of robust() me (please don't include me)", "(TRIAL) (ness from)"));
 
