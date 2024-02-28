@@ -915,8 +915,6 @@ public class HW2 {
 
     // This is the unused main method
     public static void main(String[] args) {
-        System.out.println(replaceText("(e) womp (blows) today" , "this was (a) test (man)"));
-        System.out.println(replaceText("this (e)", "(a)"));
-        System.out.println(replaceText("testing (mis()matches))", "((mismatches)"));
+
     }
 }
