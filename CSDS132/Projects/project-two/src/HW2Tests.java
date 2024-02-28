@@ -279,13 +279,13 @@ public class HW2Tests {
         assertEquals("this is a test", HW2.replaceText("this is a test", "(this)"));
 
         // Test a base with indicated substrings but none indicated in replacements
-        assertEquals("this test", HW2.replaceText("this (is a) test", "nope"));
+        assertEquals("this  test", HW2.replaceText("this (is a) test", "nope"));
 
         // Test strings with 1 substring in the base and 2 substrings in the replacements
         assertEquals("hello", HW2.replaceText("(goodbye)", "(hello) (world)"));
 
         // Test strings with 2 substrings in the base and 1 substring in the replacements
-        assertEquals("hello", HW2.replaceText("(goodbye) (world)", "(hello)"));
+        assertEquals("hello ", HW2.replaceText("(goodbye) (world)", "(hello)"));
 
         // Test strings with equal amounts of substrings in the two strings, but more than 1 word per substring
         assertEquals("this wasn't the first test", HW2.replaceText("this (is a) test", "(wasn't the first)"));
@@ -313,14 +313,14 @@ public class HW2Tests {
         assertEquals("testing mismatches)", HW2.replaceText("testing (mis()matches))", "((mismatches)"));
 
         // Test a base with too many substrings that are also  mismatched, replacements are not mismatched
-        assertEquals("hello (globworld", HW2.replaceText("hello (glob(e) (nope)", "(world)"));
+        assertEquals("hello (globworld ", HW2.replaceText("hello (glob(e) (nope)", "(world)"));
 
         // Test a base with correct everything but replacements with too many substrings that are also mismatched
         assertEquals("this is a trial of robustness", 
             HW2.replaceText("this is a (test) of robust()", "(trial)) (ness) (do not include)"));
 
         // Test a base with mismatched parentheses with too many substrings for mismatched replacements
-        assertEquals("this is a trial robustness from me", 
+        assertEquals("this is a trial of robustness from  me", 
             HW2.replaceText("this is a (test) of robust() (do not include) me", "((trial) of (ness from)"));
         
         // Test a base with mismatched parentheses with not enough substrings for mismatched replacements
@@ -328,7 +328,7 @@ public class HW2Tests {
             HW2.replaceText("this is (a (test) of robust() me", "(TRIAL) (ness from) (please don't include me)"));
 
         // Test a base with mismatched parentheses with not enough substrings for mismatched replacements
-        assertEquals("this is (a TRIAL of robustness from me", 
+        assertEquals("this is (a TRIAL of robustness from me ", 
             HW2.replaceText("this is (a (test) of robust() me (please don't include me)", "(TRIAL) (ness from)"));
 
         // Test the first example from the instructions
