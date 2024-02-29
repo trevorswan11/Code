@@ -912,9 +912,4 @@ public class HW2 {
     public static String reverseAll(String originalString) {
         return null;
     }
-
-    // This is the unused main method
-    public static void main(String[] args) {
-
-    }
 }
