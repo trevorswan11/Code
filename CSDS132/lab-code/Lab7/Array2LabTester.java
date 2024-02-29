@@ -1,3 +1,10 @@
+/* Trevor Swan
+* Curtis Li
+* Simon Eskin
+* Lab 7
+* 2/29/24
+*/
+
 import org.junit.*;
 import static org.junit.Assert.*;
 
