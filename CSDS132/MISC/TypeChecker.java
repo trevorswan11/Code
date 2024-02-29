@@ -42,6 +42,18 @@ public class TypeChecker {
         return input;
     }
 
+    // Checks if the input is a short
+    public static short type(short input) {
+        System.out.println(input + " is a short.");
+        return input;
+    }
+
+    // Checks if the input is a long
+    public static long type(long input) {
+        System.out.println(input + " is a long.");
+        return input;
+    }
+
     // Checks if the input is an Object
     public static Object type(Object input) {
         System.out.println(input + " is an object.");
