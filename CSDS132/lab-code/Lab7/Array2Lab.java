@@ -80,10 +80,10 @@ public class Array2Lab {
      *                 flip.
      */
     public static int[][] transpose(int[][] matrix, int rowStart, int rowEnd, int colStart, int colEnd) {
-        int[][] newArray = new int[rowEnd - rowStart + 1][colEnd - colStart + 1];
-        for (int i = rowStart; i < rowEnd; i++) {
-            for (int j = colStart; j < colEnd; j++) {
-                newArray[i][j] = matrix[i][j];
+        int[][] newArray = new int[colEnd - colStart + 1][rowEnd - rowStart + 1];
+        for (int i = rowStart; i <= rowEnd; i++) {
+            for (int j = colStart; j <= colEnd; j++) {
+                newArray[j - colStart][i - rowStart] = matrix[i][j];
             }
         }
 
