@@ -175,7 +175,7 @@ public class HW2 {
      */
     private static int nestedParentheses(String s, int k, int initial) {
         // Initialize a variable to keep track of the sum of parentheses
-        int sum = 1 + initial;
+        int sum = initial;
 
         // Loop through the string until the sum is zero
         while (sum > 0 && k < s.length() - 1) {
@@ -243,7 +243,9 @@ public class HW2 {
             // If another open parentheses is found, check for a mismatch and nested
             else if (s.charAt(k) == '(') {
                 mismatch = isMismatched(s, k);
-                nested = nestedParentheses(s, k, 0);
+
+                // Since an open parentheses has been found already, initial is 1
+                nested = nestedParentheses(s, k, 1);
 
                 // If a mismatch is found but it is not part of a nested set of parentheses, append the next characters until mismatch
                 if (mismatch > 0 && nested <= 0) {
@@ -768,7 +770,7 @@ public class HW2 {
                     // Any other value for mismatch means a mismatch was found at the value stored in mismatch
                     else {
                         // First check if there are nested parentheses in the substring
-                        int nested = nestedParentheses(baseString, baseIndex, 0);
+                        int nested = nestedParentheses(baseString, baseIndex, 1);
 
                         // If there are nested parentheses, then indicate it is time for replacement and move the baseIndex up
                         if (nested > 0) {
@@ -843,7 +845,7 @@ public class HW2 {
                         // If a mismatch is found, set the replaceIndex to the mismatch value and continue
                         if (mismatch >= 0) {
                             // First check if there are nested parentheses associated with the mismatch
-                            int nested = nestedParentheses(replacement, replaceIndex, 0);
+                            int nested = nestedParentheses(replacement, replaceIndex, 1);
 
                             // Change the replaceIndex to align with the mismatch value only if the parentheses are not nested
                             if (mismatch > 0 && nested <= 0) {
