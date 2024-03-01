@@ -1,5 +1,5 @@
-public class MidtermReview extends TypeChecker {
+public class MidtermReview {
     public static void main(String[] args) {
-        System.out.println(type(new Object() == new Object()));
+        System.out.println(TypeChecker.type((byte)1200));
     }
 }

@@ -32,7 +32,7 @@ public class TypeChecker {
 
     // Checks if the input is a boolean
     public static boolean type(boolean input) {
-        System.out.println(input + " is an int.");
+        System.out.println(input + " is a boolean.");
         return input;
     }
 
