@@ -44,7 +44,7 @@ public class PreLab8 {
 
         /*
          * This Loop prints the output of the read method as a Character until -1 is
-         * returned
+         * returned.
          * Each loop iteration sets the currentCharacter to the read value and then
          * checks it against -1
          */
