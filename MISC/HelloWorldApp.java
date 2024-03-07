@@ -7,7 +7,7 @@ public class HelloWorldApp {
         JLabel label = new JLabel("Hello World!");
 		System.out.println("hello");
         panel.add(label); // Add the label to the panel
-        frame.add(panel); // Add the panel to the frame
+		frame.add(panel); // Add the panel to the frame
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
