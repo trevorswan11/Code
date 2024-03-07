@@ -35,5 +35,9 @@ public class MArraysChallenge {
       }
       return sum;
     }
-  } 
+  }
+
+  public static double divide(String s) {
+	System.out.println(s);
+  }
 }
