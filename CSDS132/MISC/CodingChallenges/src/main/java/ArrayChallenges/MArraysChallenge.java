@@ -38,6 +38,8 @@ public class MArraysChallenge {
   }
 
   public static double divide(String s) {
-	System.out.println(s);
+					System.out.println(s);
+  	double lengthString = s.length() / 2.0;
+			return lengthString;
   }
 }
