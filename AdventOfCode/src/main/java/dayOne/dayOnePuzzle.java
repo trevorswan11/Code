@@ -86,11 +86,13 @@ public class dayOnePuzzle {
 			}
 			digits.setLength(0);
 		}
-
+		// Close readers
+		reader.close();
+		
 		// return the sum
 		return sum;
 	}
-
+	
 	public static void main(String[] args) throws IOException {
 		// Import the Test file for the puzzle
 		String puzzle = dayOnePuzzle
