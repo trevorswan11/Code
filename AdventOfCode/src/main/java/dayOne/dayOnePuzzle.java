@@ -88,11 +88,24 @@ public class dayOnePuzzle {
 		}
 		// Close readers
 		reader.close();
-		
+
 		// return the sum
 		return sum;
 	}
-	
+
+	/**
+	 * This method searches for the first real number, spelled or numerical, in a
+	 * given string. It then
+	 * looks through the string and looks for the last real number in the string. It
+	 * returns theses values as a single int.
+	 * 
+	 * @param s A single line string to examine for the above criteria
+	 * @return An int that cointains the combination for the puzzle line.
+	 */
+	public static int realInts(String s) {
+		return 0;
+	}
+
 	public static void main(String[] args) throws IOException {
 		// Import the Test file for the puzzle
 		String puzzle = dayOnePuzzle
