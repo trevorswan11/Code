@@ -137,7 +137,80 @@ public class dayOnePuzzle {
 	 * @return An int that cointains the combination for the puzzle line.
 	 */
 	public static int realCalibration(String s) {
-		return 0;
+		// Create a String array to hold the possible numbers
+		String[] alphaNum = new String[] {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
+		int[] numNum = new int[] {1,2,3,4,5,6,7,8,9};
+		// Create a String Builder to hold the integer value
+		StringBuilder builder = new StringBuilder();
+		
+		// Create a starting character tracker
+		boolean firstCharacter = false;
+		int lastDigit = 0;
+
+		// Create a StringBuilder to keep track of temporary numbers
+		StringBuilder temp = new StringBuilder();
+		StringBuilder look = new StringBuilder();
+		int search = 0;
+
+		// Loop through the string until characters are exhuasted
+		int value = 0;
+		for (int i = 0; i < s.length(); i++) {
+			// Create a String of words and numbers to check for all types
+			temp.append(s.charAt(i));
+			// Create a builder to assist in testing the string against its aplhaNum
+			for (int j = search; j < temp.length(); j++) {
+				look.append(temp.charAt(j));
+			}
+
+			// Set the search variable to one after the length of temp
+			search = temp.length() + 1;
+			String tried = look.toString();
+
+			// assign the first character to the first digit if a digit is found
+			if (firstCharacter == false && Character.isDigit(s.charAt(i))) {
+				builder.append(s.charAt(i));
+				firstCharacter = true;
+			}
+
+			// Assign the first string of words if a number is not at the index
+			else if (firstCharacter == false) {
+				for (int k = 0; k < alphaNum.length && firstCharacter == false; k++) {
+					if (tried.equals(alphaNum[k])) {
+						builder.append(numNum[k]);
+						firstCharacter = true;
+					}
+				}
+			}
+
+			// Otherwise a first candidate has been found and the last must be looked for
+			else {
+				// Assign the last digit to the digit if present
+				if (Character.isDigit(s.charAt(i))) {
+					lastDigit = s.charAt(i);
+				}
+
+				// Otherwise compare against the written out digits
+				else {
+					for (int l = 0; l < alphaNum.length; l++) {
+						if (tried.equals(alphaNum[l])) {
+							lastDigit = numNum[l];
+						}	
+					}
+				}
+			}
+		}
+		// Append the found last digit to the builder
+		builder.append(lastDigit);
+
+		// Create an int value based off the current combo
+		try {
+			value = Integer.parseInt(builder.toString());
+		} catch (Exception e) {
+			System.out.println("womp womp");
+		}
+
+		// Return the cuurent value to add to the sum
+		return value;
 	}
 
 	public static void main(String[] args) throws IOException {
@@ -146,10 +219,12 @@ public class dayOnePuzzle {
 				.puzzle("C:/Users/Trevor/OneDrive/Documents/CWRU/Code/AdventOfCode/Puzzle Text Files/dayOnePuzzle.txt");
 		// Print the solution to the first part of the puzzle
 		System.out.println("Part One Solution:");
-		int solution = dayOnePuzzle.sumPartOne(puzzle);
-		System.out.println(solution);
+		int solution1 = dayOnePuzzle.sumPartOne(puzzle);
+		System.out.println(solution1);
 
 		// Print the solution to the second part of the puzzle
 		System.out.println("Part Two Solution:");
+		int solution2 = dayOnePuzzle.sumPartTwo(puzzle);
+		System.out.println(solution2);
 	}
 }
