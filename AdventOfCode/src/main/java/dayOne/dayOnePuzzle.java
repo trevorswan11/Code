@@ -137,80 +137,71 @@ public class dayOnePuzzle {
 	 * @return An int that cointains the combination for the puzzle line.
 	 */
 	public static int realCalibration(String s) {
-		// Create a String array to hold the possible numbers
-		String[] alphaNum = new String[] {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
-		int[] numNum = new int[] {1,2,3,4,5,6,7,8,9};
-		// Create a String Builder to hold the integer value
-		StringBuilder builder = new StringBuilder();
-		
-		// Create a starting character tracker
-		boolean firstCharacter = false;
-		int lastDigit = 0;
+		// Create a String array to hold the number data
+		String[] numbersAlpha = new String[] { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+		int[] numbersNum = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
-		// Create a StringBuilder to keep track of temporary numbers
+		// Create StringBuilders to keep track of the line
 		StringBuilder temp = new StringBuilder();
-		StringBuilder look = new StringBuilder();
+		StringBuilder query = new StringBuilder();
+		String look;
+
+		// Create a StringBuilder to hold the calibration value
+		StringBuilder calibration = new StringBuilder();
+
+		// Create a variable to track where the look builder should go up to
 		int search = 0;
 
-		// Loop through the string until characters are exhuasted
-		int value = 0;
-		for (int i = 0; i < s.length(); i++) {
-			// Create a String of words and numbers to check for all types
+		// Loop through the entire input
+		int i = 0;
+		while (i < s.length()) {
 			temp.append(s.charAt(i));
-			// Create a builder to assist in testing the string against its aplhaNum
+
+			// append the character of temp to query from search to the length of temp
 			for (int j = search; j < temp.length(); j++) {
-				look.append(temp.charAt(j));
+				query.append(temp.charAt(j));
 			}
 
-			// Set the search variable to one after the length of temp
-			search = temp.length() + 1;
-			String tried = look.toString();
-
-			// assign the first character to the first digit if a digit is found
-			if (firstCharacter == false && Character.isDigit(s.charAt(i))) {
-				builder.append(s.charAt(i));
-				firstCharacter = true;
+			// Set the search the length of query, reset its contents, and assign to look
+			search = query.length();
+			look = query.toString();
+			
+			// If the current character in temp is a digit, append it
+			if (Character.isDigit(temp.charAt(i))) {
+				calibration.append(temp.charAt(i));
+				search = search + 1;
 			}
 
-			// Assign the first string of words if a number is not at the index
-			else if (firstCharacter == false) {
-				for (int k = 0; k < alphaNum.length && firstCharacter == false; k++) {
-					if (tried.equals(alphaNum[k])) {
-						builder.append(numNum[k]);
-						firstCharacter = true;
-					}
-				}
-			}
-
-			// Otherwise a first candidate has been found and the last must be looked for
+			// If the current string of letters is a number, append it
 			else {
-				// Assign the last digit to the digit if present
-				if (Character.isDigit(s.charAt(i))) {
-					lastDigit = s.charAt(i);
-				}
-
-				// Otherwise compare against the written out digits
-				else {
-					for (int l = 0; l < alphaNum.length; l++) {
-						if (tried.equals(alphaNum[l])) {
-							lastDigit = numNum[l];
-						}	
+				for (int k = 0; k < numbersAlpha.length; k++) {
+					if (look.equals(numbersAlpha[k])) {
+						calibration.append(numbersNum[k]);
+						query.setLength(0);
+						System.out.println(look);
+						look = "";
 					}
 				}
 			}
+			i++;
 		}
-		// Append the found last digit to the builder
-		builder.append(lastDigit);
 
-		// Create an int value based off the current combo
+		String calibrationVal = calibration.toString();
+
+		// Look thorugh the calibration String and extract the first and last digit
+		StringBuilder digits = new StringBuilder();
+		digits.append(calibrationVal.charAt(0));
+		digits.append(calibrationVal.charAt(calibrationVal.length() - 1));
+
+		// Turn the digits into an int with parseInt
+		String combo = digits.toString();
 		try {
-			value = Integer.parseInt(builder.toString());
+			int value = Integer.parseInt(combo);
+			return value;
 		} catch (Exception e) {
 			System.out.println("womp womp");
+			return -1;
 		}
-
-		// Return the cuurent value to add to the sum
-		return value;
 	}
 
 	public static void main(String[] args) throws IOException {
@@ -224,7 +215,9 @@ public class dayOnePuzzle {
 
 		// Print the solution to the second part of the puzzle
 		System.out.println("Part Two Solution:");
-		int solution2 = dayOnePuzzle.sumPartTwo(puzzle);
-		System.out.println(solution2);
+		// int solution2 = dayOnePuzzle.sumPartTwo(puzzle);
+		// System.out.println(solution2);
+		System.out.println("2eight3one");
+		System.out.println(dayOnePuzzle.realCalibration("2eight3one"));
 	}
 }
