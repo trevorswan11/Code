@@ -94,6 +94,40 @@ public class dayOnePuzzle {
 	}
 
 	/**
+	 * This method Splits the String into its own lines and feeds each one into A
+	 * method to determine the calibration value. It sums continuously.
+	 * 
+	 * @param puzzle The input puzzle as a String
+	 * @return The total calibration value as an int
+	 */
+	public static int sumPartTwo(String puzzle) throws IOException {
+		BufferedReader reader = new BufferedReader(new StringReader(puzzle));
+		int currentCharacter;
+		String line;
+		StringBuilder digits = new StringBuilder();
+		int sum = 0;
+
+		// Loop through the string until exhuasted
+		while ((currentCharacter = reader.read()) != -1) {
+			// Assuming the loop ran, append the test character and the line
+			digits.append((char) currentCharacter);
+			digits.append(reader.readLine());
+
+			// Save the line to its own varibale and reset the digits builder
+			line = digits.toString();
+			digits.setLength(0);
+
+			// Feed the Line through the real calibration method and save the result
+			sum = sum + realCalibration(line);
+			digits.setLength(0);
+		}
+
+		// Close reader and return sum
+		reader.close();
+		return sum;
+	}
+
+	/**
 	 * This method searches for the first real number, spelled or numerical, in a
 	 * given string. It then
 	 * looks through the string and looks for the last real number in the string. It
@@ -102,7 +136,7 @@ public class dayOnePuzzle {
 	 * @param s A single line string to examine for the above criteria
 	 * @return An int that cointains the combination for the puzzle line.
 	 */
-	public static int realInts(String s) {
+	public static int realCalibration(String s) {
 		return 0;
 	}
 

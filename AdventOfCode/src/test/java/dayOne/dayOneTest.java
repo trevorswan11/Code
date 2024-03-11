@@ -22,5 +22,7 @@ public class dayOneTest {
 	@Test
 	public void partTwo() throws IOException {
 		puzzle = this.getPuzzle();
+		int solution = dayOnePuzzle.sumPartTwo(puzzle);
+		System.out.println(solution);
 	}
 }

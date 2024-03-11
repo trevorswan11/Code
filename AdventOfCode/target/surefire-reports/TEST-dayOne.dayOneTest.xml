@@ -18,7 +18,7 @@
     <property name="user.country" value="US"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Amazon Corretto\jdk1.8.0_392\jre\bin"/>
-    <property name="sun.java.command" value="C:\Users\Trevor\AppData\Local\Temp\surefire6476773932125220624\surefirebooter9117141570482260868.jar C:\Users\Trevor\AppData\Local\Temp\surefire6476773932125220624 2024-03-08T15-00-21_580-jvmRun1 surefire7232452190621029785tmp surefire_0708023319130686242tmp"/>
+    <property name="sun.java.command" value="C:\Users\Trevor\AppData\Local\Temp\surefire1404457373575622371\surefirebooter7996346211773136634.jar C:\Users\Trevor\AppData\Local\Temp\surefire1404457373575622371 2024-03-10T22-16-05_646-jvmRun1 surefire3050434523203495766tmp surefire_06389629239990964842tmp"/>
     <property name="surefire.test.class.path" value="C:\Users\Trevor\OneDrive\Documents\CWRU\Code\AdventOfCode\target\test-classes;C:\Users\Trevor\OneDrive\Documents\CWRU\Code\AdventOfCode\target\classes;C:\Users\Trevor\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\Trevor\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="C:\Users\Trevor"/>
@@ -31,7 +31,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="C:\Users\Trevor\AppData\Local\Temp\surefire6476773932125220624\surefirebooter9117141570482260868.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\Trevor\AppData\Local\Temp\surefire1404457373575622371\surefirebooter7996346211773136634.jar"/>
     <property name="sun.boot.class.path" value="C:\Program Files\Amazon Corretto\jdk1.8.0_392\jre\lib\resources.jar;C:\Program Files\Amazon Corretto\jdk1.8.0_392\jre\lib\rt.jar;C:\Program Files\Amazon Corretto\jdk1.8.0_392\jre\lib\sunrsasign.jar;C:\Program Files\Amazon Corretto\jdk1.8.0_392\jre\lib\jsse.jar;C:\Program Files\Amazon Corretto\jdk1.8.0_392\jre\lib\jce.jar;C:\Program Files\Amazon Corretto\jdk1.8.0_392\jre\lib\charsets.jar;C:\Program Files\Amazon Corretto\jdk1.8.0_392\jre\lib\jfr.jar;C:\Program Files\Amazon Corretto\jdk1.8.0_392\jre\classes"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
@@ -61,6 +61,6 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="52.0"/>
   </properties>
-  <testcase name="partOne" classname="dayOne.dayOneTest" time="0.008"/>
+  <testcase name="partOne" classname="dayOne.dayOneTest" time="0.009"/>
   <testcase name="partTwo" classname="dayOne.dayOneTest" time="0"/>
 </testsuite>
