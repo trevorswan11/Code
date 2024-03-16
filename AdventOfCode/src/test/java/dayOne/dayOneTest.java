@@ -19,6 +19,7 @@ public class dayOneTest {
 		System.out.println(solution);
 	}
 
+	// Run the test for the second part
 	@Test
 	public void partTwo() throws IOException {
 		puzzle = this.getPuzzle();

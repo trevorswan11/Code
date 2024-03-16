@@ -165,20 +165,19 @@ public class dayOnePuzzle {
 			// Set the search the length of query, reset its contents, and assign to look
 			search = query.length();
 			look = query.toString();
-			
+
 			// If the current character in temp is a digit, append it
 			if (Character.isDigit(temp.charAt(i))) {
 				calibration.append(temp.charAt(i));
-				search = search + 1;
+				query.setLength(0);
 			}
 
 			// If the current string of letters is a number, append it
 			else {
-				for (int k = 0; k < numbersAlpha.length; k++) {
+				for (int k = 0; k < 9; k++) {
 					if (look.equals(numbersAlpha[k])) {
 						calibration.append(numbersNum[k]);
 						query.setLength(0);
-						System.out.println(look);
 						look = "";
 					}
 				}
@@ -217,7 +216,7 @@ public class dayOnePuzzle {
 		System.out.println("Part Two Solution:");
 		// int solution2 = dayOnePuzzle.sumPartTwo(puzzle);
 		// System.out.println(solution2);
-		System.out.println("2eight3one");
-		System.out.println(dayOnePuzzle.realCalibration("2eight3one"));
+		System.out.println("2oneeight3one");
+		System.out.println(dayOnePuzzle.realCalibration("2oneeight3one"));
 	}
 }
