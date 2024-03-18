@@ -67,6 +67,7 @@ public class Rectangle extends Polygon {
 		return getWidth() * getHeight();
 	}
 
+	// Test the way the method works 
 	public static void main(String[] args) {
 		Rectangle rect = new Rectangle(2.0,3.5);
 		System.out.println(rect.getArea());
