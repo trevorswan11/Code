@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
 public class Factorial {
+	// Recursively calls itself to calculate the Factorial of an input
 	public static int calculateFactorial(int num) {
 		if (num <= 0) {
 			return 0;
