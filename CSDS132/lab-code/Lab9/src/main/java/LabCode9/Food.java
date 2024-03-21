@@ -1,4 +1,4 @@
-package LabCode;
+package LabCode9;
 
 public abstract class Food extends GameItem {
     private double calories;

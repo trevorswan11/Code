@@ -1,4 +1,4 @@
-package LabCode;
+package LabCode9;
 
 /** A person in a game */
 public class Person {

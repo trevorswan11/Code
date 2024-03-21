@@ -1,4 +1,4 @@
-package LabCode;
+package LabCode9;
 
 public abstract class GameItem {
     private double weight;

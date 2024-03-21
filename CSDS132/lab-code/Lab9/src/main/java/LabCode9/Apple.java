@@ -1,4 +1,4 @@
-package LabCode;
+package LabCode9;
 
 public class Apple extends Food {
     public Apple() {
