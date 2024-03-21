@@ -1,7 +1,5 @@
 package LabCode;
 
-import java.util.Arrays;
-
 /** A person in a game */
 public class Person {
 
