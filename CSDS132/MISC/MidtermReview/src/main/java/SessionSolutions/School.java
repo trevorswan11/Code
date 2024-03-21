@@ -1,3 +1,5 @@
+package SessionSolutions;
+
 public class School {
     private double tuition;
     private double teacherSalary;

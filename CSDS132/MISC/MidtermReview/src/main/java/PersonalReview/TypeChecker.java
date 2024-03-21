@@ -1,3 +1,5 @@
+package PersonalReview;
+
 /** This class overloads a method I wrote to determine what type an input is */
 public class TypeChecker {
     // Checks if input is an int

@@ -1,3 +1,5 @@
+package SummarySession;
+
 /* Problem 25 on the Review WS */
 
 public class Hospital {

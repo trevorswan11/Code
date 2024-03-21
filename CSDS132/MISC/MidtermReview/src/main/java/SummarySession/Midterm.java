@@ -1,3 +1,5 @@
+package SummarySession;
+
 /**
  * A collection of methods from questions 19 to 32 on the SI Summary sheet for
  * the CSDS132 Midterm

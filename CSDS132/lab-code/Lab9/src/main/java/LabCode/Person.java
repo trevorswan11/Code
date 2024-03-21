@@ -1,4 +1,6 @@
-package code;
+package LabCode;
+
+import java.util.Arrays;
 
 /** A person in a game */
 public class Person {
@@ -8,7 +10,7 @@ public class Person {
 
 	/** the energy level of the person, it starts at a default value */
 	private int energy = 10;
-
+	
 	/** the intelligence of the person */
 	private int intelligence;
 

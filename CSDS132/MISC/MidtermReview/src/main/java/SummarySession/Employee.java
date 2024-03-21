@@ -1,3 +1,5 @@
+package SummarySession;
+
 /* Problem 26 on the Summary Sheet */
 
 public class Employee {

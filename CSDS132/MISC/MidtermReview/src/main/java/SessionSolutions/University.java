@@ -1,3 +1,5 @@
+package SessionSolutions;
+
 public class University extends School {
     private String president;
     private int reputation = 0;

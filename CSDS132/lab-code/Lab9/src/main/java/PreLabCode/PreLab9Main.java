@@ -1,4 +1,4 @@
-package code;
+package PreLabCode;
 
 public class PreLab9Main extends PreLab9Abstract {
 	private String food;

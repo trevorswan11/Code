@@ -1,3 +1,5 @@
+package SessionSolutions;
+
 // *The provided solutions are not the only ways to do these problems*
 
 public class Midterm {

@@ -1,3 +1,5 @@
+package SessionSolutions;
+
 public class Hospital {
   private String name;
   
