@@ -1,4 +1,4 @@
-package code;
+package LabCode9;
 
 import static org.junit.Assert.assertTrue;
 

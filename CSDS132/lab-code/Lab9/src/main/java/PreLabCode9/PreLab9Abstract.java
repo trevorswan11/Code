@@ -1,4 +1,4 @@
-package PreLabCode;
+package PreLabCode9;
 
 public abstract class PreLab9Abstract {
 	private double calories;
