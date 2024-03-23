@@ -1,5 +1,4 @@
 " custom init.vim config for VS Code Neovim Extension
-" QOL Configurations
 set number
 set relativenumber
 set autoindent
