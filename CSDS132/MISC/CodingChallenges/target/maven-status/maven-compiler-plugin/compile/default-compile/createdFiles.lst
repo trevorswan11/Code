@@ -1,1 +1,5 @@
 ArrayChallenges\MArraysChallenge.class
+AbstractChallenge\Ellipse.class
+AbstractChallenge\Circle.class
+MainMethodChallenge\Echo.class
+AbstractChallenge\Shape.class
