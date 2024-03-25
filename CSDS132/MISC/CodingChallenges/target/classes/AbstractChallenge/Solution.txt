@@ -1,0 +1,72 @@
+Circle Solution
+/* a class to represent a circle */
+public class Circle1 extends Ellipse {
+  
+  /* Create the circle */
+  public Circle1(double radius) {
+    super(radius, radius);
+  }
+  
+  /* Change the radius of a circle */
+  public void setRadius(double length) {
+    super.setMajorAxis(length);
+    super.setMinorAxis(length);
+  }
+  
+  /* Retrieve the radius of a circle */
+  public double getRadius() {
+    return super.getMajorAxis();
+  }
+  
+  /* Set the major axis of a circle sets both axes */
+  @Override
+  public void setMajorAxis(double length) {
+    setRadius(length);
+  }
+  
+  /* Setting the minor axis of a circle sets both axes */
+  @Override
+  public void setMinorAxis(double length) {
+    setRadius(length);
+  }
+}
+
+Ellipse Solution
+/* A class for an ellipse */
+public class Ellipse extends Shape {
+  
+  // the axis values
+  private double majorAxis;
+  private double minorAxis;
+  
+  /* Create the ellipse instance */
+  public Ellipse(double majorAxis, double minorAxis) {
+    this.majorAxis = majorAxis;
+    this.minorAxis = minorAxis;
+  }
+  
+  /* Retrieve the major axis value */
+  public double getMajorAxis() {
+    return majorAxis;
+  }
+  
+  /* Retrieve the minor axis value */
+  public double getMinorAxis() {
+    return minorAxis;
+  }
+  
+  /* Change the major axis to the given length */
+  public void setMajorAxis(double length) {
+    majorAxis = length;
+  }
+  
+  /* Change the minor axis to the given length */
+  public void setMinorAxis(double length) {
+    minorAxis = length;
+  }
+  
+  /* Return the area of the ellipse */
+  public double area() {
+    return Math.PI * getMajorAxis() * getMinorAxis();
+  }
+}

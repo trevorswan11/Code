@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="ArrayChallenges.MArraysTest" time="0" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="AbstractChallenge.ShapeTest" time="0.021" tests="3" errors="0" skipped="0" failures="0">
   <properties>
     <property name="sun.desktop" value="windows"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
@@ -18,7 +18,8 @@
     <property name="user.country" value="US"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Amazon Corretto\jdk1.8.0_392\jre\bin"/>
-    <property name="sun.java.command" value="C:\Users\Trevor\AppData\Local\Temp\surefire6908389351011449199\surefirebooter4694413869069501925.jar C:\Users\Trevor\AppData\Local\Temp\surefire6908389351011449199 2024-03-24T23-57-40_387-jvmRun1 surefire7983263237458431767tmp surefire_02876741202709797997tmp"/>
+    <property name="sun.java.command" value="C:\Users\Trevor\AppData\Local\Temp\surefire2099265866400109501\surefirebooter8125483104472222969.jar C:\Users\Trevor\AppData\Local\Temp\surefire2099265866400109501 2024-03-25T00-03-52_011-jvmRun1 surefire8739672401655544017tmp surefire_03440677150729141464tmp"/>
+    <property name="test" value="ShapeTest"/>
     <property name="surefire.test.class.path" value="C:\Users\Trevor\OneDrive\Documents\CWRU\Code\CSDS132\MISC\CodingChallenges\target\test-classes;C:\Users\Trevor\OneDrive\Documents\CWRU\Code\CSDS132\MISC\CodingChallenges\target\classes;C:\Users\Trevor\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\Trevor\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="C:\Users\Trevor"/>
@@ -31,7 +32,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="C:\Users\Trevor\AppData\Local\Temp\surefire6908389351011449199\surefirebooter4694413869069501925.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\Trevor\AppData\Local\Temp\surefire2099265866400109501\surefirebooter8125483104472222969.jar"/>
     <property name="sun.boot.class.path" value="C:\Program Files\Amazon Corretto\jdk1.8.0_392\jre\lib\resources.jar;C:\Program Files\Amazon Corretto\jdk1.8.0_392\jre\lib\rt.jar;C:\Program Files\Amazon Corretto\jdk1.8.0_392\jre\lib\sunrsasign.jar;C:\Program Files\Amazon Corretto\jdk1.8.0_392\jre\lib\jsse.jar;C:\Program Files\Amazon Corretto\jdk1.8.0_392\jre\lib\jce.jar;C:\Program Files\Amazon Corretto\jdk1.8.0_392\jre\lib\charsets.jar;C:\Program Files\Amazon Corretto\jdk1.8.0_392\jre\lib\jfr.jar;C:\Program Files\Amazon Corretto\jdk1.8.0_392\jre\classes"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
@@ -61,5 +62,7 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="52.0"/>
   </properties>
-  <testcase name="sumTest" classname="ArrayChallenges.MArraysTest" time="0"/>
+  <testcase name="circleTest" classname="AbstractChallenge.ShapeTest" time="0.001"/>
+  <testcase name="largeEllipseTest" classname="AbstractChallenge.ShapeTest" time="0"/>
+  <testcase name="smallEllipseTest" classname="AbstractChallenge.ShapeTest" time="0"/>
 </testsuite>
