@@ -1,0 +1,7 @@
+Solution to the Friendly interface
+/* A friendly class */
+public interface Friendly {
+  
+  /* A nice welcome message */
+  String greeting();
+}
