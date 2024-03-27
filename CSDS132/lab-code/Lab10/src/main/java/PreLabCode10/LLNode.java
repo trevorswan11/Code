@@ -72,7 +72,7 @@ public class LLNode<T> {
         System.out.println(listHead2.getNext().getNext().getNext());
     }
 
-    /**
+    /** mvn exec:java -Dexec.mainClass="%groupID%.%className%"
      * Step Two of the prelab assignment using a for loop
      */
     public static void step2() {
