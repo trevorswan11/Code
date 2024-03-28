@@ -9,6 +9,7 @@
         "fopen",
         "globworld",
         "inht",
+        "nodeptr",
         "orpjecf",
         "parenthe",
         "println",
@@ -26,6 +27,7 @@
     "java.dependency.packagePresentation": "hierarchical",
     "java.configuration.updateBuildConfiguration": "interactive",
     "java.project.sourcePaths": [
-        "CSDS132"
+        "CSDS132",
+        "MISC"
     ]
 }

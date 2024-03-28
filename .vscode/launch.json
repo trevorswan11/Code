@@ -6,11 +6,18 @@
     "configurations": [
         {
             "type": "java",
+            "name": "NumberTheory",
+            "request": "launch",
+            "mainClass": "NumberTheory",
+            "projectName": "Code_169593a1"
+        },
+        {
+            "type": "java",
             "name": "Debug (Attach)",
             "request": "attach",
             "hostName": "localhost",
             "port": 8000
-        },        
+        },
         {
             "type": "java",
             "name": "Current File",
