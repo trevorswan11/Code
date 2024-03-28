@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: LabCode10.LinkedListTester
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.023 s <<< FAILURE! - in LabCode10.LinkedListTester
+testRemove(LabCode10.LinkedListTester)  Time elapsed: 0.004 s  <<< ERROR!
+java.lang.NullPointerException
+	at LabCode10.LinkedListTester.testRemove(LinkedListTester.java:95)
+
