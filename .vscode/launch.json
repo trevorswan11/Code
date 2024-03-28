@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "LinkedList",
+            "request": "launch",
+            "mainClass": "LabCode10.LinkedList",
+            "projectName": "Lab10"
+        },
+        {
+            "type": "java",
             "name": "NumberTheory",
             "request": "launch",
             "mainClass": "NumberTheory",

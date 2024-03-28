@@ -132,17 +132,28 @@ public class LinkedList<T> {
      * @param element the element to remove
      */
     public void remove(T element) {
-        // DOES NOT WORK
-        if (this.contains(element)) {
-            LLNode<T> thisList = new LLNode<T>(null, this.getFirstNode());
-            thisList.setNext(thisList.getNext());
-            for (int i = 0; i < this.length(); i++) {
-                if (thisList.getElement().equals(element)) {
+        // Do nothing if the list is empty or doesn't contain element
+        if (this.isEmpty() || !this.contains(element));
+
+        // If the element to remove is in the first node
+        else if (getFirstNode().getElement().equals(element)) {
+            setFirstNode(getFirstNode().getNext());
+        } 
+
+        // Otherwise search for the element
+        else {
+            // declare an element checker and LLNode to make use of those methods
+            boolean found = false;
+            LLNode<T> thisList = getFirstNode();
+
+            // Loop through elements until the element is found 
+            while (!found) {
+                // Found the element to remove, so indicate and bypass node
+                if (thisList.getNext().getElement().equals(element)) {
                     thisList.setNext(thisList.getNext().getNext());
+                    found = true;
                 }
-                else {
-                    thisList.setNext(thisList.getNext());
-                }
+                thisList = thisList.getNext();
             }
         }
     }
