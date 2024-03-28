@@ -97,7 +97,7 @@ public class LinkedList<T> {
   }
   
   /**
-   * Deletes the first occurrance of an element in the list.
+   * Deletes the first occurrence of an element in the list.
    * If the element is not in the list, the list is unchanged.
    * @param element  the element to remove
    */
