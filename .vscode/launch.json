@@ -8,6 +8,13 @@
             "type": "java",
             "name": "LinkedList",
             "request": "launch",
+            "mainClass": "LinkedList",
+            "projectName": "Code_169593a1"
+        },
+        {
+            "type": "java",
+            "name": "LinkedList",
+            "request": "launch",
             "mainClass": "LabCode10.LinkedList",
             "projectName": "Lab10"
         },

@@ -1,4 +1,4 @@
-PreLabCode\PreLab9Main.class
+PreLabCode9\PreLab9Main.class
 LabCode9\Bread.class
 LabCode9\Steak.class
 LabCode9\Food.class
@@ -7,5 +7,5 @@ LabCode9\Statue.class
 LabCode9\Sword.class
 LabCode9\Hammer.class
 LabCode9\GameItem.class
+PreLabCode9\PreLab9Abstract.class
 LabCode9\Person.class
-PreLabCode\PreLab9Abstract.class

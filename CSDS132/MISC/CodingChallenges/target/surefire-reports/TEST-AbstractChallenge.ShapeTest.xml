@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="AbstractChallenge.ShapeTest" time="0.025" tests="3" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="AbstractChallenge.ShapeTest" time="0.032" tests="3" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -15,7 +15,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-21\bin"/>
-    <property name="sun.java.command" value="C:\Users\Trevor\AppData\Local\Temp\surefire7798695446383619234\surefirebooter3923990419268601489.jar C:\Users\Trevor\AppData\Local\Temp\surefire7798695446383619234 2024-03-28T17-07-22_875-jvmRun1 surefire7951728134530860540tmp surefire_05964677740296002905tmp"/>
+    <property name="sun.java.command" value="C:\Users\Trevor\AppData\Local\Temp\surefire14585734770546794234\surefirebooter373979222359288377.jar C:\Users\Trevor\AppData\Local\Temp\surefire14585734770546794234 2024-03-29T15-05-02_022-jvmRun1 surefire10494478118158684743tmp surefire_08317430830382790198tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\Trevor\OneDrive\Documents\CWRU\Code\CSDS132\MISC\CodingChallenges\target\test-classes;C:\Users\Trevor\OneDrive\Documents\CWRU\Code\CSDS132\MISC\CodingChallenges\target\classes;C:\Users\Trevor\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\Trevor\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -30,7 +30,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\Trevor\AppData\Local\Temp\surefire7798695446383619234\surefirebooter3923990419268601489.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\Trevor\AppData\Local\Temp\surefire14585734770546794234\surefirebooter373979222359288377.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="21.0.2+13-LTS-58"/>
@@ -58,7 +58,7 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="65.0"/>
   </properties>
-  <testcase name="circleTest" classname="AbstractChallenge.ShapeTest" time="0.003"/>
+  <testcase name="circleTest" classname="AbstractChallenge.ShapeTest" time="0"/>
   <testcase name="largeEllipseTest" classname="AbstractChallenge.ShapeTest" time="0"/>
   <testcase name="smallEllipseTest" classname="AbstractChallenge.ShapeTest" time="0"/>
 </testsuite>

@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
-Test set: AbstractChallenge.ShapeTest
+Test set: LabCode9.AppTest
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.032 s - in AbstractChallenge.ShapeTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.028 s - in LabCode9.AppTest

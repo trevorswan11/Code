@@ -27,7 +27,7 @@
     "java.dependency.packagePresentation": "hierarchical",
     "java.configuration.updateBuildConfiguration": "interactive",
     "java.project.sourcePaths": [
-        "CSDS132",
-        "MISC"
+        "MISC",
+        "CSDS132"
     ]
 }

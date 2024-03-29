@@ -1,5 +1,6 @@
 package LabCode10;
 
+import java.util.Scanner;
 import java.util.NoSuchElementException;
 
 /**
@@ -136,8 +137,8 @@ public class LinkedList<T> {
         if (this.isEmpty() || !this.contains(element));
 
         // If the element to remove is in the first node
-        else if (getFirstNode().getElement().equals(element)) {
-            setFirstNode(getFirstNode().getNext());
+        else if (this.getFirstNode().getElement().equals(element)) {
+            this.setFirstNode(this.getFirstNode().getNext());
         } 
 
         // Otherwise search for the element
@@ -156,5 +157,12 @@ public class LinkedList<T> {
                 thisList = thisList.getNext();
             }
         }
+    }
+
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        int test = input.nextInt();
+        System.out.println(test);
+        input.close();
     }
 }
