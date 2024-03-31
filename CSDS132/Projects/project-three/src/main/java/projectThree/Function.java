@@ -21,7 +21,7 @@ interface Function {
      * @return The double value of the Function as a single number
      * @throws UnsupportedOperationException When a value is expected
      */
-    double value();
+    double value() throws UnsupportedOperationException;
 
     /**
      * Returns the derivate of the Function used to call.
