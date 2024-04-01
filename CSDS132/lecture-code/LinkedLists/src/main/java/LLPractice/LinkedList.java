@@ -1,8 +1,10 @@
 package llpractice;
 
+import java.lang.Iterable;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class LinkedList<T> {
+public class LinkedList<T> implements Iterable<T> {
     private LLNode<T> firstNode;
 
     public LinkedList() {
@@ -56,7 +58,7 @@ public class LinkedList<T> {
             nodeptr = nodeptr.getNext();
         }
     }
-    
+
     protected LLNode<T> getFirstNode() {
         return this.firstNode;
     }
@@ -92,5 +94,19 @@ public class LinkedList<T> {
 
         // Now that we're at the end of the LL, add element
         nodeptr.setNext(new LLNode<T>(element, null));
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new LinkedListIterator<T>(this.getFirstNode());   
+    }
+
+    public static void main(String[] args) {
+        LinkedList<String> list = new LinkedList<String>();
+        list.addToFront("Cleveland");
+        list.addToFront("Columbus");
+        list.addToFront("Toledo");
+        // java.util.Iterator<String> it = list.iterator();
+        for (String s:list) System.out.println(s);
     }
 }
