@@ -13,7 +13,6 @@ set autochdir
 " QOL Mappings
 let mapleader = " "
 nnoremap ; :
-nnoremap <leader>11 :LspDocumentFormat<CR>
 vnoremap ; :
 vnoremap <Leader>pa :s/\\/\//g<CR>
 

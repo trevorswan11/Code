@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "LoraxGUI",
+            "request": "launch",
+            "mainClass": "prelabcode11.LoraxGUI",
+            "projectName": "Lab11"
+        },
+        {
+            "type": "java",
             "name": "LinkedList",
             "request": "launch",
             "mainClass": "LinkedList",

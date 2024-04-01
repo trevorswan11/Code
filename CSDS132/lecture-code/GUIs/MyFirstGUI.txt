@@ -1,0 +1,40 @@
+import javafx.application.Application;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.geometry.Pos;
+
+/** My first JavaFX GUI */
+public class MyFirstGUI extends Application {
+  
+  /**
+   * Creates a GUI with some labels and buttons.
+   * @param primaryStage the main window of the GUI
+   */
+  public void start(Stage primaryStage) {
+    Button button1 = new Button("Click me");
+    Button button2 = new Button("Click me, too");
+    Label header = new Label("My Gadgets");
+    
+    /* put buttons at the middle level of the gui with a label top center */
+    BorderPane layout = new BorderPane();
+    layout.setTop(header);
+    layout.setLeft(button1);
+    layout.setRight(button2);
+    layout.setAlignment(header, Pos.TOP_CENTER);
+    
+    Scene scene = new Scene(layout);
+    primaryStage.setScene(scene);
+    primaryStage.show();
+  }
+  
+  /**
+   * Start the GUI
+   * @param args the command line arguments are currently ignored
+   */
+  public static void main(String[] args) {
+    Application.launch(args);
+  }
+}

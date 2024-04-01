@@ -1,4 +1,4 @@
-package LLPractice;
+package llpractice;
 
 import java.util.NoSuchElementException;
 
@@ -26,11 +26,42 @@ public class LinkedList<T> {
         return save;
     }
 
-    public LLNode<T> getFirstNode() {
+    /*
+     * You can use T or K here, but K is stated to illustrate
+     * that it works this way. You can declare the generic type
+     * in the method.
+     * 
+     * IN STATIC METHODS: you must declare a generic because the method
+     * will not use the one specified in the class declaration.
+     */
+    public static <K> void print(LinkedList<K> list) {
+        LLNode<K> nodeptr = list.getFirstNode();
+        while (nodeptr != null) {
+            System.out.println(nodeptr.getElement());
+            nodeptr = nodeptr.getNext();
+        }
+    }
+
+    /*
+     * Pretty similar to the above method, but do we really care
+     * what generic type is used? NO!
+     * 
+     * You can use the wildcard in the declaration. This is 
+     * not declared in the static part, and is represented by '?'
+      */
+    public static void print2(LinkedList<?> list) {
+        LLNode<?> nodeptr = list.getFirstNode();
+        while (nodeptr != null) {
+            System.out.println(nodeptr.getElement());
+            nodeptr = nodeptr.getNext();
+        }
+    }
+    
+    protected LLNode<T> getFirstNode() {
         return this.firstNode;
     }
 
-    public void setFirstNode(LLNode<T> firstNode) {
+    protected void setFirstNode(LLNode<T> firstNode) {
         this.firstNode = firstNode;
     }
 
@@ -59,7 +90,7 @@ public class LinkedList<T> {
             nodeptr = nodeptr.getNext();
         }
 
-        // Now that we're at the end of the LL, add element 
+        // Now that we're at the end of the LL, add element
         nodeptr.setNext(new LLNode<T>(element, null));
     }
 }

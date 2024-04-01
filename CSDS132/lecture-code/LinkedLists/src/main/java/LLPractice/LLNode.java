@@ -1,4 +1,4 @@
-package LLPractice;
+package llpractice;
 
 /** This is an LLNode class
  * @author Trevor Swan
