@@ -62,12 +62,7 @@ public class BinaryOp extends AbstractFunction {
      * @throws NullPointerException if any inputs are null
      */
     public BinaryOp(Op operator, Function leftOperand, Function rightOperand) {
-        super(leftOperand, rightOperand);
-        // Throw a null pointer exception if the operator is null
-        if (operator == null) {
-            throw new NullPointerException("Operators cannot be null!");
-        }
-
+        super(operator, leftOperand, rightOperand);
         this.operator = operator;
         this.leftOperand = leftOperand;
         this.rightOperand = rightOperand;

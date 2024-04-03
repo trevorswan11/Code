@@ -55,12 +55,7 @@ public abstract class UnaryOperation extends AbstractFunction {
      * @param operand The desired operand of type Function
      */
     public UnaryOperation(Unary operator, Function operand) {
-        super(operand);
-        // Throw a null pointer exception if the operator is null
-        if (operator == null) {
-            throw new NullPointerException("Operators cannot be null!");
-        }
-        
+        super(operator, operand);
         this.operator = operator;
         this.operand = operand;
     }
