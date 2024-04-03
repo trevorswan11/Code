@@ -18,13 +18,22 @@ public class Variable extends AbstractFunction {
     }
 
     /**
-     * Compares two Function instances.
+     * Compares two Object instances.
      * 
-     * @param f A Function Object to be compared with Variable
+     * @param obj An Object to be compared with Variable
      * @return true if the input is a Variable, false otherwise
      */
     @Override
-    public boolean equals(Function f) {
+    public boolean equals(Object obj) {
+        // Check if the input is even a Function
+        if (!(obj instanceof Function)) {
+            return false;
+        }
+
+        // Convert the input to type function
+        Function f = (Function)obj;
+
+        // Check if the input is of the same type
         if (f instanceof Variable) {
             return true;
         }

@@ -26,11 +26,20 @@ public class Number extends AbstractFunction {
     /**
      * Compares the values of a Number with another Function.
      * 
-     * @param f A Function object
+     * @param obj An object to compare with a Number
      * @return True if both objects are Numbers and their numeric values are the
      *         same
      */
-    public boolean equals(Function f) {
+    @Override
+    public boolean equals(Object obj) {
+        // Check if the input is even a Function
+        if (!(obj instanceof Function)) {
+            return false;
+        }
+
+        // Convert the input to type function
+        Function f = (Function)obj;
+
         // If the input is not a Number, return false by default
         if (!(f instanceof Number)) {
             return false;

@@ -31,12 +31,13 @@ interface Function {
     Function derivative();
 
     /**
-     * Compares to Function objects.
+     * Compares two Function objects.
      * 
-     * @param f A Function object to be compared
+     * @param obj An object to be compared with its instance call
      * @return True if operands are equal, false otherwise
      */
-    boolean equals(Function f);
+    @Override
+    boolean equals(Object obj);
 
     /**
      * Converts a Function to its String representation.

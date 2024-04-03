@@ -48,12 +48,20 @@ public class Polynomial extends AbstractFunction {
     /**
      * Checks the equality of a Polynomial with another Function.
      * 
-     * @param f A Function to compare with the Polynomial instance
+     * @param obj An Object to compare with the Polynomial instance
      * @return True if both the power and operands of two Polynomials are
      *         equivalent. False otherwise
      */
     @Override
-    public boolean equals(Function f) {
+    public boolean equals(Object obj) {
+        // Check if the input is even a Function
+        if (!(obj instanceof Function)) {
+            return false;
+        }
+
+        // Convert the input to type function
+        Function f = (Function)obj;
+        
         // Check to see if the input is a Polynomial
         if (!(f instanceof Polynomial)) {
             return false;

@@ -96,12 +96,20 @@ public class BinaryOp extends AbstractFunction {
     /**
      * Compares a BinaryOp to another Function.
      * 
-     * @param f Any Object of type Function
+     * @param f Any Object to compare with BinaryOp
      * @return True if both the left operands and right operands are equal, as well
      *         as their operator. Otherwise false is returned
      */
     @Override
-    public boolean equals(Function f) {
+    public boolean equals(Object obj) {
+        // Check if the input is even a Function
+        if (!(obj instanceof Function)) {
+            return false;
+        }
+
+        // Convert the input to type function
+        Function f = (Function)obj;
+
         // If the inputted Function is not a BinaryOp, return false
         if (!(f instanceof BinaryOp)) {
             return false;

@@ -76,6 +76,73 @@ public abstract class UnaryOperation extends AbstractFunction {
     }
 
     /**
+     * The correct implementation of the equals method for all Unary Objects.
+     * @param obj An Object to compare with the instance used
+     * @return A boolean value indicating whether or not the instances are equal 
+     */
+    @Override
+    public boolean equals(Object obj) {
+        // Check if the input is even a Function
+        if (!(obj instanceof Function)) {
+            return false;
+        }
+
+        // Convert the input to type function
+        Function f = (Function)obj;
+
+        // If the input is not a UnaryOperation, the functions are not equal
+        if (!(f instanceof UnaryOperation)) {
+            return false;
+        }
+
+        // The input must be a UnaryOperation to get here, so typecast
+        UnaryOperation input = (UnaryOperation)f;
+
+        // Switch statement to handle the different operators
+        switch (this.getOperator()) {
+            // Step in if the instance is a Log
+            case LOG:
+                // Return false if the input is not of the same type
+                if (!(input.getOperator().equals(Unary.LOG))) {
+                    return false;
+                }
+
+                // Check the operand Functions against each other
+                return this.getOperator().equals(input.getOperator());
+                
+            // Step in if the instance is an Exp
+            case EXP:
+                // Return false if the input is not of the same type
+                if (!(input.getOperator().equals(Unary.EXP))) {
+                    return false;
+                }
+
+                // Check the operand Functions against each other
+                return this.getOperator().equals(input.getOperator());
+
+            // Step in if the instance is a Sin
+            case SIN:
+                // Return false if the input is not of the same type
+                if (!(input.getOperator().equals(Unary.SIN))) {
+                    return false;
+                }
+
+                // Check the operand Functions against each other
+                return this.getOperator().equals(input.getOperator());
+
+            // TO get here, the operator must be Cos
+            default:
+                // Return false if the input is not of the same type
+                if (!(input.getOperator().equals(Unary.COS))) {
+                    return false;
+                }
+                
+                // Check the operand Functions against each other
+                return this.getOperator().equals(input.getOperator());
+        }
+    }
+    
+    /**
      * The correct conversion to a String for Unary Objects.
      * @return The correctly formatted String representation of a UnaryOperation
      */
@@ -86,10 +153,39 @@ public abstract class UnaryOperation extends AbstractFunction {
         
         // Append the opening bracket, the operator, and the closing bracket
         builder.append("[");
-        builder.append(this.getOperand());
+        builder.append(this.getOperand().toString());
         builder.append("]");
 
         // Return the builder as a String
         return builder.toString();
+    }
+
+    /**
+     * Default implementation of the a value call with no input when one is expected. 
+     * @throws UnsupportedOperationException If an input is expected, i.e. the
+     *                                       Function is not constant
+     */
+    @Override
+    public double value() throws UnsupportedOperationException{
+        throw new UnsupportedOperationException("An input was expected, but not provided!");
+    }
+
+    /**
+     * Default implementation of value at a point that calculates the instances value.
+     * @param x A double value to evaluate a Function at
+     * @return The double evaluated expression 
+     */
+    @Override
+    public double value(double x) {
+        return this.getOperand().value(x);
+    }
+
+    /**
+     * Calculates the derivative of the Operand for inheritance use.
+     * @return A Function that is the derivative of an instances operand
+     */
+    @Override
+    public Function derivative() {
+        return this.getOperand().derivative();
     }
 }
