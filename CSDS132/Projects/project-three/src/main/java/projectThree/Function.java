@@ -29,4 +29,17 @@ interface Function {
      * @return A Function representing the derivative of the call
      */
     Function derivative();
+
+    /**
+     * Compares to Function objects.
+     * @param f A Function object to be compared
+     * @return True if operands are equal, false otherwise
+     */
+    boolean equals(Function f);
+
+    /**
+     * Converts a Function to its String representation.
+     * @return The unique String representation of a Function
+     */
+    String toString();
 }
