@@ -16,7 +16,7 @@ public abstract class AbstractFunction implements Function {
      * @throws NullPointerException if null is given as an input to any subtype
      *                              constructor
      */
-    public AbstractFunction(Object... inputs) {
+    public AbstractFunction(Object... inputs) throws NullPointerException {
         // A for-each loop to check all the inputs
         for (Object input : inputs) {
             // If the current input is null, throw an error
