@@ -17,9 +17,10 @@ public class Polynomial extends AbstractFunction {
     private final double power;
 
     /**
-     * A constructor to create an instance with an inputted operand and power 
+     * A constructor to create an instance with an inputted operand and power
+     * 
      * @param operand The Function operand to set for the instance
-     * @param power A double to represent the power of the instance
+     * @param power   A double to represent the power of the instance
      */
     public Polynomial(Function operand, double power) {
         this.operand = operand;
@@ -28,6 +29,7 @@ public class Polynomial extends AbstractFunction {
 
     /**
      * Returns the operand for the polynomial.
+     * 
      * @return A Function that is the operand of the polynomial
      */
     public Function getOperand() {
@@ -36,7 +38,8 @@ public class Polynomial extends AbstractFunction {
 
     /**
      * Returns the power for the polynomial.
-     * @return A double that is the power of the polynomial 
+     * 
+     * @return A double that is the power of the polynomial
      */
     public double getPower() {
         return this.power;
@@ -44,8 +47,10 @@ public class Polynomial extends AbstractFunction {
 
     /**
      * Checks the equality of a Polynomial with another Function.
+     * 
      * @param f A Function to compare with the Polynomial instance
-     * @return True if both the power and operands of two Polynomials are equivalent. False otherwise
+     * @return True if both the power and operands of two Polynomials are
+     *         equivalent. False otherwise
      */
     @Override
     public boolean equals(Function f) {
@@ -55,7 +60,7 @@ public class Polynomial extends AbstractFunction {
         }
 
         // Convert the input to a Polynomial now that the first conditional passed
-        Polynomial p = (Polynomial)f;
+        Polynomial p = (Polynomial) f;
 
         // Create a boolean variable to store equality of the operand Functions
         boolean operands = this.getOperand().equals(p.getOperand());
@@ -69,6 +74,7 @@ public class Polynomial extends AbstractFunction {
 
     /**
      * Converts the Polynomial instance into its String representation.
+     * 
      * @return A String that represents the Polynomial with ^ for powers
      */
     @Override
@@ -98,6 +104,7 @@ public class Polynomial extends AbstractFunction {
 
     /**
      * Computes the value of a Polynomial with a constant Operand.
+     * 
      * @return A double representing the computed Polynomial
      * @throws UnsupportedOperationException If an input is expected
      */
@@ -109,8 +116,8 @@ public class Polynomial extends AbstractFunction {
 
             // Raise the Calculated value to the Polynomial's power to return
             return Math.pow(operandValue, this.getPower());
-        } 
-        
+        }
+
         // Throw an exception if a value could not be calculated
         catch (Exception e) {
             throw new UnsupportedOperationException("One or more operands require an input!");
@@ -119,6 +126,7 @@ public class Polynomial extends AbstractFunction {
 
     /**
      * Computes an evaluated Function that is evaluated at an inputted number.
+     * 
      * @param x A double to evaluate the Function Operand at
      * @return A double representing the computed Polynomial
      */
@@ -130,8 +138,9 @@ public class Polynomial extends AbstractFunction {
         return Math.pow(operandValue, this.getPower());
     }
 
-     /**
+    /**
      * Computes the derivative of a Polynomial using the chain rule.
+     * 
      * @return A Function that is the derivative of the method instance.
      */
     public Function derivative() {

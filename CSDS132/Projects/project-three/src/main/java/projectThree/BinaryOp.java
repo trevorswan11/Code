@@ -20,6 +20,8 @@ public class BinaryOp extends AbstractFunction {
 
     /**
      * An enum to generate the possible binary operations as a nested type.
+     * Possible operations are:
+     * PLUS, SUB, MULT, DIV
      */
     public enum Op {
         // Required operations for calculator
@@ -298,7 +300,7 @@ public class BinaryOp extends AbstractFunction {
                 BinaryOp rightProductSum = new BinaryOp(Op.MULT, this.getLeftOperand(), rightDerivative);
 
                 // Return the completed product rule
-                return new BinaryOp(Op.PLUS, leftProductSum, rightProductSum); 
+                return new BinaryOp(Op.PLUS, leftProductSum, rightProductSum);
 
             // Step in for quotient rule by default as no other branches caught
             default:

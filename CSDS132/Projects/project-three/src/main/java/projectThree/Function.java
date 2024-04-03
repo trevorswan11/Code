@@ -32,6 +32,7 @@ interface Function {
 
     /**
      * Compares to Function objects.
+     * 
      * @param f A Function object to be compared
      * @return True if operands are equal, false otherwise
      */
@@ -39,7 +40,9 @@ interface Function {
 
     /**
      * Converts a Function to its String representation.
+     * 
      * @return The unique String representation of a Function
      */
+    @Override
     String toString();
 }

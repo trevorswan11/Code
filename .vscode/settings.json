@@ -2,6 +2,8 @@
     "cSpell.words": [
         "abcdhgfeijklnm",
         "allclasses",
+        "Correto",
+        "CWRU",
         "Darrays",
         "DSCS",
         "Eskin",
@@ -30,5 +32,6 @@
     "java.project.sourcePaths": [
         "MISC",
         "CSDS132"
-    ]
+    ],
+    "maven.view": "hierarchical"
 }

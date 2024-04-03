@@ -19,6 +19,8 @@ public abstract class UnaryOperation extends AbstractFunction {
 
     /**
      * An enum to generate the possible Unary operations as a nested type.
+     * Possible Operations are:
+     * LOG, EXP, SIN, COS
      */
     public enum Unary {
         // Required Unary Operations
@@ -71,5 +73,23 @@ public abstract class UnaryOperation extends AbstractFunction {
      */
     public Function getOperand() {
         return this.operand;
+    }
+
+    /**
+     * The correct conversion to a String for Unary Objects.
+     * @return The correctly formatted String representation of a UnaryOperation
+     */
+    @Override
+    public String toString() {
+        // Create a StringBuilder with the name of the operation
+        StringBuilder builder = new StringBuilder(this.getOperator().getUnaryName());
+        
+        // Append the opening bracket, the operator, and the closing bracket
+        builder.append("[");
+        builder.append(this.getOperand());
+        builder.append("]");
+
+        // Return the builder as a String
+        return builder.toString();
     }
 }

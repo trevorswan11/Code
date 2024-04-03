@@ -1,5 +1,10 @@
 projectThree\BinaryOp$1.class
+projectThree\BinaryOp.class
 projectThree\Function.class
+projectThree\UnaryOperation.class
 projectThree\Number.class
 projectThree\AbstractFunction.class
 projectThree\Variable.class
+projectThree\Polynomial.class
+projectThree\BinaryOp$Op.class
+projectThree\UnaryOperation$Unary.class
