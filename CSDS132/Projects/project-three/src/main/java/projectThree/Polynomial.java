@@ -23,6 +23,7 @@ public class Polynomial extends AbstractFunction {
      * @param power   A double to represent the power of the instance
      */
     public Polynomial(Function operand, double power) {
+        super(operand);
         this.operand = operand;
         this.power = power;
     }

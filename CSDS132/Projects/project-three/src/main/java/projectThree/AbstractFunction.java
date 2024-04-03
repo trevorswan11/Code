@@ -8,6 +8,25 @@ package projectThree;
  */
 public abstract class AbstractFunction implements Function {
     /**
+     * A constructor that must be called in every implementation. It checks for null
+     * inputs, which are not allowed as all calculator functions need inputs to
+     * work, as confirmed by any actual calculator.
+     * 
+     * @param inputs A variable number of Function objects to check against null
+     * @throws NullPointerException if null is given as an input to any subtype
+     *                              constructor
+     */
+    public AbstractFunction(Function... inputs) {
+        // A for-each loop to check all the inputs
+        for (Function input : inputs) {
+            // If the current input is null, throw an error
+            if (input == null) {
+                throw new NullPointerException("Operations cannot be null!");
+            }
+        }
+    }
+
+    /**
      * Evaluates a constant Function.
      * 
      * @return A double value of the computed Function
