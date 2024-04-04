@@ -328,7 +328,7 @@ public class CalculatorTest {
         assertTrue(new Variable().equals(polyFour.getOperand())); // Test Operand getter for a Nested Variable
         assertEquals(0, polyFour.getPower(), 0); // Test 0
         assertEquals(1, polyFive.getPower(), 0); // Test 1
-        assertEquals(4, polySix.getPower(), 0); // Test Many
+        assertEquals(4, polySix.getPower(), 0); // Test Many      
     }
 
     /**
