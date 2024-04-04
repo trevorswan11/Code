@@ -50,6 +50,20 @@ public class BinaryOp extends AbstractFunction {
         public String getSymbol() {
             return this.symbol;
         }
+
+        /**
+         * A method to check the equality of an operator.
+         * 
+         * @param op An object of Type Operator to compare
+         * @return True if the operators are the same, false otherwise
+         */
+        public boolean equals(Op op) {
+            // Compare the string symbol of the operators
+            if (this.getSymbol().equals(op.getSymbol())) {
+                return true;
+            }
+            return false;
+        }
     }
 
     /**
@@ -131,7 +145,7 @@ public class BinaryOp extends AbstractFunction {
         }
 
         // Compare the operator
-        if (!(this.getOperator().getSymbol().equals(binary.getOperator().getSymbol()))) {
+        if (!(this.getOperator().equals(binary.getOperator()))) {
             return false;
         }
 
@@ -176,8 +190,8 @@ public class BinaryOp extends AbstractFunction {
             // Typecast to a BinaryOp as the conditional passed
             BinaryOp binary = (BinaryOp) this.getRightOperand();
 
-            // If the operator of the right side is the same as this instance, parenthesize
-            if (binary.getOperator().getSymbol() == this.getOperator().getSymbol()) {
+            // If the operator of the right side is different than this instance, parenthesize
+            if (!(binary.getOperator().equals(this.getOperator()))) {
                 StringBuilder delimiter = new StringBuilder("(");
                 delimiter.append(this.getRightOperand().toString());
                 delimiter.append(")");
@@ -187,7 +201,9 @@ public class BinaryOp extends AbstractFunction {
             }
 
             // Otherwise, directly convert to a String
-            rightOperand = this.getRightOperand().toString();
+            else {
+                rightOperand = this.getRightOperand().toString();
+            }
         }
 
         // Otherwise, directly convert the right operand to a String
@@ -222,21 +238,21 @@ public class BinaryOp extends AbstractFunction {
             double rightOperand = this.getRightOperand().value();
 
             // A switch block to compute the BinaryOp based on the operator
-            switch (this.getOperator().getSymbol()) {
+            switch (this.getOperator()) {
                 // Step in if Addition will occur
-                case "+":
+                case PLUS:
                     return leftOperand + rightOperand;
 
                 // Step in if Subtraction will occur
-                case "-":
+                case SUB:
                     return leftOperand - rightOperand;
 
                 // Step in if Multiplication will occur
-                case "*":
+                case MULT:
                     return leftOperand * rightOperand;
 
                 // Step in if Division will occur
-                case "/":
+                case DIV:
                     return leftOperand / rightOperand;
 
                 // Throw an unsupported exception by default

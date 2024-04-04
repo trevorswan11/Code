@@ -103,6 +103,12 @@ public class CalculatorTest {
     BinaryOp binaryFour;
     BinaryOp binaryFive;
     BinaryOp binarySix;
+    BinaryOp binarySeven;
+    BinaryOp binaryEight;
+    BinaryOp binaryNine;
+    BinaryOp binaryTen;
+    BinaryOp binaryEleven;
+    BinaryOp binaryTwelve;
     
     /**
      * This helper method creates BinaryOp Test Objects and stores them in the
@@ -111,9 +117,18 @@ public class CalculatorTest {
     private void binaryTesters() {
         numTesters();
         varTesters();
-        binaryOne = new BinaryOp(Op.PLUS, new Number(0), new Number(0));
-        binaryTwo = new BinaryOp(Op.PLUS, numThree, numThree);
-
+        binaryOne = new BinaryOp(Op.PLUS, new Number(0), new Number(0)); // Test Zeros
+        binaryTwo = new BinaryOp(Op.PLUS, numThree, numThree); // Test Ones
+        binaryThree = new BinaryOp(Op.SUB, numThree, numThree); // Test Ones
+        binaryFour = new BinaryOp(Op.MULT, numThree, numThree); // Test Ones
+        binaryFive = new BinaryOp(Op.DIV, numThree, numThree); // Test Ones
+        binarySix = new BinaryOp(Op.PLUS, new Number(5), numThree); // Test Many
+        binarySeven = new BinaryOp(Op.SUB, new Number(5), numThree); // Test Many
+        binaryEight = new BinaryOp(Op.MULT, new Number(5), new Number(2.3)); // Test many
+        binaryNine = new BinaryOp(Op.DIV, new Number(5), new Number(2)); // Test many
+        binaryTen = new BinaryOp(Op.DIV, new Number(4), new Number(2)); // Change left op
+        binaryEleven = new BinaryOp(Op.DIV, new Number(5), new Number(6)); // Change right op
+        binaryTwelve = new BinaryOp(Op.DIV, new Number(5), new Number(6)); // Identical BinaryOp
     }
 
     /**
@@ -131,9 +146,93 @@ public class CalculatorTest {
     /**
      * This JUnit Method tests a variety of BinaryOp Objects.
      */
-    @Test //(expected = UnsupportedOperationException.class)
-    public void binaryOpTest() {
+    @Test
+    public void binaryOperatorTest() {
         binaryTesters();
+        // Test operator getter methods
+        assertEquals(Op.PLUS, binaryTwo.getOperator()); 
+        assertEquals(Op.SUB, binaryThree.getOperator());
+        assertEquals(Op.MULT, binaryFour.getOperator());
+        assertEquals(Op.DIV, binaryFive.getOperator());
+        
+        // Test operand getter methods
+        assertEquals(new Number(5), binaryEight.getLeftOperand());
+        assertEquals(new Number(2.3), binaryEight.getRightOperand());
+    }
+
+    /**
+     * This JUnit method tests the equals method of BinaryOp
+     */
+    @Test
+    public void binaryEqualsTest() {
+        binaryTesters();
+        assertFalse(binaryOne.equals(neqTester)); // Test a non Function Object
+        assertFalse(binaryOne.equals(new Number(2))); // Test a non BinaryOp Object
+        assertFalse(binaryNine.equals(binaryTen)); // Test a BinaryOp with different left Operands
+        assertFalse(binaryNine.equals(binaryEleven)); // Test a BinaryOp with different right operands
+        assertFalse(binaryTwo.equals(binaryThree)); // Test a BinaryOp with a different operator
+        assertTrue(binaryEleven.equals(binaryTwelve)); // Test with equivalent BinaryOps
+    }
+
+    /**
+     * This helper method declares BinaryOps that have nested Types
+     */
+    private void binaryNested() {
+        binaryOne = new BinaryOp(Op.PLUS, new Variable(), new Number(0)); // Test 0
+        binaryTwo = new BinaryOp(Op.SUB, new Number(1), new Variable()); // Test 1
+        binaryThree = new BinaryOp(Op.DIV, new Number(3), new Variable()); // Test Many
+        binaryFour = new BinaryOp(Op.MULT, new Variable(), new Variable()); // Test Many
+        binaryFive = new BinaryOp(Op.MULT, new Number(4), new BinaryOp(Op.MULT, new Number(3), new Variable())); // Nested same op
+        binarySix = new BinaryOp(Op.MULT, new Variable(), new BinaryOp(Op.DIV, new Number(1), new Variable())); // Nested different op
+        binarySeven = new BinaryOp(Op.DIV, new BinaryOp(Op.DIV, new Variable(), new Number(3)), new Number(5)); // Nested BinaryOp first same
+        binaryEight = new BinaryOp(Op.DIV, new BinaryOp(Op.SUB, new Number(7), new Number(9)), new Variable()); // Nested BinaryOp first different
+        binaryNine = new BinaryOp(Op.PLUS, new Number(1), new Number(1)); // Just a regular Numeric Only BinaryOp
+    }
+
+    /**
+     * This JUnit method tests the toString implementation in BinaryOp
+     */
+    @Test
+    public void binaryToStringTest() {
+        binaryNested();
+        assertEquals("1.0 + 1.0", binaryNine.toString()); // Normal BinaryOp Conversion
+        assertEquals("x + 0.0", binaryOne.toString()); // Variable + Number
+        assertEquals("1.0 - x", binaryTwo.toString()); // Number - Variable
+        assertEquals("3.0 / x", binaryThree.toString()); // Number / Variable
+        assertEquals("x * x", binaryFour.toString()); // Variable * Variable
+        assertEquals("4.0 * 3.0 * x", binaryFive.toString()); // Nested BinaryOp that is on right with same Op
+        assertEquals("x * (1.0 / x)", binarySix.toString()); // Nested BinaryOp that is on right with different Op
+        assertEquals("(x / 3.0) / 5.0", binarySeven.toString()); // Nested BinaryOp on left with same Op
+        assertEquals("(7.0 - 9.0) / x", binaryEight.toString()); // Nested BinaryOp on left with different Op
+    }
+
+    /**
+     * This JUnit method tests the value implementation in BinaryOp.
+     * This method is only used to test Numeric values
+     */
+    @Test
+    public void binaryNumericTest() {
+        binaryTesters();
+        // Test Operations on Numbers only
+        assertEquals(0, binaryOne.value(), 0); // Test 0
+        assertEquals(2, binaryTwo.value(), 0); // Test 1
+        assertEquals(0, binaryThree.value(), 0);
+        assertEquals(1, binaryFour.value(), 0);
+        assertEquals(1, binaryFive.value(), 0);
+        assertEquals(6, binarySix.value(), 0); // Test many
+        assertEquals(4, binarySeven.value(), 0);
+        assertEquals(5 * 2.3, binaryEight.value(), 0);
+        assertEquals(5. / 2., binaryNine.value(), 0);
+    }
+
+    /**
+     * This JUnit method tests the value implementation in BinaryOp.
+     * This method makes use of Variable types as well
+     */
+    @Test(expected = UnsupportedOperationException.class)
+    public void binaryValueTest() {
+        binaryNested(); 
+        binaryOne.value(); // Test Exception Handler
     }
 
     /**
