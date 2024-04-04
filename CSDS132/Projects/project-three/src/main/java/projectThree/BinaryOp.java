@@ -311,11 +311,11 @@ public class BinaryOp extends AbstractFunction {
         switch (this.getOperator()) {
             // Step in for an addition operator
             case PLUS:
-                return new BinaryOp(this.getOperator(), leftDerivative, rightDerivative);
+                return new BinaryOp(Op.PLUS, leftDerivative, rightDerivative);
 
             // Step in for a subtraction operation
             case SUB:
-                return new BinaryOp(this.getOperator(), leftDerivative, rightDerivative);
+                return new BinaryOp(Op.SUB, leftDerivative, rightDerivative);
 
             // Step in for product rule
             case MULT:

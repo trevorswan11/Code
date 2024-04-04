@@ -47,6 +47,17 @@ public abstract class UnaryOperation extends AbstractFunction {
         public String getUnaryName() {
             return this.name;
         }
+
+        /**
+         * A method to check the equality of an operator.
+         * 
+         * @param op An object of type Unary to compare
+         * @return True if the operators are the same, false otherwise
+         */
+        public boolean equals(Unary op) {
+            // Compare the equality of the operator names
+            return this.getUnaryName().equals(op.getUnaryName());
+        }
     }
 
     /**

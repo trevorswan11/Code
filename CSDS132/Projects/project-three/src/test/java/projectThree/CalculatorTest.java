@@ -93,6 +93,7 @@ public class CalculatorTest {
         assertEquals(0, numOne.value(0), 0); // Test value(x) with identical input 
         assertEquals(1, numThree.value(Math.random()), 0); // Test value(x) with random input
         assertTrue(new Number(0).equals(numOne.derivative())); // Test derivative method
+        assertTrue(new Number(0).equals(numThree.derivative())); 
         assertFalse(new Number(1).equals(numOne.derivative())); // Test an incorrect derivative for a Number
     }
 
@@ -187,6 +188,13 @@ public class CalculatorTest {
         binarySeven = new BinaryOp(Op.DIV, new BinaryOp(Op.DIV, new Variable(), new Number(3)), new Number(5)); // Nested BinaryOp first same
         binaryEight = new BinaryOp(Op.DIV, new BinaryOp(Op.SUB, new Number(7), new Number(9)), new Variable()); // Nested BinaryOp first different
         binaryNine = new BinaryOp(Op.PLUS, new Number(1), new Number(1)); // Just a regular Numeric Only BinaryOp
+        binaryTen = new BinaryOp(Op.MULT, new BinaryOp(Op.PLUS, new Number(2), new Variable()), new Variable()); // MULT and Nested PLUS
+        binaryEleven = new BinaryOp(Op.MULT, new BinaryOp(Op.SUB, new Number(3), new Variable()), new Variable()); // MULT and Nested SUB
+
+        // Create placeholders to prevent a large line
+        BinaryOp plusHolder = new BinaryOp(Op.PLUS, new Number(2), new Variable());
+        BinaryOp subHolder = new BinaryOp(Op.SUB, new Number(3), new Variable());
+        binaryTwelve = new BinaryOp(Op.DIV,  plusHolder, subHolder); // DIV and Nested PLUS and SUB
     }
 
     /**
@@ -204,6 +212,7 @@ public class CalculatorTest {
         assertEquals("x * (1.0 / x)", binarySix.toString()); // Nested BinaryOp that is on right with different Op
         assertEquals("(x / 3.0) / 5.0", binarySeven.toString()); // Nested BinaryOp on left with same Op
         assertEquals("(7.0 - 9.0) / x", binaryEight.toString()); // Nested BinaryOp on left with different Op
+        assertEquals("(2.0 + x) / (3.0 - x)", binaryTwelve.toString()); // Two nested BinaryOps in a BinaryOp
     }
 
     /**
@@ -222,7 +231,7 @@ public class CalculatorTest {
         assertEquals(6, binarySix.value(), 0); // Test many
         assertEquals(4, binarySeven.value(), 0);
         assertEquals(5 * 2.3, binaryEight.value(), 0);
-        assertEquals(5. / 2., binaryNine.value(), 0);
+        assertEquals(5.0 / 2.0, binaryNine.value(), 0);
     }
 
     /**
@@ -233,22 +242,93 @@ public class CalculatorTest {
     public void binaryValueTest() {
         binaryNested(); 
         binaryOne.value(); // Test Exception Handler
+        assertEquals(2, binaryNine.value(0), 0); // Test Zero
+        assertEquals(0, binaryOne.value(0), 0); 
+        assertEquals(0, binaryTwo.value(1), 0); // Test One
+        assertEquals(-1, binaryThree.value(4), 0);
+        assertEquals(16, binaryFour.value(4), 0); // Test Many 
+        assertEquals(24, binaryFive.value(2), 0);
+        assertEquals(12, binarySix.value(3), 0);
+        assertEquals(2.0 / 5.0, binarySeven.value(6), 0);
+        assertEquals(-0.5, binaryEight.value(4), 0);
+        assertEquals(15, binaryTen.value(3), 0);
+        assertEquals(-4, binaryEleven.value(4), 0);
+        assertEquals(7.0 / -2.0, binaryTwelve.value(5), 0);
     }
+
+    /**
+     * This JUnit method tests the derivative implementation in BinaryOp.
+     * The test analyzes basic derivatives, including product and quotient rules.
+     * String representations are occasionally used to test derivative output
+     */
+    @Test
+    public void binaryDerivative() {
+        binaryNested();
+        // Create a temporary variable whose derivative is the same as itself
+        BinaryOp binaryZero = new BinaryOp(Op.PLUS, new Number(0), new Number(0));
+        assertTrue(binaryZero.equals(binaryNine.derivative())); // Test Zero Variables
+        assertTrue(new BinaryOp(Op.PLUS, new Number(1), new Number(0)).equals(binaryOne.derivative())); // Test one
+        assertTrue(new BinaryOp(Op.SUB, new Number(0), new Number(1)).equals(binaryTwo.derivative()));
+        assertTrue(new BinaryOp(Op.PLUS, new BinaryOp(Op.MULT, new Number(0), new Variable()), 
+        new BinaryOp(Op.MULT, new Number(4), new Number(1)))
+        .equals(new BinaryOp(Op.MULT, new Number(4), new Variable()).derivative())); // Basic Product Rule
+        assertEquals("((0.0 * x) - (3.0 * 1.0)) / x^2.0", binaryThree.derivative().toString()); // Basic Quotient Rule
+        assertFalse(binaryThree.derivative().equals(neqTester)); // Known False Assertion
+        assertEquals("(1.0 * x) + (x * 1.0)", binaryFour.derivative().toString()); // Test Many (multiple nested)
+        assertEquals("(0.0 * 3.0 * x) + (4.0 * ((0.0 * x) + (3.0 * 1.0)))", binaryFive.derivative().toString());
+        assertEquals("(1.0 * (1.0 / x)) + (x * (((0.0 * x) - (1.0 * 1.0)) / x^2.0))", binarySix.derivative().toString());
+        assertEquals("(((((1.0 * 3.0) - (x * 0.0)) / 3.0^2.0) * 5.0) - ((x / 3.0) * 0.0)) / 5.0^2.0", binarySeven.derivative().toString());
+        assertEquals("(((0.0 - 0.0) * x) - ((7.0 - 9.0) * 1.0)) / x^2.0", binaryEight.derivative().toString());
+        assertEquals("((0.0 + 1.0) * x) + ((2.0 + x) * 1.0)", binaryTen.derivative().toString());
+        assertEquals("((0.0 - 1.0) * x) + ((3.0 - x) * 1.0)", binaryEleven.derivative().toString());
+        assertEquals("(((0.0 + 1.0) * (3.0 - x)) - ((2.0 + x) * (0.0 - 1.0))) / (3.0 - x)^2.0", binaryTwelve.derivative().toString());
+    }
+
+    // These fields are to be used with the Polynomial tests
+    Polynomial polyOne;
+    Polynomial polyTwo;
+    Polynomial polyThree;
+    Polynomial polyFour;
+    Polynomial polyFive;
+    Polynomial polySix;
 
     /**
      * This helper method creates Polynomial Test Objects and stores them in the
-     * Polynomial fields stored in this class.
+     * Polynomial fields stored in this class. This method is for basic tests only.
      */
     private void polyTesters() {
-        
+        polyOne = new Polynomial(new Number(0), 0);
+        polyTwo = new Polynomial(new Number(1), 1);
+        polyThree = new Polynomial(new Number(4), 4);
+        polyFour = new Polynomial(new Variable(), 0);
+        polyFive = new Polynomial(new Variable(), 1);
+        polySix = new Polynomial(new Variable(), 4);
+    }
+    
+    /**
+     * This JUnit method tests the NullPointerException Constructor for Polynomial
+     */
+    @Test (expected = NullPointerException.class)
+    public void polynomialNullTest() {
+        new Polynomial(null, 4);
     }
 
     /**
-     * This JUnit Method tests a variety of Polynomial Objects.
+     * This JUnit Method tests a variety of Polynomial Objects Getter Methods.
      */
     @Test //(expected = UnsupportedOperationException.class)
-    public void polynomialTest() {
+    public void polynomialGetters() {
         polyTesters();
+        assertTrue(new Number(0).equals(polyOne.getOperand())); // Test 0
+        assertEquals(0, polyOne.getPower(), 0);
+        assertTrue(new Number(1).equals(polyTwo.getOperand())); // Test 1 
+        assertEquals(1, polyTwo.getPower(), 0);
+        assertTrue(new Number(4).equals(polyThree.getOperand())); // Test Many
+        assertEquals(4, polyThree.getPower(), 0);
+        assertTrue(new Variable().equals(polyFour.getOperand())); // Test Operand getter for a Nested Variable
+        assertEquals(0, polyFour.getPower(), 0); // Test 0
+        assertEquals(1, polyFive.getPower(), 0); // Test 1
+        assertEquals(4, polySix.getPower(), 0); // Test Many
     }
 
     /**

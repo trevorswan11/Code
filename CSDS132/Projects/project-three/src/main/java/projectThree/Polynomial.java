@@ -153,6 +153,11 @@ public class Polynomial extends AbstractFunction {
      * @return A Function that is the derivative of the method instance.
      */
     public Function derivative() {
+        // If a polynomial has a 0 power, then its derivative is just 0
+        if (this.getPower() == 0) {
+            return new Number(0);
+        }
+
         // Create an Uninitialized variable to use as the first term
         Function firstTerm;
 
