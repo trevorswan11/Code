@@ -2,7 +2,7 @@ package projectThree;
 
 // Needed JUnit imports
 import org.junit.*;
-import org.omg.CORBA.PolicyError;
+import org.junit.experimental.theories.suppliers.TestedOn;
 
 import static org.junit.Assert.*;
 
@@ -514,12 +514,29 @@ public class CalculatorTest {
         assertFalse(unaryFour.getOperator().equals(neqTester));
     }
 
+    // These fields are for the Log Tests
+    Log logNegative = new Log(new Number(-1)); // Negative Number!
+    Log logZero = new Log(new Number(0)); // Zero!
+    Log logOne;
+    Log logTwo;
+    Log logThree;
+    Log logFour;
+    Log logFive;
+    BinaryOp logSix;
+
     /**
      * This helper method creates Log Test Objects and stores them in the Log
      * fields stored in this class.
      */
     private void logTesters() {
+        logOne = new Log(new Number(1));
+        logTwo = new Log(new Variable());
+        logThree = new Log(new Polynomial(new Variable(), 2));
+        logFour = new Log(new Polynomial(new Variable(), 3));
+        logFive = new Log(new BinaryOp(Op.MULT, new Number(3), new Log(new Variable())));
+        logSix = new BinaryOp(Op.PLUS, new Log(new Variable()), new Log(new Polynomial(new Log(new Variable()), 3)));
     }
+        
 
     /**
      * This JUnit method tests the null point exception for Log
@@ -531,18 +548,110 @@ public class CalculatorTest {
 
     /**
      * This JUnit Method tests a variety of Log Objects.
+     * This method specifically focuses on the equals method.
      */
-    @Test //(expected = UnsupportedOperationException.class)
-    public void logTest() {
+    @Test
+    public void logEqualsTest() {
         logTesters();
+        unaryTesters();
+        assertTrue(logZero.equals(new Log(new Number(0)))); // Test Zero
+        assertTrue(logOne.equals(new Log(new Number(1)))); // Test One
+        assertFalse(logOne.equals(neqTester)); // False Assertions
+        assertFalse(logOne.equals(logSix));
+        assertFalse(logOne.equals(unaryTwo));
+
+        // Test Many
+        assertFalse(logThree.equals(logFour)); // Nested Polynomials with different Powers
+        assertTrue(logFive.equals(new Log(new BinaryOp(Op.MULT, new Number(3), new Log(new Variable()))))); // Nested BinaryOp
+
+        // Long Expression
+        Log leftOperand = new Log(new Variable());
+        Log rightOperand = new Log(new Polynomial(new Log(new Variable()), 3));
+        assertTrue(logSix.getLeftOperand().equals(leftOperand)); // Compare Left Operand
+        assertTrue(logSix.getRightOperand().equals(rightOperand)); // Compare Right Operand
     }
 
+    /**
+     * This JUnit Method tests a variety of Log and nested Log Objects.
+     * This method specifically focuses on the toString method.
+     */
+    @Test
+    public void logToString() {
+        logTesters();
+        assertEquals("Log[-1.0]", logNegative.toString()); // Test Negative
+        assertEquals("Log[0.0]", logZero.toString()); // Test Zero
+        assertEquals("Log[1.0]", logOne.toString()); // Test One
+        assertEquals("Log[x]", logTwo.toString()); // Test Many
+        assertEquals("Log[x^2.0]", logThree.toString());
+        assertEquals("Log[x^3.0]", logFour.toString()); 
+        assertEquals("Log[3.0 * Log[x]]", logFive.toString()); 
+        assertEquals("Log[x] + Log[Log[x]^3.0]", logSix.toString()); 
+    }
+
+    /**
+     * This JUnit Method tests a variety of Log and nested Log Objects.
+     * This method specifically focuses on the value methods.
+     */
+    @Test(expected = UnsupportedOperationException.class)
+    public void logValueTest() {
+        logTesters();
+        assertTrue(Double.isNaN(logNegative.value())); // Test Negative
+        assertTrue(Double.isNaN(logNegative.value(10)));
+        assertTrue(Double.isInfinite(logZero.value())); // Test Zero
+        assertTrue(Double.isInfinite(logZero.value()));
+        assertEquals(0, logOne.value(), 0); // Test One
+        assertEquals(0, logOne.value(10), 0);
+
+        // Test Many - Margin of Error Included
+        assertEquals(0.6931471806, logTwo.value(2), 0.0001);
+        assertEquals(1.386294361, logThree.value(2), 0.0001);
+        assertEquals(2.079441542, logFour.value(2), 0.0001);
+        assertEquals(0.7320993681, logFive.value(2), 0.0001);
+        assertEquals(-0.4063915812, logSix.value(2), 0.0001);
+
+        logTwo.value(); // Test Exception Handler
+    }
+
+    /**
+     * This JUnit Method tests a variety of Log and nested Log Objects.
+     * This method specifically tests the derivative method.
+     */
+    @Test
+    public void logDerivativeTest() {
+        logTesters();
+        assertEquals("0.0 / -1.0", logNegative.derivative().toString()); // Test Negative
+        assertEquals("0.0 / 0.0", logZero.derivative().toString());// Test Zero - woah!
+        assertEquals("0.0 / 1.0", logOne.derivative().toString());// Test One
+
+        // Test Many
+        assertEquals("1.0 / x", logTwo.derivative().toString());
+        assertEquals("((2.0 * x^1.0) * 1.0) / x^2.0", logThree.derivative().toString());
+        assertEquals("((3.0 * x^2.0) * 1.0) / x^3.0", logFour.derivative().toString());
+        assertEquals("((0.0 * Log[x]) + (3.0 * (1.0 / x))) / (3.0 * Log[x])", logFive.derivative().toString());
+        assertEquals("(1.0 / x) + (((3.0 * Log[x]^2.0) * (1.0 / x)) / Log[x]^3.0)", logSix.derivative().toString()); 
+    }
+    
     // These fields are to be used with the Exponential tests
+    Exp expNegative = new Exp(new Number(-1)); // Negative Number!
+    Exp expZero = new Exp(new Number(0)); // Zero!
+    Exp expOne;
+    Exp expTwo;
+    Exp expThree;
+    Exp expFour;
+    Exp expFive;
+    BinaryOp expSix;
+
     /**
      * This helper method creates Exp Test Objects and stores them in the Exp
      * fields stored in this class.
      */
     private void expTesters() {     
+        expOne = new Exp(new Number(1));
+        expTwo = new Exp(new Variable());
+        expThree = new Exp(new Polynomial(new Variable(), 2));
+        expFour = new Exp(new Polynomial(new Variable(), 3));
+        expFive = new Exp(new BinaryOp(Op.MULT, new Number(3), new Exp(new Variable())));
+        expSix = new BinaryOp(Op.PLUS, new Exp(new Variable()), new Exp(new Polynomial(new Exp(new Variable()), 3)));
     }
 
     /**
@@ -555,18 +664,111 @@ public class CalculatorTest {
 
     /**
      * This JUnit Method tests a variety of Exp Objects.
+     * This method specifically focuses on the equals method.
      */
-    @Test //(expected = UnsupportedOperationException.class)
-    public void expTest() {
+    @Test
+    public void expEqualsTest() {
         expTesters();
+        unaryTesters();
+        assertTrue(expZero.equals(new Exp(new Number(0)))); // Test Zero
+        assertTrue(expOne.equals(new Exp(new Number(1)))); // Test One
+        assertFalse(expOne.equals(neqTester)); // False Assertions
+        assertFalse(expOne.equals(expSix));
+        assertFalse(expOne.equals(unaryTwo));
+
+        // Test Many
+        assertFalse(expThree.equals(logFour)); // Nested Polynomials with different Powers
+        assertTrue(expFive.equals(new Exp(new BinaryOp(Op.MULT, new Number(3), new Exp(new Variable()))))); // Nested BinaryOp
+
+        // Long Expression
+        Exp leftOperand = new Exp(new Variable());
+        Exp rightOperand = new Exp(new Polynomial(new Exp(new Variable()), 3));
+        assertTrue(expSix.getLeftOperand().equals(leftOperand)); // Compare Left Operand
+        assertTrue(expSix.getRightOperand().equals(rightOperand)); // Compare Right Operand
+    }
+
+    /**
+     * This JUnit Method tests a variety of Exp and nested Exp Objects.
+     * This method specifically focuses on the toString method.
+     */
+    @Test
+    public void expToString() {
+        expTesters();
+        assertEquals("Exp[-1.0]", expNegative.toString()); // Test Negative
+        assertEquals("Exp[0.0]", expZero.toString()); // Test Zero
+        assertEquals("Exp[1.0]", expOne.toString()); // Test One
+        assertEquals("Exp[x]", expTwo.toString()); // Test Many
+        assertEquals("Exp[x^2.0]", expThree.toString());
+        assertEquals("Exp[x^3.0]", expFour.toString()); 
+        assertEquals("Exp[3.0 * Exp[x]]", expFive.toString()); 
+        assertEquals("Exp[x] + Exp[Exp[x]^3.0]", expSix.toString()); 
+    }
+
+    /**
+     * This JUnit Method tests a variety of Exp and nested Exp Objects.
+     * This method specifically focuses on the value methods.
+     */
+    @Test(expected = UnsupportedOperationException.class)
+    public void expValueTest() {
+        expTesters();
+        assertEquals(0.3678794412, expNegative.value(), 0.0001); // Test Negative
+        assertEquals(0.3678794412, expNegative.value(10), 0.0001);
+        assertEquals(1, expZero.value(), 0); // Test Zero
+        assertEquals(1, expZero.value(10), 0);
+        assertEquals(Math.E, expOne.value(), 0); // Test One
+        assertEquals(Math.E, expOne.value(10), 0);
+        
+        // Test Many
+        assertEquals(7.389056099, expTwo.value(2), 0.0001);
+        assertEquals(54.59815003, expThree.value(2), 0.0001);
+        assertEquals(2980.957987, expFour.value(2), 0.0001);
+        assertEquals(3480.201542, expFive.value(1), 0.0001);
+        assertEquals(90.03255445, expSix.value(0.5), 0.0001);
+
+        expTwo.value(); // Test Exception Handler
+    }
+
+    /**
+     * This JUnit Method tests a variety of Exp and nested Exp Objects.
+     * This method specifically tests the derivative method.
+     */
+    @Test
+    public void expDerivativeTest() {
+        expTesters();
+        assertEquals("0.0 * Exp[-1.0]", expNegative.derivative().toString()); // Test Negative
+        assertEquals("0.0 * Exp[0.0]", expZero.derivative().toString()); // Test Zero
+        assertEquals("0.0 * Exp[1.0]", expOne.derivative().toString()); // Test One
+
+        // Test Many
+        assertEquals("1.0 * Exp[x]", expTwo.derivative().toString());
+        assertEquals("((2.0 * x^1.0) * 1.0) * Exp[x^2.0]", expThree.derivative().toString());
+        assertEquals("((3.0 * x^2.0) * 1.0) * Exp[x^3.0]", expFour.derivative().toString());
+        assertEquals("((0.0 * Exp[x]) + (3.0 * 1.0 * Exp[x])) * Exp[3.0 * Exp[x]]",
+                expFive.derivative().toString());
+        assertEquals("(1.0 * Exp[x]) + (((3.0 * Exp[x]^2.0) * 1.0 * Exp[x]) * Exp[Exp[x]^3.0])",
+                expSix.derivative().toString());
     }
 
     // These fields are to be used with the Sine tests
+    Sin sinZero = new Sin(new Number(0)); // Zero!
+    Sin sinOne;
+    Sin sinTwo;
+    Sin sinThree;
+    Sin sinFour;
+    Sin sinFive;
+    BinaryOp sinSix;
+
     /**
      * This helper method creates Sin Test Objects and stores them in the Sin
      * fields stored in this class.
      */
     private void sinTesters() {     
+        sinOne = new Sin(new Number(1));
+        sinTwo = new Sin(new Variable());
+        sinThree = new Sin(new Polynomial(new Variable(), 2));
+        sinFour = new Sin(new Polynomial(new Variable(), 3));
+        sinFive = new Sin(new BinaryOp(Op.MULT, new Number(3), new Sin(new Variable())));
+        sinSix = new BinaryOp(Op.PLUS, new Sin(new Variable()), new Sin(new Polynomial(new Sin(new Variable()), 3)));
     }
 
     /**
@@ -579,18 +781,107 @@ public class CalculatorTest {
 
     /**
      * This JUnit Method tests a variety of Sin Objects.
+     * This method specifically focuses on the equals method.
      */
-    @Test //(expected = UnsupportedOperationException.class)
-    public void sinTest() {
+    @Test
+    public void sinEqualsTest() {
         sinTesters();
+        unaryTesters();
+        assertTrue(sinZero.equals(new Sin(new Number(0)))); // Test Zero
+        assertTrue(sinOne.equals(new Sin(new Number(1)))); // Test One
+        assertFalse(sinOne.equals(neqTester)); // False Assertions
+        assertFalse(sinOne.equals(sinSix));
+        assertFalse(sinOne.equals(unaryTwo));
+
+        // Test Many
+        assertFalse(sinThree.equals(logFour)); // Nested Polynomials with different Powers
+        assertTrue(sinFive.equals(new Sin(new BinaryOp(Op.MULT, new Number(3), new Sin(new Variable()))))); // Nested BinaryOp
+
+        // Long Expression
+        Sin leftOperand = new Sin(new Variable());
+        Sin rightOperand = new Sin(new Polynomial(new Sin(new Variable()), 3));
+        assertTrue(sinSix.getLeftOperand().equals(leftOperand)); // Compare Left Operand
+        assertTrue(sinSix.getRightOperand().equals(rightOperand)); // Compare Right Operand
+    }
+
+    /**
+     * This JUnit Method tests a variety of Sin and nested Sin Objects.
+     * This method specifically focuses on the toString method.
+     */
+    @Test
+    public void sinToString() {
+        sinTesters();
+        assertEquals("Sin[0.0]", sinZero.toString()); // Test Zero
+        assertEquals("Sin[1.0]", sinOne.toString()); // Test One
+        assertEquals("Sin[x]", sinTwo.toString()); // Test Many
+        assertEquals("Sin[x^2.0]", sinThree.toString());
+        assertEquals("Sin[x^3.0]", sinFour.toString()); 
+        assertEquals("Sin[3.0 * Sin[x]]", sinFive.toString()); 
+        assertEquals("Sin[x] + Sin[Sin[x]^3.0]", sinSix.toString()); 
+    }
+
+    /**
+     * This JUnit Method tests a variety of Sin and nested Sin Objects.
+     * This method specifically focuses on the value methods.
+     */
+    @Test(expected = UnsupportedOperationException.class) 
+    public void sinValueTest() {
+        sinTesters();
+        assertEquals(0, sinZero.value(), 0); // Test Zero
+        assertEquals(0, sinZero.value(10), 0);
+        assertEquals(0.8414709848, sinOne.value(), 0.0001); // Test One
+        assertEquals(0.8414709848, sinOne.value(10), 0.0001);
+        
+        // Test Many
+        assertEquals(1, sinTwo.value(Math.PI / 2.0), 0.0001);
+        assertEquals(-0.7568024953, sinThree.value(2), 0.0001);
+        assertEquals(0.9893582466, sinFour.value(2), 0.0001);
+        assertEquals(0.4020002804, sinFive.value(2), 0.0001);
+        assertEquals(1.592271804, sinSix.value(2), 0.0001);
+
+        sinTwo.value(); // Test Exception Handler
+    }
+
+    /**
+     * This JUnit Method tests a variety of Sin and nested Sin Objects.
+     * This method specifically tests the derivative method.
+     */
+    @Test
+    public void sinDerivativeTest() {
+        sinTesters();
+        assertEquals("-1.0 * 0.0 * Cos[0.0]", sinZero.derivative().toString()); // Test Zero
+        assertEquals("-1.0 * 0.0 * Cos[1.0]", sinOne.derivative().toString()); // Test One
+
+        // Test Many
+        assertEquals("-1.0 * 1.0 * Cos[x]", sinTwo.derivative().toString());
+        assertEquals("-1.0 * ((2.0 * x^1.0) * 1.0) * Cos[x^2.0]", sinThree.derivative().toString());
+        assertEquals("-1.0 * ((3.0 * x^2.0) * 1.0) * Cos[x^3.0]", sinFour.derivative().toString());
+        assertEquals("-1.0 * ((0.0 * Sin[x]) + (3.0 * -1.0 * 1.0 * Cos[x])) * Cos[3.0 * Sin[x]]",
+                sinFive.derivative().toString());
+        assertEquals("(-1.0 * 1.0 * Cos[x]) + (-1.0 * ((3.0 * Sin[x]^2.0) * -1.0 * 1.0 * Cos[x]) * Cos[Sin[x]^3.0])",
+                sinSix.derivative().toString());
     }
 
     // These fields are to be used with the Cosine tests
+    Cos cosZero = new Cos(new Number(0)); // Zero!
+    Cos cosOne;
+    Cos cosTwo;
+    Cos cosThree;
+    Cos cosFour;
+    Cos cosFive;
+    BinaryOp cosSix;
+
     /**
      * This helper method creates Cos Test Objects and stores them in the Cos
      * fields stored in this class.
      */
     private void cosTesters() {
+        cosOne = new Cos(new Number(1));
+        cosTwo = new Cos(new Variable());
+        cosThree = new Cos(new Polynomial(new Variable(), 2));
+        cosFour = new Cos(new Polynomial(new Variable(), 3));
+        cosFive = new Cos(new BinaryOp(Op.MULT, new Number(3), new Cos(new Variable())));
+        cosSix = new BinaryOp(Op.PLUS, new Cos(new Variable()), new Cos(new Polynomial(new Cos(new Variable()), 3)));
     }
 
     /**
@@ -600,12 +891,87 @@ public class CalculatorTest {
     public void nullCosTest() {
         unaryFour = new Cos(null);
     }
-
+    
     /**
      * This JUnit Method tests a variety of Cos Objects.
+     * This method specifically focuses on the equals method.
      */
-    @Test //(expected = UnsupportedOperationException.class)
-    public void cosTest() {
+    @Test
+    public void cosEqualsTest() {
         cosTesters();
+        unaryTesters();
+        assertTrue(cosZero.equals(new Cos(new Number(0)))); // Test Zero
+        assertTrue(cosOne.equals(new Cos(new Number(1)))); // Test One
+        assertFalse(cosOne.equals(neqTester)); // False Assertions
+        assertFalse(cosOne.equals(cosSix));
+        assertFalse(cosOne.equals(unaryTwo));
+
+        // Test Many
+        assertFalse(cosThree.equals(logFour)); // Nested Polynomials with different Powers
+        assertTrue(cosFive.equals(new Cos(new BinaryOp(Op.MULT, new Number(3), new Cos(new Variable()))))); // Nested BinaryOp
+
+        // Long Expression
+        Cos leftOperand = new Cos(new Variable());
+        Cos rightOperand = new Cos(new Polynomial(new Cos(new Variable()), 3));
+        assertTrue(cosSix.getLeftOperand().equals(leftOperand)); // Compare Left Operand
+        assertTrue(cosSix.getRightOperand().equals(rightOperand)); // Compare Right Operand
+    }
+
+    /**
+     * This JUnit Method tests a variety of Cos and nested Cos Objects.
+     * This method specifically focuses on the toString method.
+     */
+    @Test
+    public void cosToString() {
+        cosTesters();
+        assertEquals("Cos[0.0]", cosZero.toString()); // Test Zero
+        assertEquals("Cos[1.0]", cosOne.toString()); // Test One
+        assertEquals("Cos[x]", cosTwo.toString()); // Test Many
+        assertEquals("Cos[x^2.0]", cosThree.toString());
+        assertEquals("Cos[x^3.0]", cosFour.toString()); 
+        assertEquals("Cos[3.0 * Cos[x]]", cosFive.toString()); 
+        assertEquals("Cos[x] + Cos[Cos[x]^3.0]", cosSix.toString()); 
+    }
+
+    /**
+     * This JUnit Method tests a variety of Cos and nested Cos Objects.
+     * This method specifically focuses on the value methods.
+     */
+    @Test(expected = UnsupportedOperationException.class)
+    public void cosValueTest() {
+        cosTesters();
+        assertEquals(1, cosZero.value(), 0); // Test Zero
+        assertEquals(1, cosZero.value(10), 0);
+        assertEquals(0.5403023059, cosOne.value(), 0.0001); // Test One
+        assertEquals(0.5403023059, cosOne.value(10), 0.0001);
+        
+        // Test Many
+        assertEquals(-1, cosTwo.value(Math.PI), 0.0001);
+        assertEquals(-0.6536436209, cosThree.value(2), 0.0001);
+        assertEquals(-0.1455000338, cosFour.value(2), 0.0001);
+        assertEquals(0.3168019107, cosFive.value(2), 0.0001);
+        assertEquals(0.5812574209, cosSix.value(2), 0.0001);
+
+        cosTwo.value(); // Test Exception Handler
+    }
+
+    /**
+     * This JUnit Method tests a variety of Cos and nested Cos Objects.
+     * This method specifically tests the derivative method.
+     */
+    @Test
+    public void cosDerivativeTest() {
+        cosTesters();
+        assertEquals("0.0 * Sin[0.0]", cosZero.derivative().toString()); // Test Zero
+        assertEquals("0.0 * Sin[1.0]", cosOne.derivative().toString()); // Test One
+
+        // Test Many
+        assertEquals("1.0 * Sin[x]", cosTwo.derivative().toString());
+        assertEquals("((2.0 * x^1.0) * 1.0) * Sin[x^2.0]", cosThree.derivative().toString());
+        assertEquals("((3.0 * x^2.0) * 1.0) * Sin[x^3.0]", cosFour.derivative().toString());
+        assertEquals("((0.0 * Cos[x]) + (3.0 * 1.0 * Sin[x])) * Sin[3.0 * Cos[x]]",
+                cosFive.derivative().toString());
+        assertEquals("(1.0 * Sin[x]) + (((3.0 * Cos[x]^2.0) * 1.0 * Sin[x]) * Sin[Cos[x]^3.0])",
+                cosSix.derivative().toString());
     }
 }

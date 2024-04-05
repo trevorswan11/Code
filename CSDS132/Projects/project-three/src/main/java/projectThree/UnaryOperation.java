@@ -120,7 +120,7 @@ public abstract class UnaryOperation extends AbstractFunction {
                 }
 
                 // Check the operand Functions against each other
-                return this.getOperator().equals(input.getOperator());
+                return this.getOperand().equals(input.getOperand());
                 
             // Step in if the instance is an Exp
             case EXP:
@@ -130,7 +130,7 @@ public abstract class UnaryOperation extends AbstractFunction {
                 }
 
                 // Check the operand Functions against each other
-                return this.getOperator().equals(input.getOperator());
+                return this.getOperand().equals(input.getOperand());
 
             // Step in if the instance is a Sin
             case SIN:
@@ -140,7 +140,7 @@ public abstract class UnaryOperation extends AbstractFunction {
                 }
 
                 // Check the operand Functions against each other
-                return this.getOperator().equals(input.getOperator());
+                return this.getOperand().equals(input.getOperand());
 
             // TO get here, the operator must be Cos
             default:
@@ -150,7 +150,7 @@ public abstract class UnaryOperation extends AbstractFunction {
                 }
                 
                 // Check the operand Functions against each other
-                return this.getOperator().equals(input.getOperator());
+                return this.getOperand().equals(input.getOperand());
         }
     }
     
