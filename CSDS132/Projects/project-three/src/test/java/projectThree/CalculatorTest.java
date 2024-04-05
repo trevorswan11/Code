@@ -2,6 +2,8 @@ package projectThree;
 
 // Needed JUnit imports
 import org.junit.*;
+import org.omg.CORBA.PolicyError;
+
 import static org.junit.Assert.*;
 
 // Needed enum imports
@@ -46,10 +48,10 @@ public class CalculatorTest {
         assertFalse(varOne.equals(neqTester)); // Test not equals
         assertTrue(varOne.equals(varTwo)); // Test equals
         assertEquals("x", varOne.toString()); // Test toString
-        varOne.value(); // An exception should be thrown
         assertEquals(0, varOne.value(0), 0); // Test value of 0
-        assertEquals(1, varOne.value(1), 0); // Test value of 1
-        assertEquals(1, varOne.derivative()); // Test the derivative
+        assertEquals(1.0, varOne.value(1), 0); // Test value of 1
+        assertEquals(new Number(1), varOne.derivative()); // Test the derivative
+        varOne.value(); // An exception should be thrown
     }
 
     // These fields are to be used with the Number tests
@@ -98,6 +100,7 @@ public class CalculatorTest {
     }
 
     // These fields are to be used with the BinaryOp Tests
+    BinaryOp binaryZero = new BinaryOp(Op.PLUS, new Number(0), new Number(0)); // Zeros!
     BinaryOp binaryOne;
     BinaryOp binaryTwo;
     BinaryOp binaryThree;
@@ -241,19 +244,19 @@ public class CalculatorTest {
     @Test(expected = UnsupportedOperationException.class)
     public void binaryValueTest() {
         binaryNested(); 
-        binaryOne.value(); // Test Exception Handler
         assertEquals(2, binaryNine.value(0), 0); // Test Zero
         assertEquals(0, binaryOne.value(0), 0); 
         assertEquals(0, binaryTwo.value(1), 0); // Test One
-        assertEquals(-1, binaryThree.value(4), 0);
+        assertEquals(0.75, binaryThree.value(4), 0);
         assertEquals(16, binaryFour.value(4), 0); // Test Many 
         assertEquals(24, binaryFive.value(2), 0);
-        assertEquals(12, binarySix.value(3), 0);
+        assertEquals(1, binarySix.value(3), 0);
         assertEquals(2.0 / 5.0, binarySeven.value(6), 0);
         assertEquals(-0.5, binaryEight.value(4), 0);
         assertEquals(15, binaryTen.value(3), 0);
         assertEquals(-4, binaryEleven.value(4), 0);
         assertEquals(7.0 / -2.0, binaryTwelve.value(5), 0);
+        binaryOne.value(); // Test Exception Handler
     }
 
     /**
@@ -265,13 +268,12 @@ public class CalculatorTest {
     public void binaryDerivative() {
         binaryNested();
         // Create a temporary variable whose derivative is the same as itself
-        BinaryOp binaryZero = new BinaryOp(Op.PLUS, new Number(0), new Number(0));
         assertTrue(binaryZero.equals(binaryNine.derivative())); // Test Zero Variables
         assertTrue(new BinaryOp(Op.PLUS, new Number(1), new Number(0)).equals(binaryOne.derivative())); // Test one
         assertTrue(new BinaryOp(Op.SUB, new Number(0), new Number(1)).equals(binaryTwo.derivative()));
         assertTrue(new BinaryOp(Op.PLUS, new BinaryOp(Op.MULT, new Number(0), new Variable()), 
-        new BinaryOp(Op.MULT, new Number(4), new Number(1)))
-        .equals(new BinaryOp(Op.MULT, new Number(4), new Variable()).derivative())); // Basic Product Rule
+                new BinaryOp(Op.MULT, new Number(4), new Number(1)))
+                .equals(new BinaryOp(Op.MULT, new Number(4), new Variable()).derivative())); // Basic Product Rule
         assertEquals("((0.0 * x) - (3.0 * 1.0)) / x^2.0", binaryThree.derivative().toString()); // Basic Quotient Rule
         assertFalse(binaryThree.derivative().equals(neqTester)); // Known False Assertion
         assertEquals("(1.0 * x) + (x * 1.0)", binaryFour.derivative().toString()); // Test Many (multiple nested)
@@ -285,18 +287,24 @@ public class CalculatorTest {
     }
 
     // These fields are to be used with the Polynomial tests
+    Polynomial polyZero = new Polynomial(new Number(0), 0); // Zeros!
     Polynomial polyOne;
     Polynomial polyTwo;
     Polynomial polyThree;
     Polynomial polyFour;
     Polynomial polyFive;
     Polynomial polySix;
+    Polynomial polySeven;
+    Polynomial polyEight;
+    Polynomial polyNine;
+    Polynomial polyTen;
+    BinaryOp polyEleven;
 
     /**
      * This helper method creates Polynomial Test Objects and stores them in the
      * Polynomial fields stored in this class. This method is for basic tests only.
      */
-    private void polyTesters() {
+    private void polySimpleTesters() {
         polyOne = new Polynomial(new Number(0), 0);
         polyTwo = new Polynomial(new Number(1), 1);
         polyThree = new Polynomial(new Number(4), 4);
@@ -316,9 +324,9 @@ public class CalculatorTest {
     /**
      * This JUnit Method tests a variety of Polynomial Objects Getter Methods.
      */
-    @Test //(expected = UnsupportedOperationException.class)
+    @Test
     public void polynomialGetters() {
-        polyTesters();
+        polySimpleTesters();
         assertTrue(new Number(0).equals(polyOne.getOperand())); // Test 0
         assertEquals(0, polyOne.getPower(), 0);
         assertTrue(new Number(1).equals(polyTwo.getOperand())); // Test 1 
@@ -328,7 +336,182 @@ public class CalculatorTest {
         assertTrue(new Variable().equals(polyFour.getOperand())); // Test Operand getter for a Nested Variable
         assertEquals(0, polyFour.getPower(), 0); // Test 0
         assertEquals(1, polyFive.getPower(), 0); // Test 1
-        assertEquals(4, polySix.getPower(), 0); // Test Many      
+        assertEquals(4, polySix.getPower(), 0); // Test Many
+    }
+
+    /**
+     * This helper method creates complex BinaryOp and Polynomial expressions to be tested.
+     */
+    private void polyComplexTesters() {
+        polyOne = new Polynomial(new Polynomial(new Number(2), 2), 2); // Nested Numeric Polynomial
+        polyTwo = new Polynomial(new Polynomial(new Variable(), 2), -3);
+        polyThree = new Polynomial(new Polynomial(new Polynomial(new Variable(), 2), -0.5), 4); // Double Nesting
+        binaryFour = new BinaryOp(Op.PLUS, new Polynomial(new Variable(), 2), new Number(2)); // Polynomial inside BinaryOp
+        binaryFive = new BinaryOp(Op.SUB, new Polynomial(new Variable(), 3), new Number(10));
+        binarySix = new BinaryOp(Op.MULT, new Number(4), new Polynomial(new Variable(), 6));
+        binarySeven = new BinaryOp(Op.DIV, new Number(-2), new Polynomial(new Variable(), 4));
+        polyEight = new Polynomial(new Polynomial(new BinaryOp(Op.MULT, new Number(2),
+                new Variable()), 2.3), 2.4); // BinaryOp inside Polynomial
+        polyNine = new Polynomial(new Polynomial(new BinaryOp(Op.MULT, new Number(2),
+                new Polynomial(new Variable(), 2)), 1), 2); // Tons of Nesting
+        polyTen = new Polynomial(new Polynomial(new BinaryOp(Op.DIV, new Number(2),
+                new Polynomial(new Variable(), 2)), 3), 4); // Tons of Nesting
+        polyEleven = new BinaryOp(Op.PLUS, new Polynomial(new Variable(), 2),
+                new BinaryOp(Op.PLUS, new BinaryOp(Op.MULT, new Number(3), new Polynomial(new Variable(), 3)),
+                new BinaryOp(Op.PLUS, new Polynomial(new Variable(), 4),
+                new BinaryOp(Op.MULT, new Number(-1), new Polynomial(new Variable(), 5))))); // Long Polynomial Expression
+    }
+
+    /**
+     * This JUnit Method tests a variety of Function Objects with true and nested Polynomial types.
+     * This tests the equals method of these Objects
+     */
+    @Test
+    public void polynomialEquals() {
+        polyComplexTesters();
+        assertTrue(polyZero.equals(polyZero)); // Test 0
+        assertTrue(new Polynomial(new Number(1), 1).equals(new Polynomial(new Number(1), 1))); // Test 1
+        assertFalse(polyOne.equals(neqTester)); // Known False Assertions
+        assertFalse(polyOne.equals(new Polynomial(new Polynomial(new Number(2), 2), 3))); 
+        assertFalse(polyOne.equals(new Polynomial(new Polynomial(new Number(2), 4), 2))); 
+        assertFalse(polyOne.equals(new Polynomial(new Polynomial(new Number(5), 2), 2)));
+        assertTrue(polyOne.equals(new Polynomial(new Polynomial(new Number(2), 2), 2))); // Test Many
+        assertTrue(polyThree.equals(new Polynomial(new Polynomial(new Polynomial(new Variable(), 2), -0.5), 4)));
+        assertTrue(binaryFour.getLeftOperand().equals(new Polynomial(new Variable(), 2)));
+    }
+
+    /**
+     * This JUnit Method tests complex Polynomials.
+     * This tests the toString Method of these Objects
+     */
+    @Test
+    public void polynomialToString() {
+        polyComplexTesters();
+        assertEquals("0.0^0.0", polyZero.toString()); // Test 0
+        assertEquals("1.0^1.0", new Polynomial(new Number(1), 1).toString()); // Test 1
+        assertNotEquals("0.0^1.0", new Polynomial(new Number(1), 1).toString()); // Known False Assertion
+        assertEquals("2.0^2.0^2.0", polyOne.toString()); // Test Many
+        assertEquals("x^2.0^-3.0", polyTwo.toString());
+        assertEquals("x^2.0^-0.5^4.0", polyThree.toString());
+        assertEquals("x^2.0 + 2.0", binaryFour.toString());
+        assertEquals("x^3.0 - 10.0", binaryFive.toString());
+        assertEquals("4.0 * x^6.0", binarySix.toString());
+        assertEquals("-2.0 / x^4.0", binarySeven.toString());
+        assertEquals("(2.0 * x)^2.3^2.4", polyEight.toString());
+        assertEquals("(2.0 * x^2.0)^1.0^2.0", polyNine.toString());
+        assertEquals("(2.0 / x^2.0)^3.0^4.0", polyTen.toString());
+        assertEquals("x^2.0 + (3.0 * x^3.0) + x^4.0 + (-1.0 * x^5.0)", polyEleven.toString()); // Long Polynomial Expression
+    }
+
+    /**
+     * This JUnit Method tests complex Polynomials.
+     * This tests the value Methods of these Objects
+     */
+    @Test(expected = UnsupportedOperationException.class)
+    public void polynomialValue() {
+        polyComplexTesters();
+        assertEquals(1, polyZero.value(), 0); // Test 0
+        assertEquals(1, polyZero.value(0), 0);
+        assertEquals(1, polyZero.value(1), 0);
+        assertEquals(1, polyZero.value(10), 0);
+        assertEquals(16, polyOne.value(), 0);
+        assertEquals(16, polyOne.value(0), 0); // Test 1
+        assertEquals(16, polyOne.value(1), 0);
+        assertEquals(16, polyOne.value(10), 0);
+        assertEquals(1, polyTwo.value(1), 0); // Test Many
+        assertEquals(0.0625, polyThree.value(2), 0);
+        assertEquals(11, binaryFour.value(3), 0);
+        assertEquals(54, binaryFive.value(4), 0);
+        assertEquals(62500, binarySix.value(5), 0);
+        assertEquals(-2, binarySeven.value(-1), 0);
+        assertEquals(324, polyNine.value(-3), 0);
+        assertEquals(0, polyTen.value(-4), 0.0001); // Rounding error
+        assertEquals(12, polyEleven.value(2), 0); 
+
+        assertTrue(Double.isNaN(polyEight.value(-2))); // Undefined expected
+
+        polyTwo.value(); // Test Exception
+    }
+
+    /**
+     * This JUnit Method tests complex Polynomials.
+     * This tests the derivative Method of these Objects. 
+     * String representations are used to check equality.
+     */
+    @Test
+    public void polynomialDerivatives() {
+        polyComplexTesters();
+        assertEquals("0.0", polyZero.derivative().toString()); // Test 0
+        assertEquals("1.0 * 0.0", new Polynomial(new Number(1), 1).derivative().toString()); // Test 1
+        assertEquals("(2.0 * 2.0^2.0^1.0) * (2.0 * 2.0^1.0) * 0.0", polyOne.derivative().toString()); // Test Many
+        assertEquals("(-3.0 * x^2.0^-4.0) * (2.0 * x^1.0) * 1.0", polyTwo.derivative().toString());
+        assertEquals("(4.0 * x^2.0^-0.5^3.0) * (-0.5 * x^2.0^-1.5) * (2.0 * x^1.0) * 1.0", 
+                polyThree.derivative().toString());
+        assertEquals("((2.0 * x^1.0) * 1.0) + 0.0", binaryFour.derivative().toString());
+        assertEquals("((3.0 * x^2.0) * 1.0) - 0.0", binaryFive.derivative().toString());
+        assertEquals("(0.0 * x^6.0) + (4.0 * (6.0 * x^5.0) * 1.0)", binarySix.derivative().toString());
+        assertEquals("((0.0 * x^4.0) - (-2.0 * (4.0 * x^3.0) * 1.0)) / x^4.0^2.0",
+                binarySeven.derivative().toString());
+        assertEquals("(2.4 * (2.0 * x)^2.3^1.4) * (2.3 * (2.0 * x)^1.2999999999999998) * ((0.0 * x) + (2.0 * 1.0))",
+                polyEight.derivative().toString());
+        assertEquals("(2.0 * (2.0 * x^2.0)^1.0^1.0) * 1.0 * ((0.0 * x^2.0) + (2.0 * (2.0 * x^1.0) * 1.0))",
+                polyNine.derivative().toString());
+        assertEquals("(4.0 * (2.0 / x^2.0)^3.0^3.0) * (3.0 * (2.0 / x^2.0)^2.0) * (((0.0 * x^2.0) - (2.0 * (2.0 * x^1.0) * 1.0)) / x^2.0^2.0)",
+                polyTen.derivative().toString());
+
+        // The result of the derivative of polyEleven when converted to a String
+        String longExpression = "((2.0 * x^1.0) * 1.0) + ((0.0 * x^3.0) + (3.0 * (3.0 * x^2.0) * 1.0)) + ((4.0 * x^3.0) * 1.0) + (0.0 * x^5.0) + (-1.0 * (5.0 * x^4.0) * 1.0)";
+        assertEquals(longExpression, polyEleven.derivative().toString());
+    }
+
+    // These fields are to be used with the UnaryOperation tests
+    UnaryOperation unaryOne;
+    UnaryOperation unaryTwo;
+    UnaryOperation unaryThree;
+    UnaryOperation unaryFour; 
+
+    /**
+     * This helper method creates UnaryOperation Objects and stores them to fields.
+     * These Objects are used to test the default implementations found in UnaryOperation.
+     */
+    private void unaryTesters() {
+        unaryOne = new Log(new Variable());
+        unaryTwo = new Exp(new Variable());
+        unaryThree = new Sin(new Variable());
+        unaryFour = new Cos(new Variable());
+    }
+
+
+    /**
+     * This JUnit method tests the getter implementations in UnaryOperation.
+     * This excludes equals, toString value(), and value(x).
+     */
+    @Test
+    public void unaryTest() {
+        unaryTesters();
+        // Log operator/operand
+        assertTrue(unaryOne.getOperator().equals(Unary.LOG));
+        assertTrue(unaryOne.getOperand().equals(new Variable()));
+        assertEquals("Log", unaryOne.getOperator().getUnaryName());
+        assertFalse(unaryOne.getOperator().equals(neqTester));
+
+        // Exp operator/operand
+        assertTrue(unaryTwo.getOperator().equals(Unary.EXP));
+        assertTrue(unaryTwo.getOperand().equals(new Variable()));
+        assertEquals("Exp", unaryTwo.getOperator().getUnaryName());
+        assertFalse(unaryTwo.getOperator().equals(neqTester));
+
+        // Sin operator/operand
+        assertTrue(unaryThree.getOperator().equals(Unary.SIN));
+        assertTrue(unaryThree.getOperand().equals(new Variable()));
+        assertEquals("Sin", unaryThree.getOperator().getUnaryName());
+        assertFalse(unaryThree.getOperator().equals(neqTester));
+
+        // Cos operator/operand
+        assertTrue(unaryFour.getOperator().equals(Unary.COS));
+        assertTrue(unaryFour.getOperand().equals(new Variable()));
+        assertEquals("Cos", unaryFour.getOperator().getUnaryName());
+        assertFalse(unaryFour.getOperator().equals(neqTester));
     }
 
     /**
@@ -339,6 +522,14 @@ public class CalculatorTest {
     }
 
     /**
+     * This JUnit method tests the null point exception for Log
+     */
+    @Test(expected = NullPointerException.class) 
+    public void nullLogTest() {
+        unaryOne = new Log(null);
+    }
+
+    /**
      * This JUnit Method tests a variety of Log Objects.
      */
     @Test //(expected = UnsupportedOperationException.class)
@@ -346,11 +537,20 @@ public class CalculatorTest {
         logTesters();
     }
 
+    // These fields are to be used with the Exponential tests
     /**
      * This helper method creates Exp Test Objects and stores them in the Exp
      * fields stored in this class.
      */
     private void expTesters() {     
+    }
+
+    /**
+     * This JUnit method tests the null point exception for Exp
+     */
+    @Test(expected = NullPointerException.class) 
+    public void nullExpTest() {
+        unaryTwo = new Exp(null);
     }
 
     /**
@@ -361,11 +561,20 @@ public class CalculatorTest {
         expTesters();
     }
 
+    // These fields are to be used with the Sine tests
     /**
      * This helper method creates Sin Test Objects and stores them in the Sin
      * fields stored in this class.
      */
     private void sinTesters() {     
+    }
+
+    /**
+     * This JUnit method tests the null point exception for Sin
+     */
+    @Test(expected = NullPointerException.class) 
+    public void nullSinTest() {
+        unaryThree = new Sin(null);
     }
 
     /**
@@ -376,11 +585,20 @@ public class CalculatorTest {
         sinTesters();
     }
 
+    // These fields are to be used with the Cosine tests
     /**
      * This helper method creates Cos Test Objects and stores them in the Cos
      * fields stored in this class.
      */
     private void cosTesters() {
+    }
+
+    /**
+     * This JUnit method tests the null point exception for Cos
+     */
+    @Test(expected = NullPointerException.class) 
+    public void nullCosTest() {
+        unaryFour = new Cos(null);
     }
 
     /**

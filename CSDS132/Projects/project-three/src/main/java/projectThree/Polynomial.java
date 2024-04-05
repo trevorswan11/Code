@@ -113,6 +113,7 @@ public class Polynomial extends AbstractFunction {
 
     /**
      * Computes the value of a Polynomial with a constant Operand.
+     * 0^0 is evaluated to 1, Complex numbers are NaN
      * 
      * @return A double representing the computed Polynomial
      * @throws UnsupportedOperationException If an input is expected
@@ -129,12 +130,13 @@ public class Polynomial extends AbstractFunction {
 
         // Throw an exception if a value could not be calculated
         catch (Exception e) {
-            throw new UnsupportedOperationException("One or more operands require an input!");
+            throw new UnsupportedOperationException("One or more operands require an input or are undefined!");
         }
     }
 
     /**
      * Computes an evaluated Function that is evaluated at an inputted number.
+     * 0^0 is evaluated to 1, Complex numbers are NaN
      * 
      * @param x A double to evaluate the Function Operand at
      * @return A double representing the computed Polynomial

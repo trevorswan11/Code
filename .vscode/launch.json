@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CalculatorTest",
+            "request": "launch",
+            "mainClass": "projectThree.CalculatorTest",
+            "projectName": "project-three"
+        },
+        {
+            "type": "java",
+            "name": "ButtonLabGUI",
+            "request": "launch",
+            "mainClass": "labcode11.ButtonLabGUI",
+            "projectName": "Lab11"
+        },
+        {
+            "type": "java",
             "name": "LinkedList",
             "request": "launch",
             "mainClass": "llpractice.LinkedList",
