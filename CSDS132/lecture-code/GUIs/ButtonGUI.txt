@@ -1,0 +1,51 @@
+import javafx.application.Application;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.control.Button;
+import javafx.event.EventHandler;
+import javafx.event.ActionEvent;
+
+
+/** A GUI with buttons that do something */
+public class ButtonGUI extends Application implements EventHandler<ActionEvent> {
+  
+  private Button button1;
+  private Button button2;
+  private BorderPane layout;
+  
+  /** Create the GUI with the buttons */
+  public void start(Stage primaryStage) {
+    button1 = new Button("button one");
+    button2 = new Button("button two");
+    
+    button1.setOnAction(this);
+    button2.setOnAction(this);
+    
+    layout = new BorderPane();
+    layout.setTop(button1);
+    layout.setBottom(button2);
+  
+    Scene scene = new Scene(layout);
+    primaryStage.setScene(scene);
+    primaryStage.show();
+  }
+  
+  /** The method called if a button is clicked */
+  public void handle(ActionEvent e) {
+    Button b = (Button)e.getSource();
+    
+    if (b == button1) {
+      System.out.println("I was clicked!");
+    }
+    else {
+      System.out.println("Don't click me!!!");
+    }
+  }
+  
+  /** Run the GUI */
+  public static void main(String[] args) {
+    Application.launch(args);
+  }
+}
+  
