@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="projectThree.CalculatorTest" time="0.033" tests="37" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="projectThree.CalculatorTest" time="0.032" tests="37" errors="0" skipped="0" failures="0">
   <properties>
     <property name="sun.desktop" value="windows"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
@@ -18,7 +18,7 @@
     <property name="user.country" value="US"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Amazon Corretto\jdk1.8.0_392\jre\bin"/>
-    <property name="sun.java.command" value="C:\Users\Trevor\AppData\Local\Temp\surefire7510782091966779522\surefirebooter4716824765559023146.jar C:\Users\Trevor\AppData\Local\Temp\surefire7510782091966779522 2024-04-05T15-56-12_131-jvmRun1 surefire6552043940255256672tmp surefire_07604999328108239504tmp"/>
+    <property name="sun.java.command" value="C:\Users\Trevor\AppData\Local\Temp\surefire1280226896911839766\surefirebooter5943339234211909846.jar C:\Users\Trevor\AppData\Local\Temp\surefire1280226896911839766 2024-04-05T20-13-06_206-jvmRun1 surefire6625547800843824253tmp surefire_05460155591048376262tmp"/>
     <property name="test" value="CalculatorTest"/>
     <property name="surefire.test.class.path" value="C:\Users\Trevor\OneDrive\Documents\CWRU\Code\CSDS132\projects\project-three\target\test-classes;C:\Users\Trevor\OneDrive\Documents\CWRU\Code\CSDS132\projects\project-three\target\classes;C:\Users\Trevor\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\Trevor\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -32,7 +32,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="C:\Users\Trevor\AppData\Local\Temp\surefire7510782091966779522\surefirebooter4716824765559023146.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\Trevor\AppData\Local\Temp\surefire1280226896911839766\surefirebooter5943339234211909846.jar"/>
     <property name="sun.boot.class.path" value="C:\Program Files\Amazon Corretto\jdk1.8.0_392\jre\lib\resources.jar;C:\Program Files\Amazon Corretto\jdk1.8.0_392\jre\lib\rt.jar;C:\Program Files\Amazon Corretto\jdk1.8.0_392\jre\lib\sunrsasign.jar;C:\Program Files\Amazon Corretto\jdk1.8.0_392\jre\lib\jsse.jar;C:\Program Files\Amazon Corretto\jdk1.8.0_392\jre\lib\jce.jar;C:\Program Files\Amazon Corretto\jdk1.8.0_392\jre\lib\charsets.jar;C:\Program Files\Amazon Corretto\jdk1.8.0_392\jre\lib\jfr.jar;C:\Program Files\Amazon Corretto\jdk1.8.0_392\jre\classes"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
@@ -63,41 +63,41 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="52.0"/>
   </properties>
-  <testcase name="polynomialEquals" classname="projectThree.CalculatorTest" time="0.001"/>
-  <testcase name="polynomialGetters" classname="projectThree.CalculatorTest" time="0"/>
-  <testcase name="cosValueTest" classname="projectThree.CalculatorTest" time="0"/>
-  <testcase name="binaryDerivative" classname="projectThree.CalculatorTest" time="0"/>
+  <testcase name="cosValueTest" classname="projectThree.CalculatorTest" time="0.001"/>
   <testcase name="nullCosTest" classname="projectThree.CalculatorTest" time="0"/>
   <testcase name="binaryOperatorTest" classname="projectThree.CalculatorTest" time="0"/>
-  <testcase name="cosToString" classname="projectThree.CalculatorTest" time="0"/>
-  <testcase name="expToString" classname="projectThree.CalculatorTest" time="0"/>
+  <testcase name="sinToStringTest" classname="projectThree.CalculatorTest" time="0"/>
+  <testcase name="polynomialEqualsTest" classname="projectThree.CalculatorTest" time="0"/>
   <testcase name="sinValueTest" classname="projectThree.CalculatorTest" time="0"/>
   <testcase name="binaryToStringTest" classname="projectThree.CalculatorTest" time="0"/>
   <testcase name="expDerivativeTest" classname="projectThree.CalculatorTest" time="0"/>
-  <testcase name="sinEqualsTest" classname="projectThree.CalculatorTest" time="0.001"/>
-  <testcase name="binaryNumericTest" classname="projectThree.CalculatorTest" time="0"/>
+  <testcase name="sinEqualsTest" classname="projectThree.CalculatorTest" time="0"/>
+  <testcase name="binaryNumericTest" classname="projectThree.CalculatorTest" time="0.001"/>
+  <testcase name="expToStringTest" classname="projectThree.CalculatorTest" time="0"/>
   <testcase name="nullSinTest" classname="projectThree.CalculatorTest" time="0"/>
+  <testcase name="polynomialValueTest" classname="projectThree.CalculatorTest" time="0"/>
   <testcase name="variableTest" classname="projectThree.CalculatorTest" time="0"/>
-  <testcase name="polynomialValue" classname="projectThree.CalculatorTest" time="0"/>
-  <testcase name="logDerivativeTest" classname="projectThree.CalculatorTest" time="0.001"/>
+  <testcase name="binaryDerivativeTest" classname="projectThree.CalculatorTest" time="0.001"/>
+  <testcase name="logDerivativeTest" classname="projectThree.CalculatorTest" time="0"/>
+  <testcase name="polynomialToStringTest" classname="projectThree.CalculatorTest" time="0.001"/>
   <testcase name="binaryEqualsTest" classname="projectThree.CalculatorTest" time="0"/>
-  <testcase name="logToString" classname="projectThree.CalculatorTest" time="0"/>
+  <testcase name="logToStringTest" classname="projectThree.CalculatorTest" time="0"/>
   <testcase name="expValueTest" classname="projectThree.CalculatorTest" time="0"/>
+  <testcase name="cosToStringTest" classname="projectThree.CalculatorTest" time="0.002"/>
   <testcase name="cosEqualsTest" classname="projectThree.CalculatorTest" time="0"/>
   <testcase name="nullExpTest" classname="projectThree.CalculatorTest" time="0"/>
   <testcase name="numberMethodTest" classname="projectThree.CalculatorTest" time="0"/>
   <testcase name="polynomialNullTest" classname="projectThree.CalculatorTest" time="0"/>
-  <testcase name="polynomialToString" classname="projectThree.CalculatorTest" time="0.001"/>
-  <testcase name="polynomialDerivatives" classname="projectThree.CalculatorTest" time="0.001"/>
+  <testcase name="polynomialDerivativesTest" classname="projectThree.CalculatorTest" time="0"/>
+  <testcase name="polynomialGettersTest" classname="projectThree.CalculatorTest" time="0"/>
   <testcase name="unaryTest" classname="projectThree.CalculatorTest" time="0"/>
   <testcase name="sinDerivativeTest" classname="projectThree.CalculatorTest" time="0"/>
   <testcase name="cosDerivativeTest" classname="projectThree.CalculatorTest" time="0"/>
   <testcase name="numberEqualsTest" classname="projectThree.CalculatorTest" time="0"/>
   <testcase name="logValueTest" classname="projectThree.CalculatorTest" time="0"/>
-  <testcase name="sinToString" classname="projectThree.CalculatorTest" time="0"/>
   <testcase name="expEqualsTest" classname="projectThree.CalculatorTest" time="0"/>
   <testcase name="logEqualsTest" classname="projectThree.CalculatorTest" time="0"/>
   <testcase name="binaryNullTest" classname="projectThree.CalculatorTest" time="0"/>
   <testcase name="nullLogTest" classname="projectThree.CalculatorTest" time="0"/>
-  <testcase name="binaryValueTest" classname="projectThree.CalculatorTest" time="0.001"/>
+  <testcase name="binaryValueTest" classname="projectThree.CalculatorTest" time="0"/>
 </testsuite>

@@ -3,7 +3,6 @@ package projectThree;
 // Needed JUnit imports
 import org.junit.*;
 import org.junit.experimental.theories.suppliers.TestedOn;
-
 import static org.junit.Assert.*;
 
 // Needed enum imports
@@ -45,8 +44,8 @@ public class CalculatorTest {
     @Test(expected = UnsupportedOperationException.class)
     public void variableTest() {
         varTesters();
-        assertFalse(varOne.equals(neqTester)); // Test not equals
         assertTrue(varOne.equals(varTwo)); // Test equals
+        assertFalse(varOne.equals(neqTester)); // Test not equals
         assertEquals("x", varOne.toString()); // Test toString
         assertEquals(0, varOne.value(0), 0); // Test value of 0
         assertEquals(1.0, varOne.value(1), 0); // Test value of 1
@@ -265,7 +264,7 @@ public class CalculatorTest {
      * String representations are occasionally used to test derivative output
      */
     @Test
-    public void binaryDerivative() {
+    public void binaryDerivativeTest() {
         binaryNested();
         // Create a temporary variable whose derivative is the same as itself
         assertTrue(binaryZero.equals(binaryNine.derivative())); // Test Zero Variables
@@ -279,11 +278,13 @@ public class CalculatorTest {
         assertEquals("(1.0 * x) + (x * 1.0)", binaryFour.derivative().toString()); // Test Many (multiple nested)
         assertEquals("(0.0 * 3.0 * x) + (4.0 * ((0.0 * x) + (3.0 * 1.0)))", binaryFive.derivative().toString());
         assertEquals("(1.0 * (1.0 / x)) + (x * (((0.0 * x) - (1.0 * 1.0)) / x^2.0))", binarySix.derivative().toString());
-        assertEquals("(((((1.0 * 3.0) - (x * 0.0)) / 3.0^2.0) * 5.0) - ((x / 3.0) * 0.0)) / 5.0^2.0", binarySeven.derivative().toString());
+        assertEquals("(((((1.0 * 3.0) - (x * 0.0)) / 3.0^2.0) * 5.0) - ((x / 3.0) * 0.0)) / 5.0^2.0",
+                binarySeven.derivative().toString());
         assertEquals("(((0.0 - 0.0) * x) - ((7.0 - 9.0) * 1.0)) / x^2.0", binaryEight.derivative().toString());
         assertEquals("((0.0 + 1.0) * x) + ((2.0 + x) * 1.0)", binaryTen.derivative().toString());
         assertEquals("((0.0 - 1.0) * x) + ((3.0 - x) * 1.0)", binaryEleven.derivative().toString());
-        assertEquals("(((0.0 + 1.0) * (3.0 - x)) - ((2.0 + x) * (0.0 - 1.0))) / (3.0 - x)^2.0", binaryTwelve.derivative().toString());
+        assertEquals("(((0.0 + 1.0) * (3.0 - x)) - ((2.0 + x) * (0.0 - 1.0))) / (3.0 - x)^2.0",
+                binaryTwelve.derivative().toString());
     }
 
     // These fields are to be used with the Polynomial tests
@@ -325,7 +326,7 @@ public class CalculatorTest {
      * This JUnit Method tests a variety of Polynomial Objects Getter Methods.
      */
     @Test
-    public void polynomialGetters() {
+    public void polynomialGettersTest() {
         polySimpleTesters();
         assertTrue(new Number(0).equals(polyOne.getOperand())); // Test 0
         assertEquals(0, polyOne.getPower(), 0);
@@ -367,7 +368,7 @@ public class CalculatorTest {
      * This tests the equals method of these Objects
      */
     @Test
-    public void polynomialEquals() {
+    public void polynomialEqualsTest() {
         polyComplexTesters();
         assertTrue(polyZero.equals(polyZero)); // Test 0
         assertTrue(new Polynomial(new Number(1), 1).equals(new Polynomial(new Number(1), 1))); // Test 1
@@ -385,11 +386,11 @@ public class CalculatorTest {
      * This tests the toString Method of these Objects
      */
     @Test
-    public void polynomialToString() {
+    public void polynomialToStringTest() {
         polyComplexTesters();
         assertEquals("0.0^0.0", polyZero.toString()); // Test 0
         assertEquals("1.0^1.0", new Polynomial(new Number(1), 1).toString()); // Test 1
-        assertNotEquals("0.0^1.0", new Polynomial(new Number(1), 1).toString()); // Known False Assertion
+        assertNotEquals(neqTester, new Polynomial(new Number(1), 1).toString()); // Known False Assertion
         assertEquals("2.0^2.0^2.0", polyOne.toString()); // Test Many
         assertEquals("x^2.0^-3.0", polyTwo.toString());
         assertEquals("x^2.0^-0.5^4.0", polyThree.toString());
@@ -408,7 +409,7 @@ public class CalculatorTest {
      * This tests the value Methods of these Objects
      */
     @Test(expected = UnsupportedOperationException.class)
-    public void polynomialValue() {
+    public void polynomialValueTest() {
         polyComplexTesters();
         assertEquals(1, polyZero.value(), 0); // Test 0
         assertEquals(1, polyZero.value(0), 0);
@@ -439,7 +440,7 @@ public class CalculatorTest {
      * String representations are used to check equality.
      */
     @Test
-    public void polynomialDerivatives() {
+    public void polynomialDerivativesTest() {
         polyComplexTesters();
         assertEquals("0.0", polyZero.derivative().toString()); // Test 0
         assertEquals("1.0 * 0.0", new Polynomial(new Number(1), 1).derivative().toString()); // Test 1
@@ -576,7 +577,7 @@ public class CalculatorTest {
      * This method specifically focuses on the toString method.
      */
     @Test
-    public void logToString() {
+    public void logToStringTest() {
         logTesters();
         assertEquals("Log[-1.0]", logNegative.toString()); // Test Negative
         assertEquals("Log[0.0]", logZero.toString()); // Test Zero
@@ -598,7 +599,7 @@ public class CalculatorTest {
         assertTrue(Double.isNaN(logNegative.value())); // Test Negative
         assertTrue(Double.isNaN(logNegative.value(10)));
         assertTrue(Double.isInfinite(logZero.value())); // Test Zero
-        assertTrue(Double.isInfinite(logZero.value()));
+        assertTrue(Double.isInfinite(logZero.value(10)));
         assertEquals(0, logOne.value(), 0); // Test One
         assertEquals(0, logOne.value(10), 0);
 
@@ -692,7 +693,7 @@ public class CalculatorTest {
      * This method specifically focuses on the toString method.
      */
     @Test
-    public void expToString() {
+    public void expToStringTest() {
         expTesters();
         assertEquals("Exp[-1.0]", expNegative.toString()); // Test Negative
         assertEquals("Exp[0.0]", expZero.toString()); // Test Zero
@@ -809,7 +810,7 @@ public class CalculatorTest {
      * This method specifically focuses on the toString method.
      */
     @Test
-    public void sinToString() {
+    public void sinToStringTest() {
         sinTesters();
         assertEquals("Sin[0.0]", sinZero.toString()); // Test Zero
         assertEquals("Sin[1.0]", sinOne.toString()); // Test One
@@ -922,7 +923,7 @@ public class CalculatorTest {
      * This method specifically focuses on the toString method.
      */
     @Test
-    public void cosToString() {
+    public void cosToStringTest() {
         cosTesters();
         assertEquals("Cos[0.0]", cosZero.toString()); // Test Zero
         assertEquals("Cos[1.0]", cosOne.toString()); // Test One
