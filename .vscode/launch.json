@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "ButtonGUI",
+            "request": "launch",
+            "mainClass": "ButtonGUI",
+            "projectName": "Code_169593a1"
+        },
+        {
+            "type": "java",
+            "name": "PreLab12",
+            "request": "launch",
+            "mainClass": "prelabcode12.PreLab12",
+            "projectName": "Lab12"
+        },
+        {
+            "type": "java",
             "name": "CalculatorTest",
             "request": "launch",
             "mainClass": "projectThree.CalculatorTest",
