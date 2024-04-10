@@ -3,8 +3,12 @@ package projectFour;
 import java.util.List;
 
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -183,7 +187,65 @@ public class SlideGame extends Application {
         List<String> input = getParameters().getRaw();
         this.setBoardDim(SlideGame.parseArgs(input));
 
-        
+        // Create a GridPane of buttons fitting the dimensions of the board
+        GridPane buttonPane = new GridPane();
+
+        /*
+         * Creates buttons and adds them to the button pane.
+         * precondition: length and width have been determined
+         * postcondition: button pane has array with dimensions matching gameBoard
+         */
+        for (int i = 0; i < this.getBoardDim()[0]; i++) {
+            for (int j = 0; j < this.getBoardDim()[1]; j++) {
+                buttonPane.add(new Button(), i, j);
+            }
+        }
+
+        // Create a border pane to organize the GUI
+        BorderPane organizePane = new BorderPane();
+
+        organizePane.setCenter(buttonPane);
+        organizePane.setTop(this.buttonBar());
+
+        BorderPane.setAlignment(organizePane, Pos.BASELINE_CENTER);
+
+        // Create/set/show the scene
+        Scene scene = new Scene(organizePane);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    /**
+     * Creates a ButtonBar that contains the possible moves for the game.
+     * @return A ButtonBar Object with the needed buttons created and labeled
+     */
+    public ButtonBar buttonBar() {
+        // Create the button bar object itself
+        ButtonBar buttonBar = new ButtonBar();
+
+        // Create buttons for the possible moves
+        Button left = new Button("Left");
+        Button leftDown = new Button("Down-Left");
+        Button leftUp = new Button("Up-Left");
+        Button down = new Button("Down");
+        Button up = new Button("Up");
+        Button rightUp = new Button("Up-Right");
+        Button rightDown = new Button("Down-Right");
+        Button right = new Button("Right");
+
+        // Set button data to order the buttons properly
+        ButtonBar.setButtonData(left, ButtonData.LEFT);
+        ButtonBar.setButtonData(leftDown, ButtonData.NEXT_FORWARD);
+        ButtonBar.setButtonData(leftUp, ButtonData.NEXT_FORWARD);
+        ButtonBar.setButtonData(down, ButtonData.NEXT_FORWARD);
+        ButtonBar.setButtonData(up, ButtonData.NEXT_FORWARD);
+        ButtonBar.setButtonData(rightUp, ButtonData.NEXT_FORWARD);
+        ButtonBar.setButtonData(rightDown, ButtonData.NEXT_FORWARD);
+        ButtonBar.setButtonData(right, ButtonData.RIGHT);
+
+        // Add all the buttons and return full button bar
+        buttonBar.getButtons().addAll(left, leftDown, leftUp, down, up, rightUp, rightDown, right);
+        return buttonBar;
     }
 
     /**

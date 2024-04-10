@@ -76,7 +76,7 @@
         },
         {
             "type": "java",
-            "name": "Debug (Attach)",
+            "name": "Maven Debug",
             "request": "attach",
             "hostName": "localhost",
             "port": 8000
