@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "SlideGame",
+            "request": "launch",
+            "mainClass": "projectFour.SlideGame",
+            "projectName": "project-four"
+        },
+        {
+            "type": "java",
             "name": "ButtonGUI",
             "request": "launch",
             "mainClass": "ButtonGUI",
