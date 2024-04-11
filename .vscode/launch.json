@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "SlideGameMock",
+            "request": "launch",
+            "mainClass": "projectFour.SlideGameMock",
+            "projectName": "project-four"
+        },
+        {
+            "type": "java",
             "name": "SlideGame",
             "request": "launch",
             "mainClass": "projectFour.SlideGame",

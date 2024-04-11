@@ -1,14 +1,11 @@
 package projectFour;
 
-import java.util.List;
+import java.util.NoSuchElementException;
 
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -28,111 +25,70 @@ public class SlideGame extends Application {
 
     /**
      * A helper method to parse the args of the command line to set the dimensions
-     * of the board.
+     * of the board. Takes command line arguments and directly modifies the
+     * dimensions.
      * 
-     * @param input A String List that is the raw arguments from the user
-     * @return A 2x1 int array for the dimensions
+     * @param params The command line arguments
      */
-    private static int[] parseArgs(List<String> input) {
-        // A temp array for the dimensions
-        int[] dimensions = new int[] { 4, 4 };
-
-        // The length of the board
+    private void parseArgs(Parameters params) {
+        // Variables to store the length and width
         int length = -1;
-
-        // The width of the board
         int width = -1;
 
-        // A boolean variable indicating if the dimensions have been filled
-        boolean filled = false;
-
-        /*
-         * Determine what the user requested for the board size
-         * The loop parses the String to an int and stores the first two in an int array
-         */
-        for (String num : input) {
-            // if length has not been filled, then try to fill it
-            if (length == -1 && filled == false)
-                // Try to parse the num as an int
-                try {
-                    // Temp length
-                    int first = Integer.parseInt(num);
-
-                    // Make sure first is not smaller than 4
-                    if (first < 4) {
-                        length = 4;
-                    }
-
-                    // Make sure first is not larger than 10
-                    else if (first > 10) {
-                        length = 10;
-                    }
-
-                    // Otherwise set length to the parsed value
-                    else {
-                        length = first;
-                    }
-                }
-
-                // If an exception was caught, 4 is default 
-                catch (Exception e) {
-                    length = 4;
-                }
-            
-            // if the length has been filled but the dimensions are not filled
-            else if (filled == false) {
-                // Try to parse the num as an int
-                try {
-                    // Temp width
-                    int second = Integer.parseInt(num);
-
-                    // Make sure first is not smaller than 4
-                    if (second < 4) {
-                        width = 4;
-                    }
-
-                    // Make sure first is not larger than 10
-                    else if (second > 10) {
-                        width = 10;
-                    }
-
-                    // Otherwise set width to the parsed value
-                    else {
-                        width = second;
-                    }
-                } 
-                
-                // if an exception was caught, 4 is the default
-                catch (Exception e) {
-                    width = 4;
-                }
-
-                // Set filled to true and width and length must've been reached
-                filled = true;
+        // Parse the command line arguments
+        if (!params.getRaw().isEmpty()) {
+            try {
+                width = Integer.parseInt(params.getRaw().get(0));
+                length = Integer.parseInt(params.getRaw().get(1));
+            } catch (Exception e) {
+                length = 4;
+                width = 4;
             }
         }
 
-        // If the parameters were filled, then set them to the dimensions
-        if (filled) {
-            dimensions[0] = length;
-            dimensions[1] = width;
+        // Otherwise set length and width to 4
+        else {
+            length = 4;
+            width = 4;
         }
 
-        // Return the array
-        return dimensions;
+        // If the length is unreasonable, change to a rounded value
+        if (length < 4) {
+            length = 4;
+        }
+
+        // I want 10 x 10 to be the max
+        else if (length > 10) {
+            length = 10;
+        }
+
+        // If the width is unreasonable, change to a rounded value
+        if (width < 4) {
+            width = 4;
+        }
+
+        // I want 10 x 10 to be the max
+        else if (width > 10) {
+            width = 10;
+        }
+
+        // Set the board dimensions based on length and width
+        this.setBoardDim(new int[] { width, length });
     }
 
     /**
-     * A method to retrieve the board's dimensions.
-     * @return A 2 column, single row array containing length X width data
+     * A method to retrieve the boards dimensions.
+     * 
+     * @return The boards dimensions as an int array in form {width, length}
      */
     public int[] getBoardDim() {
-        return boardDim;
+        return this.boardDim;
     }
 
     /**
      * A method to set the board's dimensions.
-     * @param boardDim A 2 column, single row int array representing length x width
+     * 
+     * @param boardDim A 2 column, single row int array representing {width, length}
      */
     public void setBoardDim(int[] boardDim) {
         this.boardDim = boardDim;
@@ -140,6 +96,7 @@ public class SlideGame extends Application {
 
     /**
      * A method to retrieve the contents of the game board
+     * 
      * @return A 2D array of ints signifying the game's state.
      */
     public int[][] getGameBoard() {
@@ -148,6 +105,7 @@ public class SlideGame extends Application {
 
     /**
      * A method to set the entire state of the game.
+     * 
      * @param gameBoard A full game board 2D array of ints
      */
     public void setGameBoard(int[][] gameBoard) {
@@ -156,17 +114,18 @@ public class SlideGame extends Application {
 
     /**
      * A Method to set an individual value in the board game
-     * @param val The value to be placed in the array
-     * @param col The column position of the value
-     * @param row The row position of the value
+     * 
+     * @param val      The value to be placed in the array
+     * @param position an array indicating the position in the game to alter as
+     *                 {row, column}
      */
-    public void setPosition(int val, int row, int col) {
+    public void setPosition(int val, int[] position) {
         // Create a temporary board
         int[][] gameBoard = this.getGameBoard();
 
         // Try to change the value in the array
         try {
-            gameBoard[row][col] = val;
+            gameBoard[position[0]][position[1]] = val;
         }
 
         // Exception handling doesn't matter, set the board to the temp board
@@ -184,70 +143,118 @@ public class SlideGame extends Application {
     @Override
     public void start(Stage primaryStage) {
         // Gather the command line arguments and parse it
-        List<String> input = getParameters().getRaw();
-        this.setBoardDim(SlideGame.parseArgs(input));
+        this.parseArgs(getParameters());
+
+        // Retrieve the board's dimensions
+        int length = this.getBoardDim()[0];
+        int width = this.getBoardDim()[1];
 
         // Create a GridPane of buttons fitting the dimensions of the board
+        Button[][] buttons = new Button[width][length];
         GridPane buttonPane = new GridPane();
+
+        // Generate random indices for the original 1
+        // int[] randomStart = this.randomIndex();
+
+        // Generate the original board and set one random place to 1
+        this.setGameBoard(this.emptyBoard(this.getBoardDim()));
+        this.setPosition(1, new int[] {1,1});
 
         /*
          * Creates buttons and adds them to the button pane.
          * precondition: length and width have been determined
          * postcondition: button pane has array with dimensions matching gameBoard
          */
-        for (int i = 0; i < this.getBoardDim()[0]; i++) {
-            for (int j = 0; j < this.getBoardDim()[1]; j++) {
-                buttonPane.add(new Button(), i, j);
+        for (int i = 0; i < length; i++) {
+            for (int j = 0; j < width; j++) {
+                // Create a button and store it in the array of buttons
+                Button button = new Button();
+                buttons[j][i] = button;
+
+                // Set the size and position of the button
+                button.setMinSize(50, 50);
+                button.setAlignment(Pos.CENTER);
+
+                // Set the text of the button to the text in the game board
+                String text = Integer.toString(getGameBoard()[j][i]);
+                button.setText(text.equals("0") ? "" : text);
+
+                // Add the button to the pane
+                buttonPane.add(button, i, j);
             }
         }
 
-        // Create a border pane to organize the GUI
-        BorderPane organizePane = new BorderPane();
-
-        organizePane.setCenter(buttonPane);
-        organizePane.setTop(this.buttonBar());
-
-        BorderPane.setAlignment(buttonPane, Pos.CENTER);
-        BorderPane.setAlignment(this.buttonBar(), Pos.CENTER);
-        BorderPane.setAlignment(organizePane, Pos.CENTER);
-
         // Create/set/show the scene
-        Scene scene = new Scene(organizePane);
+        Scene scene = new Scene(buttonPane);
         primaryStage.setScene(scene);
+        primaryStage.setTitle("Slide Game");
         primaryStage.show();
     }
 
     /**
-     * Creates a ButtonBar that contains the possible moves for the game.
-     * @return A ButtonBar Object with the needed buttons created and labeled
+     * Creates an empty board of specified 2D size full of zeros.
+     * 
+     * @param dimensions Length x Width array to create the empty board
      */
-    public ButtonBar buttonBar() {
-        // Create the button bar object itself
-        ButtonBar buttonBar = new ButtonBar();
+    public int[][] emptyBoard(int[] dimensions) {
+        // Create a array with width nested arrays
+        int[][] board = new int[dimensions[1]][];
 
-        // Create buttons for the possible moves
-        Button left = new Button("Left");
-        Button leftDown = new Button("Down-Left");
-        Button leftUp = new Button("Up-Left");
-        Button down = new Button("Down");
-        Button up = new Button("Up");
-        Button rightUp = new Button("Up-Right");
-        Button rightDown = new Button("Down-Right");
-        Button right = new Button("Right");
+        // Add length arrays of zeros to the board
+        for (int i = 0; i < dimensions[1]; i++) {
+            board[i] = new int[dimensions[0]];
+        }
 
-        // Set button data to order the buttons properly
-        ButtonBar.setButtonData(left, ButtonData.LEFT);
-        ButtonBar.setButtonData(leftDown, ButtonData.NEXT_FORWARD);
-        ButtonBar.setButtonData(leftUp, ButtonData.NEXT_FORWARD);
-        ButtonBar.setButtonData(down, ButtonData.NEXT_FORWARD);
-        ButtonBar.setButtonData(up, ButtonData.NEXT_FORWARD);
-        ButtonBar.setButtonData(rightUp, ButtonData.NEXT_FORWARD);
-        ButtonBar.setButtonData(rightDown, ButtonData.NEXT_FORWARD);
-        ButtonBar.setButtonData(right, ButtonData.RIGHT);
+        // Return the full board
+        return board;
+    }
 
-        // Add all the buttons and return full button bar
-        buttonBar.getButtons().addAll(left, leftDown, leftUp, down, up, rightUp, rightDown, right);
-        return buttonBar;
+    /**
+     * Generates a pseudo-random position in the board to alter. The position's
+     * criteria is that it contains 0.
+     * 
+     * @return An array in form {row, column} which is randomly chosen from a pool
+     *         of zero-values
+     * @throws NoSuchElementException when no indices fir the criteria of being zero 
+     */
+    public int[] randomIndex() throws NoSuchElementException {
+        // retrieve the game board and the total number of elements in it
+        int[][] board = this.getGameBoard();
+        int size = this.getBoardDim()[0] * this.getBoardDim()[1];
+
+        // int to store number of non-zero spaces
+        int nonZeros = 0;
+
+        // Check for a non-zero location in the board
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                // if a non-zero is found, add to the index
+                if (board[i][j] != 0) {
+                    nonZeros++;
+                }
+            }
+        }
+
+        // If there are as many non-zeros as there are possible positions, throw exception
+        if (nonZeros == size) {
+            throw new NoSuchElementException("There are no empty locations on the board.");
+        }
+
+        // boolean variable to indicate if a suitable index has been found
+        boolean found = false;
+
+        // Loop through the game board for as many elements are in it
+        int element = 0;
+        while (element < size && !found) {
+            // Generate two random numbers to index into the board
+            int randRow = (int) ((Math.random() * (size - 1)) + 1);
+            int randCol = (int) ((Math.random() * (size - 1)) + 1);
+
+            // If either index contains a non-zero value, do nothing
+
+            element++;
+        }
+        return new int[] {1,1};
     }
 
     /**
