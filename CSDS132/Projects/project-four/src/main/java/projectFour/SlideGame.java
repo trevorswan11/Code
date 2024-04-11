@@ -207,7 +207,9 @@ public class SlideGame extends Application {
         organizePane.setCenter(buttonPane);
         organizePane.setTop(this.buttonBar());
 
-        BorderPane.setAlignment(organizePane, Pos.BASELINE_CENTER);
+        organizePane.setAlignment(buttonPane, Pos.CENTER);
+        organizePane.setAlignment(this.buttonBar(), Pos.CENTER);
+        organizePane.setAlignment(organizePane, Pos.CENTER);
 
         // Create/set/show the scene
         Scene scene = new Scene(organizePane);
