@@ -11,6 +11,7 @@ import static org.junit.Assert.*;
  * @author Trevor Swan
  * @version CSDS132 - Spring 2024
  */
+@SuppressWarnings("unused")
 public class SlideGameTest {
     // SlideGame object to be used in testing
     SlideGame game = new SlideGame();

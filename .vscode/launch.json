@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "DLNode",
+            "request": "launch",
+            "mainClass": "prelabcode13.DLNode",
+            "projectName": "Lab13"
+        },
+        {
+            "type": "java",
             "name": "SlideGameMock",
             "request": "launch",
             "mainClass": "projectFour.SlideGameMock",
