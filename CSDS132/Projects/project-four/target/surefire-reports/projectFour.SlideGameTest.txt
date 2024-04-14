@@ -1,0 +1,9 @@
+-------------------------------------------------------------------------------
+Test set: projectFour.SlideGameTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.025 s <<< FAILURE! - in projectFour.SlideGameTest
+gameBoardTest(projectFour.SlideGameTest)  Time elapsed: 0.004 s  <<< ERROR!
+java.lang.NullPointerException
+	at projectFour.SlideGameTest.assertBoardEquals(SlideGameTest.java:52)
+	at projectFour.SlideGameTest.gameBoardTest(SlideGameTest.java:95)
+

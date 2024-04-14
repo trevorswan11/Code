@@ -97,19 +97,9 @@ public class SlideGame extends Application {
             col = 4;
         }
 
-        // I want 10 x 10 to be the max
-        else if (col > 10) {
-            col = 10;
-        }
-
         // If the row is unreasonable, change to a rounded value
         if (row < 4) {
             row = 4;
-        }
-
-        // I want 10 x 10 to be the max
-        else if (row > 10) {
-            row = 10;
         }
 
         // Set the board dimensions based on length and width
@@ -199,15 +189,17 @@ public class SlideGame extends Application {
     /**
      * Creates an empty board of specified 2D size full of zeros.
      * 
-     * @param dimensions Length x Width array to create the empty board
+     * @param dimensions {row, col} array to create the empty board
      */
     private int[][] emptyBoard(int[] dimensions) {
         // Create a array with row nested arrays
-        int[][] board = new int[dimensions[0]][];
+        int[][] board = new int[dimensions[0]][dimensions[1]];
 
-        // Add length arrays of zeros to the board
+        // set all the indices to zero
         for (int i = 0; i < dimensions[0]; i++) {
-            board[i] = new int[dimensions[1]];
+            for (int j = 0; j < dimensions[1]; j++) {
+                board[i][j] = 0;
+            }
         }
 
         // Return the full board
