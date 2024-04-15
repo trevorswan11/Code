@@ -20,6 +20,7 @@ import javafx.stage.Stage;
  * @author Trevor Swan
  * @version CSDS132 - Spring 2024
  */
+@SuppressWarnings("unused")
 public class SlideGame extends Application {
     // An int array to store the size of the board
     private int[] boardDim;
@@ -42,6 +43,22 @@ public class SlideGame extends Application {
      * @param boardDim A 2 column, single row int array representing {width, length}
      */
     public void setBoardDim(int[] boardDim) {
+        // If the board is null, set it to 4 x 4
+        if (boardDim == null) {
+            boardDim = new int[] { 4, 4 };
+        }
+
+        // Prevent the board from being smaller than 4 x 4. check rows
+        if (boardDim[0] < 4) {
+            boardDim[0] = 4;
+        }
+
+        // Check cols for the same
+        if (boardDim[1] < 4) {
+            boardDim[1] = 4;
+        }
+
+        // Do the actual setting part of this setter method
         this.boardDim = boardDim;
     }
 
@@ -77,12 +94,24 @@ public class SlideGame extends Application {
 
         // Parse the command line arguments
         if (!params.getRaw().isEmpty()) {
+            // Try to parse the row value
             try {
                 row = Integer.parseInt(params.getRaw().get(0));
-                col = Integer.parseInt(params.getRaw().get(1));
-            } catch (Exception e) {
-                col = 4;
+            } 
+            
+            // If the slot has a non-numeric value, set row to 4
+            catch (Exception e) {
                 row = 4;
+            }
+
+            // Try to parse the column value
+            try {
+                col = Integer.parseInt(params.getRaw().get(1));
+            } 
+            
+            // If the slot has a non-numeric value, set column to 4
+            catch (Exception e) {
+                col = 4;
             }
         }
 
@@ -120,10 +149,11 @@ public class SlideGame extends Application {
         // Try to change the value in the array
         try {
             gameBoard[position[0]][position[1]] = val;
+            this.setGameBoard(gameBoard);
         }
 
-        // Exception handling doesn't matter, set the board to the temp board
-        finally {
+        // If indices are out of bounds, return the base board
+        catch (Exception e) {
             this.setGameBoard(gameBoard);
         }
     }
@@ -192,6 +222,16 @@ public class SlideGame extends Application {
      * @param dimensions {row, col} array to create the empty board
      */
     private int[][] emptyBoard(int[] dimensions) {
+        // Return null if the dimensions are null
+        if (dimensions == null) {
+            return null;
+        }
+
+        // Return null if the dimensions are 0
+        if (dimensions[0] == 0 || dimensions[1] == 0) {
+            return null;
+        }
+
         // Create a array with row nested arrays
         int[][] board = new int[dimensions[0]][dimensions[1]];
 
@@ -225,7 +265,7 @@ public class SlideGame extends Application {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
                 if (board[i][j] == 0) {
-                    zeroIndices.add(new int[]{i, j});
+                    zeroIndices.add(new int[] { i, j });
                 }
             }
         }
@@ -239,6 +279,172 @@ public class SlideGame extends Application {
         Random rand = new Random();
         int[] randomIndex = zeroIndices.get(rand.nextInt(zeroIndices.size()));
         return randomIndex;
+    }
+
+    /**
+     * Transposes the board horizontally. The board is transposed by reversing the
+     * order of the values in each row.
+     * 
+     * @return The transposed board, flipped along the horizontal axis
+     */
+    private int[][] flipHorizontal() {
+        // Retrieve the board
+        int[][] board = this.getGameBoard();
+
+        // Loop through the board for as many columns there are
+        for (int i = 0; i < board[0].length; i++) {
+            // Create pointers for top and bottom
+            int top = 0;
+            int bottom = board.length - 1;
+
+            // While the top pointer is less than the bottom, swap the values
+            while (top < bottom) {
+                // Store the value in temp to swap properly
+                int temp = board[top][i];
+
+                // Swap the values using temp and pointers
+                board[top][i] = board[bottom][i];
+                board[bottom][i] = temp;
+
+                // increment and decrement as needed
+                top++;
+                bottom--;
+            }
+        }
+
+        // Return the board
+        return board;
+    }
+
+    /**
+     * Transposes the board vertically. The board is transposed by reversing the
+     * order of the values in each column.
+     * 
+     * @return The transposed board, flipped along the vertical axis
+     */
+    private int[][] flipVertical() {
+        // Retrieve the board
+        int[][] board = this.getGameBoard();
+
+        // Loop through the board dor as many rows there are
+        for (int i = 0; i < board.length; i++) {
+            // Create pointers for left and right
+            int left = 0;
+            int right = board[i].length - 1;
+
+            // While the left pointer is less than the right, swap the values
+            while (left < right) {
+                // Store the value in temp to swap properly
+                int temp = board[i][left];
+
+                // Swap the values using the temp and pointers
+                board[i][left] = board[i][right];
+                board[i][right] = temp;
+
+                // Increment and decrement as needed
+                left++;
+                right--;
+            }
+        }
+
+        // Return the board
+        return board;
+    }
+
+    /**
+     * Transposes the board by definition. The board is transposed by changing the
+     * first column to the first row, and the first row to the first column, etc.
+     * 
+     * @return The transposed board, uses definition of matrix transposition
+     */
+    private int[][] flipDiagonal() {
+        // Retrieve the board
+        int[][] board = this.getGameBoard();
+
+        // Create a new array with column and row swapped
+        int[][] transposed = new int[board[0].length][board.length];
+
+        // Loop through the boards full contents
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                transposed[j][i] = board[i][j];
+            }
+        }
+
+        // Return the new array
+        return transposed;
+    }
+
+    /**
+     * Slides the board to the left. All zeros are moved to the left and all
+     * non-zeroes are added together as possible. Follows standard sliding
+     * algorithm from the actual 2048 game.
+     */
+    private void slideLeft() {
+        // TODO
+    }
+    
+    /**
+     * Slides the board to the right. All zeros are moved to the right and all
+     * non-zeroes are added together as possible. Follows standard sliding
+     * algorithm from the actual 2048 game.
+     */
+    private void slideRight() {
+        // TODO
+    }
+
+    /**
+     * Slides the board to the up. All zeros are moved to the up and all
+     * non-zeroes are added together as possible. Follows standard sliding
+     * algorithm from the actual 2048 game.
+     */
+    private void slideUp() {
+        // TODO
+    }
+
+    /**
+     * Slides the board to the down. All zeros are moved to the down and all
+     * non-zeroes are added together as possible. Follows standard sliding
+     * algorithm from the actual 2048 game.
+     */
+    private void slideDown() {
+        // TODO
+    }
+
+    /**
+     * Slides the board to the upper left corner. All zeros are moved to the upper left 
+     * and all non-zeroes are added together as possible. Follows standard sliding
+     * algorithm from the actual 2048 game, but diagonally.
+     */
+    private void slideUpLeft() {
+        // TODO
+    }
+
+    /**
+     * Slides the board to the upper right corner. All zeros are moved to the upper right 
+     * and all non-zeroes are added together as possible. Follows standard sliding
+     * algorithm from the actual 2048 game, but diagonally.
+     */
+    private void slideUpRight() {
+        // TODO
+    }
+
+    /**
+     * Slides the board to the lower left corner. All zeros are moved to the lower left 
+     * and all non-zeroes are added together as possible. Follows standard sliding
+     * algorithm from the actual 2048 game, but diagonally.
+     */
+    private void slideDownLeft() {
+        // TODO
+    }
+
+    /**
+     * Slides the board to the lower right corner. All zeros are moved to the lower right 
+     * and all non-zeroes are added together as possible. Follows standard sliding
+     * algorithm from the actual 2048 game, but diagonally.
+     */
+    private void slideDownRight() {
+        // TODO
     }
 
     /**
