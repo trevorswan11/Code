@@ -6,6 +6,8 @@ import java.util.NoSuchElementException;
 import java.util.Random;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -205,6 +207,14 @@ public class SlideGame extends Application {
             }
         }
 
+        // Create a handler for the button clicks
+        EventHandler<ActionEvent> buttonHandler = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                // Get the button that was clicked
+            }
+        };
+
         // Organize the GUI with a BorderPane
         BorderPane slideGame = new BorderPane();
         slideGame.setCenter(buttonPane);
@@ -285,6 +295,9 @@ public class SlideGame extends Application {
      * Transposes the board horizontally. The board is transposed by reversing the
      * order of the values in each row.
      * 
+     * ! This method may not be necessary, but it is included and tested just in case
+     * ! it is needed for future logic.
+     * 
      * @return The transposed board, flipped along the horizontal axis
      */
     private int[][] flipHorizontal() {
@@ -357,7 +370,7 @@ public class SlideGame extends Application {
      * 
      * @return The transposed board, uses definition of matrix transposition
      */
-    private int[][] flipDiagonal() {
+    private int[][] transpose() {
         // Retrieve the board
         int[][] board = this.getGameBoard();
 
@@ -373,6 +386,85 @@ public class SlideGame extends Application {
 
         // Return the new array
         return transposed;
+    }
+
+    /**
+     * A class that contains all the logic for the game. It handles the sliding
+     * mechanics for individual rows and columns.
+     *  
+     * @author Trevor Swan
+     * @version CSDS132 - Spring 2024
+     */
+    private static class Logic {
+        // An arbitrary slide game for row manipulations
+        SlideGame arbitraryGame = new SlideGame();
+
+        /**
+         * Slides the elements in a row to the left. Equivalent values are combined, and
+         * vacant slots become zeros.
+         * 
+         * @param row The row to slide
+         * @return A new row with the values slid to the left
+         */
+        private int[] mergeLeft(int[] row) {
+            // Create a new row for sliding and returning
+            int[] newRow = new int[row.length];
+
+
+
+            // TODO
+            return null;
+        }
+
+        /**
+         * Slides the elements in a row to the right. Equivalent values are combined, and
+         * vacant slots become zeros.
+         * 
+         * @param row The row to slide
+         * @return A new row with the values slid to the right
+         */
+        private int[] mergeRight(int[] row) {
+            // Set and retrieve the board after flipping vertically
+            arbitraryGame.setGameBoard(new int[][] { row } );
+            arbitraryGame.flipVertical();
+            int[][] gameBoard = arbitraryGame.getGameBoard();
+
+            // TODO
+            return null;
+        }
+
+        /**
+         * Slides the elements in a column to the up. Equivalent values are combined, and
+         * vacant slots become zeros.
+         * 
+         * @param column The column to slide
+         * @return A new column with the values slid to the up
+         */
+        private int[] mergeUp(int[] column) {
+            // Set and retrieve the board
+            arbitraryGame.setGameBoard(new int[][] { column } );
+            int[][] gameBoard = arbitraryGame.getGameBoard();
+
+            // TODO
+            return null;
+        }
+
+        /**
+         * Slides the elements in a column down. Equivalent values are combined, and
+         * vacant slots become zeros.
+         * 
+         * @param column The column to slide
+         * @return A new column with the values slid to the down
+         */
+        private int[] mergeDown(int[] column) {
+            // Set and retrieve the board
+            arbitraryGame.setGameBoard(new int[][] { column } );
+            arbitraryGame.flipVertical();
+            int[][] gameBoard = arbitraryGame.getGameBoard();
+
+            // TODO
+            return null;
+        }
     }
 
     /**

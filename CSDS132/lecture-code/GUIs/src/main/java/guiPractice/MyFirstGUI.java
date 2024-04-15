@@ -1,3 +1,5 @@
+package guiPractice;
+
 // You should know these by heart after the fourth project
 import javafx.application.Application;
 import javafx.scene.Scene;

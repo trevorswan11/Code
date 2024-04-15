@@ -26,7 +26,7 @@ public class SlideGameTest {
     Method randomIndex;
     Method flipHorizontal;
     Method flipVertical;
-    Method flipDiagonal;
+    Method transpose;
 
     // SlideGame object to be used in testing
     SlideGame game = new SlideGame();
@@ -37,7 +37,7 @@ public class SlideGameTest {
      * @throws SecurityException     when needed, java handles
      * @throws NoSuchMethodException when method name does not exist
      */
-    private void privateMethods() throws NoSuchMethodException, SecurityException {
+    private void privateMethods() throws SecurityException, NoSuchMethodException {
         // grab the parseArgs method
         parseArgs = SlideGame.class.getDeclaredMethod("parseArgs", Parameters.class);
         parseArgs.setAccessible(true);
@@ -62,9 +62,43 @@ public class SlideGameTest {
         flipVertical = SlideGame.class.getDeclaredMethod("flipVertical");
         flipVertical.setAccessible(true);
 
-        // Grab the flipDiagonal method
-        flipDiagonal = SlideGame.class.getDeclaredMethod("flipDiagonal");
-        flipDiagonal.setAccessible(true);
+        // Grab the transpose method
+        transpose = SlideGame.class.getDeclaredMethod("transpose");
+        transpose.setAccessible(true);
+    }
+
+    // A group of methods to be pulled from the Logic nested class
+    Method mergeLeft;
+    Method mergeRight;
+    Method mergeUp;
+    Method mergeDown;
+
+    /**
+     * This helper method declares the private Logic methods to be tested.
+     * 
+     * @throws SecurityException     when needed, java handles
+     * @throws NoSuchMethodException when method name does not exist
+     * @throws ClassNotFoundException wen class name does not exist
+     */
+    private void logicMethods() throws SecurityException, NoSuchMethodException, ClassNotFoundException {
+        // Grab the SlideGame class
+        Class<?> logicClass = Class.forName("projectFour.SlideGame$Logic");
+
+        // Grab the mergeLeft method
+        mergeLeft = logicClass.getDeclaredMethod("mergeLeft", int[].class);
+        mergeLeft.setAccessible(true);
+
+        // Grab the mergeRight method
+        mergeRight = logicClass.getDeclaredMethod("mergeRight", int[].class);
+        mergeRight.setAccessible(true);
+
+        // Grab the mergeUp method
+        mergeUp = logicClass.getDeclaredMethod("mergeUp", int[].class);
+        mergeUp.setAccessible(true);
+
+        // Grab the mergeDown method
+        mergeDown = logicClass.getDeclaredMethod("mergeDown", int[].class);
+        mergeDown.setAccessible(true);
     }
 
     /**
@@ -638,7 +672,7 @@ public class SlideGameTest {
 
     // Test the flip diagonal method
     @Test
-    public void flipDiagonalTest()
+    public void transposeTest()
             throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException {
         // Use the private helper method to create the methods
         privateMethods();
@@ -655,7 +689,7 @@ public class SlideGameTest {
         expectedBoard = new int[][] { { 0 } };
 
         // Use reflection to test zero
-        actualBoard = (int[][]) flipDiagonal.invoke(game);
+        actualBoard = (int[][]) transpose.invoke(game);
         assertArrayEquals(expectedBoard, actualBoard);
 
         // Test one (a 2 x 2 board)
@@ -669,7 +703,7 @@ public class SlideGameTest {
         };
 
         // Use reflection to test one
-        actualBoard = (int[][]) flipDiagonal.invoke(game);
+        actualBoard = (int[][]) transpose.invoke(game);
         assertBoardEquals(expectedBoard, actualBoard);
         
         // Test many (a 4 x 5 board)
@@ -678,15 +712,15 @@ public class SlideGameTest {
 
         // Create the resulting board
         expectedBoard = new int[][] {
-                {1, 6, 11, 16},
-                {2, 7, 12, 17},
-                {3, 8, 13, 18},
-                {4, 9, 14, 19},
-                {5, 10, 15, 20}
+                { 1, 6, 11, 16 },
+                { 2, 7, 12, 17 },
+                { 3, 8, 13, 18 },
+                { 4, 9, 14, 19 },
+                { 5, 10, 15, 20 }
         };
 
         // Use reflection to test many
-        actualBoard = (int[][]) flipDiagonal.invoke(game);
+        actualBoard = (int[][]) transpose.invoke(game);
         assertBoardEquals(expectedBoard, actualBoard);
 
         // Test many (a 5 x 6 board)
@@ -695,16 +729,16 @@ public class SlideGameTest {
 
         // Create the resulting board
         expectedBoard = new int[][] {
-                {1, 7, 13, 19, 25},
-                {2, 8, 14, 20, 26},
-                {3, 9, 15, 21, 27},
-                {4, 10, 16, 22, 28},
-                {5, 11, 17, 23, 29},
-                {6, 12, 18, 24, 30}
+                { 1, 7, 13, 19, 25 },
+                { 2, 8, 14, 20, 26 },
+                { 3, 9, 15, 21, 27 },
+                { 4, 10, 16, 22, 28 },
+                { 5, 11, 17, 23, 29 },
+                { 6, 12, 18, 24, 30 }
         };
 
         // Use reflection to test many
-        actualBoard = (int[][]) flipDiagonal.invoke(game);
+        actualBoard = (int[][]) transpose.invoke(game);
         assertBoardEquals(expectedBoard, actualBoard);
 
         // Test many (a 7 x 9 board - two odd cases)
@@ -725,7 +759,14 @@ public class SlideGameTest {
         };
 
         // Use reflection to test many
-        actualBoard = (int[][]) flipDiagonal.invoke(game);
+        actualBoard = (int[][]) transpose.invoke(game);
         assertBoardEquals(expectedBoard, actualBoard);
+    }
+
+    // Test the slide left method
+    public void slideLeftTest() 
+            throws SecurityException, NoSuchMethodException, ClassNotFoundException {
+        // Use the private helper method to create the methods
+        logicMethods();
     }
 }
