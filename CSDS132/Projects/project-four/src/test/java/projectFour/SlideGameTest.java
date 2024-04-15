@@ -1,5 +1,6 @@
 package projectFour;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -67,39 +68,6 @@ public class SlideGameTest {
         transpose.setAccessible(true);
     }
 
-    // A group of methods to be pulled from the Logic nested class
-    Method mergeLeft;
-    Method mergeRight;
-    Method mergeUp;
-    Method mergeDown;
-
-    /**
-     * This helper method declares the private Logic methods to be tested.
-     * 
-     * @throws SecurityException     when needed, java handles
-     * @throws NoSuchMethodException when method name does not exist
-     * @throws ClassNotFoundException wen class name does not exist
-     */
-    private void logicMethods() throws SecurityException, NoSuchMethodException, ClassNotFoundException {
-        // Grab the SlideGame class
-        Class<?> logicClass = Class.forName("projectFour.SlideGame$Logic");
-
-        // Grab the mergeLeft method
-        mergeLeft = logicClass.getDeclaredMethod("mergeLeft", int[].class);
-        mergeLeft.setAccessible(true);
-
-        // Grab the mergeRight method
-        mergeRight = logicClass.getDeclaredMethod("mergeRight", int[].class);
-        mergeRight.setAccessible(true);
-
-        // Grab the mergeUp method
-        mergeUp = logicClass.getDeclaredMethod("mergeUp", int[].class);
-        mergeUp.setAccessible(true);
-
-        // Grab the mergeDown method
-        mergeDown = logicClass.getDeclaredMethod("mergeDown", int[].class);
-        mergeDown.setAccessible(true);
-    }
 
     /**
      * A nested class that will be used to test the parseArgs method. It extends
@@ -763,10 +731,69 @@ public class SlideGameTest {
         assertBoardEquals(expectedBoard, actualBoard);
     }
 
+    // A group of objects to be pulled from the Logic nested class
+    Class<?> Logic;
+    Object logicInstance;
+    Method mergeLeft;
+    Method mergeRight;
+    Method mergeUp;
+    Method mergeDown;
+
+    /**
+     * This helper method declares the private Logic methods to be tested.
+     * 
+     * @throws SecurityException     when needed, java handles
+     * @throws NoSuchMethodException when method name does not exist
+     * @throws ClassNotFoundException wen class name does not exist
+     * @throws InvocationTargetException 
+     * @throws IllegalArgumentException 
+     * @throws IllegalAccessException 
+     * @throws InstantiationException 
+     */
+    private void logicMethods() throws SecurityException, NoSuchMethodException, ClassNotFoundException, InstantiationException, 
+            IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        // Grab the SlideGame class
+        Logic = Class.forName("projectFour.SlideGame$Logic");
+
+        // Grab an instance of logic
+        Constructor<?> logicConstructor = Logic.getDeclaredConstructor();
+        logicConstructor.setAccessible(true);
+        logicInstance = logicConstructor.newInstance();
+
+        // Grab the mergeLeft method
+        mergeLeft = Logic.getDeclaredMethod("mergeLeft", int[].class);
+        mergeLeft.setAccessible(true);
+
+        // Grab the mergeRight method
+        mergeRight = Logic.getDeclaredMethod("mergeRight", int[].class);
+        mergeRight.setAccessible(true);
+
+        // Grab the mergeUp method
+        mergeUp = Logic.getDeclaredMethod("mergeUp", int[].class);
+        mergeUp.setAccessible(true);
+
+        // Grab the mergeDown method
+        mergeDown = Logic.getDeclaredMethod("mergeDown", int[].class);
+        mergeDown.setAccessible(true);
+    }
+
     // Test the slide left method
+    @Test
     public void slideLeftTest() 
-            throws SecurityException, NoSuchMethodException, ClassNotFoundException {
+            throws SecurityException, NoSuchMethodException, ClassNotFoundException, IllegalAccessException,
+             IllegalArgumentException, InvocationTargetException, InstantiationException {
         // Use the private helper method to create the methods
         logicMethods();
+
+        // Expected and actual result arrays
+        int[] actualRow;
+        int[] expectedRow;
+
+        // Test an empty row
+        int[] rowEmpty = new int[] {};
+
+        // Use reflection to test empty
+        actualRow = (int[]) mergeLeft.invoke(logicInstance, rowEmpty);
+        assertArrayEquals(null, actualRow);
     }
 }

@@ -1,6 +1,7 @@
 package projectFour;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Random;
@@ -407,13 +408,71 @@ public class SlideGame extends Application {
          * @return A new row with the values slid to the left
          */
         private int[] mergeLeft(int[] row) {
-            // Create a new row for sliding and returning
-            int[] newRow = new int[row.length];
+            // Return null if the row is null or empty
+            if (row == null || row.length == 0) {
+                return null;
+            }
 
+            // Return the same array if the row has one value
+            if (row.length == 1) {
+                return row;
+            }
 
+            // Create new rows for sliding and combining, respectively
+            int[] shiftedRow = new int[row.length];
+            int[] combinedRow = new int[row.length];
 
-            // TODO
-            return null;
+            // Determine the runtime by counting leading zeros
+            int runtime = 1;
+
+            // loop through the row and count zeros
+            int zeros = 0;
+            while (zeros < row.length && row[zeros] == 0) {
+                runtime++;
+                zeros++;
+            }
+
+            // By design, merging should occur for however many zeros are at the start of a row
+            for (int run = 0; run < runtime; run++) {
+                // Value to keep track of the current index and running status
+                int index = 0;
+
+                // Loop through the row and left align the values
+                for (int i = 0; i < row.length; i++) {
+                    // If the value is not zero, add it to the new row
+                    if (row[i] != 0) {
+                        shiftedRow[index] = row[i];
+                        index++;
+                    }
+                }
+
+                // Loop through the row again and combine like elements
+                for (int i = 0; i < row.length - 1; i++) {
+                    // If the current and next value are the same, combine them
+                    if (shiftedRow[i] == shiftedRow[i + 1]) {
+                        combinedRow[i] = shiftedRow[i] * 2;
+                        i++;
+                    }
+
+                    // Otherwise just place the current value
+                    else {
+                        combinedRow[i] = shiftedRow[i];
+                    }
+                }
+
+                // Change the row values if runtime is greater than 1
+                if (runtime > 1) {
+                    row = combinedRow;
+
+                    // Reset the slide and combine rows
+                    shiftedRow = new int[row.length];
+                    combinedRow = new int[row.length];
+                }
+
+            }
+
+            // Return the new row
+            return combinedRow;
         }
 
         /**
@@ -546,6 +605,9 @@ public class SlideGame extends Application {
      *             defaults to 4 x 4.
      */
     public static void main(String[] args) {
-        Application.launch(args);
+        // Application.launch(args);
+        Logic logic = new Logic();
+        int[] result = logic.mergeLeft(new int[] {});
+        System.out.println(Arrays.toString(result));
     }
 }
