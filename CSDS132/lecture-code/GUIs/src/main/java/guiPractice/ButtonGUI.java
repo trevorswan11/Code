@@ -95,11 +95,4 @@ public class ButtonGUI extends Application {
             System.out.println("You clicked me: static");
         }
     }
-
-    // Another button behavior
-    public class HandlerChange implements EventHandler<ActionEvent> {
-        public void handle(ActionEvent e) {
-            
-        }
-    }
 }
