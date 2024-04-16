@@ -849,7 +849,7 @@ public class SlideGameTest {
         extractDiagonals.setAccessible(true);
 
         // Grab the diagonal reconstructor
-        reconstructDiagonals = Logic.getDeclaredMethod("reconstructDiagonals", int[][].class);
+        reconstructDiagonals = Logic.getDeclaredMethod("reconstructDiagonals", int[].class, int[][].class);
         reconstructDiagonals.setAccessible(true);
 
         // Grab the merge top left
@@ -1587,6 +1587,118 @@ public class SlideGameTest {
             NoSuchMethodException, SecurityException, ClassNotFoundException, InstantiationException {
         // Use the private helper method to create the methods
         logicMethods();
+
+        // Create arrays to store input, expected, and actual results
+        int[][] inputArray;
+        int[][] expectedDiagonals;
+        int[][] actualDiagonals;
+
+        // Test a null array
+        expectedDiagonals = null;
+        actualDiagonals = (int[][]) extractDiagonals.invoke(logicInstance, (Object) null);
+        assertArrayEquals(expectedDiagonals, actualDiagonals);
+
+        // Test an array of 0 length
+        inputArray = new int[0][0];
+        expectedDiagonals = null;
+        actualDiagonals = (int[][]) extractDiagonals.invoke(logicInstance, (Object) inputArray);
+        assertArrayEquals(expectedDiagonals, actualDiagonals);
+
+        // Test an array of 1 length
+        inputArray = new int[][] { { 1 } };
+        expectedDiagonals = inputArray;
+        actualDiagonals = (int[][]) extractDiagonals.invoke(logicInstance, (Object) inputArray);
+        assertArrayEquals(expectedDiagonals, actualDiagonals);
+
+        // Test an empty square array
+        inputArray = zeroBoard(2, 2);
+        expectedDiagonals = new int[][] {
+                { 0 },
+                { 0, 0 },
+                { 0 }
+        };
+        actualDiagonals = (int[][]) extractDiagonals.invoke(logicInstance, (Object) inputArray);
+        assertArrayEquals(expectedDiagonals, actualDiagonals);
+
+        // Test a full square array
+        inputArray = ascendBoard(2, 2);
+        expectedDiagonals = new int[][] {
+                { 1 },
+                { 3, 2 },
+                { 4 }
+        };
+        actualDiagonals = (int[][]) extractDiagonals.invoke(logicInstance, (Object) inputArray);
+        assertArrayEquals(expectedDiagonals, actualDiagonals);
+
+        // Test a standard game board (4 x 4)
+        inputArray = ascendBoard(4, 4);
+        expectedDiagonals = new int[][] {
+                { 1 },
+                { 5, 2 },
+                { 9, 6, 3 },
+                { 13, 10, 7, 4 },
+                { 14, 11, 8 },
+                { 15,12 },
+                { 16 }
+        };
+        actualDiagonals = (int[][]) extractDiagonals.invoke(logicInstance, (Object) inputArray);
+        assertArrayEquals(expectedDiagonals, actualDiagonals);
+        
+        // Test an empty rectangular array (more columns than rows)
+        inputArray = zeroBoard(4, 7);
+        expectedDiagonals = new int[][] {
+                { 0 },
+                { 0, 0 },
+                { 0, 0, 0 },
+                { 0, 0, 0, 0 },
+                { 0, 0, 0, 0 },
+                { 0, 0, 0, 0 },
+                { 0, 0, 0, 0 },
+                { 0, 0, 0 },
+                { 0, 0 },
+                { 0 }
+        };
+        actualDiagonals = (int[][]) extractDiagonals.invoke(logicInstance, (Object) inputArray);
+        assertArrayEquals(expectedDiagonals, actualDiagonals);
+
+        // Test a full rectangular array (more columns than rows)
+        inputArray = ascendBoard(3, 4);
+        expectedDiagonals = new int[][] {
+                { 1 },
+                { 5, 2 },
+                { 9, 6, 3 },
+                { 10, 7, 4 },
+                { 11, 8 },
+                { 12 }
+        };
+        actualDiagonals = (int[][]) extractDiagonals.invoke(logicInstance, (Object) inputArray);
+        assertArrayEquals(expectedDiagonals, actualDiagonals);
+
+        // Test an empty rectangular array (more rows than columns)
+        inputArray = zeroBoard(4, 3);
+        expectedDiagonals = new int[][] {
+                { 0 },
+                { 0, 0 },
+                { 0, 0, 0 },
+                { 0, 0, 0 },
+                { 0, 0 },
+                { 0 }
+        };
+        actualDiagonals = (int[][]) extractDiagonals.invoke(logicInstance, (Object) inputArray);
+        assertArrayEquals(expectedDiagonals, actualDiagonals);
+
+        // Test a full rectangular array (more rows than columns)
+        inputArray = ascendBoard(4, 3);
+        expectedDiagonals = new int[][] {
+                { 1 },
+                { 4, 2 },
+                { 7, 5, 3 },
+                { 10, 8, 6 },
+                { 11, 9 },
+                { 12 }
+        };
+        actualDiagonals = (int[][]) extractDiagonals.invoke(logicInstance, (Object) inputArray);
+        assertArrayEquals(expectedDiagonals, actualDiagonals);
     }
 
     // Test the diagonal reconstructor
@@ -1596,15 +1708,155 @@ public class SlideGameTest {
             NoSuchMethodException, SecurityException, ClassNotFoundException, InstantiationException {
         // Use the private helper method to create the methods
         logicMethods();
-    }
 
-    // Test the merge up left method
-    @Test
-    public void mergeTopLeftTest()
-            throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, 
-            NoSuchMethodException, SecurityException, ClassNotFoundException, InstantiationException {
-        // Use the private helper method to create the methods
-        logicMethods();
+        // Create arrays to store input, expected, and actual results
+        int[][] inputDiagonals;
+        int[][] expectedBoard;
+        int[][] actualBoard;
+
+        // Test a null array
+        expectedBoard = null;
+        actualBoard = (int[][]) reconstructDiagonals.invoke(logicInstance, null, (Object) null);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test dimensions with one 0
+        inputDiagonals = new int[0][0];
+        expectedBoard = null;
+        actualBoard = (int[][]) reconstructDiagonals.invoke(logicInstance, new int[] { 5, 0 }, (Object) inputDiagonals);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test dimensions with other 0
+        inputDiagonals = new int[0][0];
+        expectedBoard = null;
+        actualBoard = (int[][]) reconstructDiagonals.invoke(logicInstance, new int[] { 0, 5}, (Object) inputDiagonals);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test dimensions with both 0
+        inputDiagonals = new int[0][0];
+        expectedBoard = null;
+        actualBoard = (int[][]) reconstructDiagonals.invoke(logicInstance, new int[] { 0, 0 }, (Object) inputDiagonals);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test an array of 1 length with null dimensions
+        inputDiagonals = new int[][] { { 1 } };
+        expectedBoard = null;
+        actualBoard = (int[][]) reconstructDiagonals.invoke(logicInstance, null, (Object) inputDiagonals);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test an array of 1 length with real dimensions
+        expectedBoard = new int[][] { { 1 } };
+        actualBoard = (int[][]) reconstructDiagonals.invoke(logicInstance, new int[] { 3, 2 }, (Object) inputDiagonals);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a valid array with null dimensions
+        inputDiagonals = new int[][] {
+                { 1 },
+                { 3, 2 },
+                { 4 }
+        };
+        expectedBoard = null;
+        actualBoard = (int[][]) reconstructDiagonals.invoke(logicInstance, null, (Object) inputDiagonals);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a valid array with 1D dimensions
+        inputDiagonals = new int[][] {
+                { 1 },
+                { 3, 2 },
+                { 4 }
+        };
+        expectedBoard = null;
+        actualBoard = (int[][]) reconstructDiagonals.invoke(logicInstance, new int[] { 3 }, (Object) inputDiagonals);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test an array of zeros - all tests below here have proper dimensions
+        inputDiagonals = new int[][] {
+                { 0 },
+                { 0, 0 },
+                { 0 }
+        };
+        expectedBoard = zeroBoard(2, 2);
+        actualBoard = (int[][]) reconstructDiagonals.invoke(logicInstance, new int[] { 2, 2 }, (Object) inputDiagonals);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a small array with actual numbers
+        inputDiagonals = new int[][] {
+                { 1 },
+                { 3, 2 },
+                { 4 }
+        };
+        expectedBoard = ascendBoard(2, 2);
+        actualBoard = (int[][]) reconstructDiagonals.invoke(logicInstance, new int[] { 2, 2 }, (Object) inputDiagonals);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a standard 4 x 4 array with actual values
+        inputDiagonals = new int[][] {
+                { 1 },
+                { 5, 2 },
+                { 9, 6, 3 },
+                { 13, 10, 7, 4 },
+                { 14, 11, 8 },
+                { 15, 12 },
+                { 16 }
+        };
+        expectedBoard = ascendBoard(4, 4);
+        actualBoard = (int[][]) reconstructDiagonals.invoke(logicInstance, new int[] { 4, 4 }, (Object) inputDiagonals);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test an empty rectangular array (col > row)
+        inputDiagonals = new int[][] {
+                { 0 },
+                { 0, 0 },
+                { 0, 0, 0 },
+                { 0, 0, 0, 0 },
+                { 0, 0, 0, 0 },
+                { 0, 0, 0, 0 },
+                { 0, 0, 0, 0 },
+                { 0, 0, 0 },
+                { 0, 0 },
+                { 0 }
+        };
+        expectedBoard = zeroBoard(4, 7);
+        actualBoard = (int[][]) reconstructDiagonals.invoke(logicInstance, new int[] { 4, 7 }, (Object) inputDiagonals);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a non-zero rectangular board (col > row)
+        inputDiagonals = new int[][] {
+                { 1 },
+                { 5, 2 },
+                { 9, 6, 3 },
+                { 10, 7, 4 },
+                { 11, 8 },
+                { 12 }
+        };
+        expectedBoard = ascendBoard(3, 4);
+        actualBoard = (int[][]) reconstructDiagonals.invoke(logicInstance, new int[] { 3, 4 }, (Object) inputDiagonals);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test an empty rectangular array (row > col)
+        inputDiagonals = new int[][] {
+                { 0 },
+                { 0, 0 },
+                { 0, 0, 0 },
+                { 0, 0, 0 },
+                { 0, 0 },
+                { 0 }
+        };
+        expectedBoard = zeroBoard(4, 3);
+        actualBoard = (int[][]) reconstructDiagonals.invoke(logicInstance, new int[] { 4, 3 }, (Object) inputDiagonals);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a non-zero rectangular board (row > col)
+        inputDiagonals = new int[][] {
+                { 1 },
+                { 4, 2 },
+                { 7, 5, 3 },
+                { 10, 8, 6 },
+                { 11, 9 },
+                { 12 }
+        };
+        expectedBoard = ascendBoard(4, 3);
+        actualBoard = (int[][]) reconstructDiagonals.invoke(logicInstance, new int[] { 4, 3 }, (Object) inputDiagonals);
+        assertArrayEquals(expectedBoard, actualBoard);
     }
 
     // Test the merge up right method
@@ -1614,6 +1866,646 @@ public class SlideGameTest {
             NoSuchMethodException, SecurityException, ClassNotFoundException, InstantiationException {
         // Use the private helper method to create the methods
         logicMethods();
+
+        // Declare board dimensions to prevent null pointer exceptions
+        game.setGameBoard(this.zeroBoard(5, 5));
+
+        // Create arrays to store expected and actual results
+        int[][] expectedBoard;
+        int[][] actualBoard;
+
+        // Test a null board
+        int[][] nullBoard = null;
+        expectedBoard = null;
+        actualBoard = (int[][]) mergeTopRight.invoke(logicInstance, (Object) nullBoard);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a board of 0 length
+        int[][] emptyBoard = new int[0][0];
+        expectedBoard = null;
+        actualBoard = (int[][]) mergeTopRight.invoke(logicInstance, (Object) emptyBoard);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a board of 1 length
+        int[][] oneLengthBoard = new int[][] { { 1 } };
+        expectedBoard = oneLengthBoard;
+        actualBoard = (int[][]) mergeTopRight.invoke(logicInstance, (Object) oneLengthBoard);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a board with two rows full of zeros
+        int[][] boardTwoRows = new int[2][2];
+        expectedBoard = new int[][] {
+                { 0, 0 },
+                { 0, 0 }
+        };
+
+        // Use reflection to test two empty rows
+        actualBoard = (int[][]) mergeTopRight.invoke(logicInstance, (Object) boardTwoRows);
+        assertBoardEquals(expectedBoard, actualBoard);
+
+        // Test a column board with all different values
+        int[][] columnBoardDiff = new int[][] {
+                { 1 },
+                { 2 },
+                { 3 },
+                { 4 }
+        };
+        expectedBoard = columnBoardDiff;
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeTopRight.invoke(logicInstance, (Object) columnBoardDiff);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a column board with different values, empty on top (test first)
+        int[][] columnBoardSameFirst = new int[][] {
+                { 0 },
+                { 1 },
+                { 2 },
+                { 3 }
+        };
+        expectedBoard = columnBoardSameFirst;
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeTopRight.invoke(logicInstance, (Object) columnBoardSameFirst);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a column board with different values, empty on middle (test middle)
+        int[][] columnBoardSameMiddle = new int[][] {
+                { 1 },
+                { 0 },
+                { 2 },
+                { 3 }
+        };
+        expectedBoard = columnBoardSameMiddle;
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeTopRight.invoke(logicInstance, (Object) columnBoardSameMiddle);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a column board with different values, empty on bottom (test last)
+        int[][] columnBoardSameLast = new int[][] {
+                { 1 },
+                { 2 },
+                { 3 },
+                { 0 }
+        };
+        expectedBoard = columnBoardSameLast;
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeTopRight.invoke(logicInstance, (Object) columnBoardSameLast);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a column board with equal numbers in first two rows (test first)
+        int[][] boardFirstTwo = new int[][] {
+                { 1, 1, 1, 1 },
+                { 1, 1, 1, 1 },
+                { 0, 0, 0, 0 },
+                { 0, 0, 0, 0 }
+        };
+        expectedBoard = new int[][] {
+                { 1, 2, 2, 2 },
+                { 0, 0, 0, 1 },
+                { 0, 0, 0, 0 },
+                { 0, 0, 0, 0 }
+        };
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeTopRight.invoke(logicInstance, (Object) boardFirstTwo);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a column board with equal numbers in middle two rows (test middle)
+        int[][] boardMiddleTwo = new int[][] {
+                { 0, 0, 0, 0 },
+                { 1, 1, 1, 1 },
+                { 1, 1, 1, 1 },
+                { 0, 0, 0, 0 }
+        };
+        expectedBoard = new int[][] {
+                { 0, 1, 2, 2 },
+                { 0, 0, 0, 2 },
+                { 0, 0, 0, 1 },
+                { 0, 0, 0, 0 }
+        };
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeTopRight.invoke(logicInstance, (Object) boardMiddleTwo);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a column board with equal numbers in separated rows (test middle)
+        int[][] boardSeparateMiddle = new int[][] {
+                { 0, 0, 0, 0 },
+                { 1, 1, 1, 1 },
+                { 0, 0, 0, 0 },
+                { 1, 1, 1, 1 }
+        };
+        expectedBoard = new int[][] {
+                { 0, 1, 1, 2 },
+                { 0, 0, 0, 2 },
+                { 0, 0, 0, 1 },
+                { 0, 0, 0, 1 }
+        };
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeTopRight.invoke(logicInstance, (Object) boardSeparateMiddle);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a column board with equal numbers in last two rows (test last)
+        int[][] boardLastTwo = new int[][] {
+                { 0, 0, 0, 0 },
+                { 0, 0, 0, 0 },
+                { 1, 1, 1, 1 },
+                { 1, 1, 1, 1 }
+        };
+        expectedBoard = new int[][] {
+                { 0, 0, 1, 2 },
+                { 0, 0, 0, 2 },
+                { 0, 0, 0, 2 },
+                { 0, 0, 0, 1 }
+        };
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeTopRight.invoke(logicInstance, (Object) boardLastTwo);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test an example one variant in board format
+        int[][] boardExampleOne = new int[][] {
+                { 0, 1, 1, 1, 1 },
+                { 1, 0, 1, 1, 1 },
+                { 1, 1, 0, 1, 1 }
+        };
+        expectedBoard = new int[][] {
+                { 0, 2, 2, 2, 2 },
+                { 0, 0, 1, 0, 2 },
+                { 0, 0, 0, 0, 1 }
+        };
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeTopRight.invoke(logicInstance, (Object) boardExampleOne);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test an example two variant in board format
+        int[][] boardExampleTwo = new int[][] {
+                { 0, 0, 0, 0, 0 },
+                { 1, 1, 0, 3, 1 },
+                { 1, 0, 1, 1, 4 },
+                { 2, 1, 2, 1, 1 }
+        };
+        expectedBoard = new int[][] {
+                { 0, 1, 2, 2, 3 },
+                { 0, 0, 0, 2, 4 },
+                { 0, 0, 0, 0, 4 },
+                { 0, 0, 0, 1, 1 }
+        };
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeTopRight.invoke(logicInstance, (Object) boardExampleTwo);
+        assertArrayEquals(expectedBoard, actualBoard);
+    }
+
+    // Test the merge down right method
+    @Test
+    public void mergeBottomRightTest()
+            throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, 
+            NoSuchMethodException, SecurityException, ClassNotFoundException, InstantiationException {
+        // Use the private helper method to create the methods
+        logicMethods();
+
+        // Declare board dimensions to prevent null pointer exceptions
+        game.setGameBoard(this.zeroBoard(5, 5));
+
+        // Create arrays to store expected and actual results
+        int[][] expectedBoard;
+        int[][] actualBoard;
+
+        // Test a null board
+        int[][] nullBoard = null;
+        expectedBoard = null;
+        actualBoard = (int[][]) mergeBottomRight.invoke(logicInstance, (Object) nullBoard);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a board of 0 length
+        int[][] emptyBoard = new int[0][0];
+        expectedBoard = null;
+        actualBoard = (int[][]) mergeBottomRight.invoke(logicInstance, (Object) emptyBoard);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a board of 1 length
+        int[][] oneLengthBoard = new int[][] { { 1 } };
+        expectedBoard = oneLengthBoard;
+        actualBoard = (int[][]) mergeBottomRight.invoke(logicInstance, (Object) oneLengthBoard);
+        assertBoardEquals(expectedBoard, actualBoard);
+
+        // Test a board with two rows full of zeros
+        int[][] boardTwoRows = new int[2][2];
+        expectedBoard = new int[][] {
+                { 0, 0 },
+                { 0, 0 }
+        };
+
+        // Use reflection to test two empty rows
+        actualBoard = (int[][]) mergeBottomRight.invoke(logicInstance, (Object) boardTwoRows);
+        assertBoardEquals(expectedBoard, actualBoard);
+
+        // Test a column board with all different values
+        int[][] columnBoardDiff = new int[][] {
+                { 1 },
+                { 2 },
+                { 3 },
+                { 4 }
+        };
+        expectedBoard = new int[][] {
+                { 1 },
+                { 2 },
+                { 3 },
+                { 4 }
+        };
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeBottomRight.invoke(logicInstance, (Object) columnBoardDiff);
+        assertBoardEquals(expectedBoard, actualBoard);
+
+        // Test a column board with different values, empty on top (test first)
+        int[][] columnBoardSameFirst = new int[][] {
+                { 0 },
+                { 1 },
+                { 2 },
+                { 3 }
+        };
+        expectedBoard = new int[][] {
+                { 0 },
+                { 1 },
+                { 2 },
+                { 3 }
+        };
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeBottomRight.invoke(logicInstance, (Object) columnBoardSameFirst);
+        assertBoardEquals(expectedBoard, actualBoard);
+
+        // Test a column board with different values, empty on middle (test middle)
+        int[][] columnBoardSameMiddle = new int[][] {
+                { 1 },
+                { 0 },
+                { 2 },
+                { 3 }
+        };
+        expectedBoard = new int[][] {
+                { 1 },
+                { 0 },
+                { 2 },
+                { 3 }
+        };
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeBottomRight.invoke(logicInstance, (Object) columnBoardSameMiddle);
+        assertBoardEquals(expectedBoard, actualBoard);
+
+        // Test a column board with different values, empty on bottom (test last)
+        int[][] columnBoardSameLast = new int[][] {
+                { 1 },
+                { 2 },
+                { 3 },
+                { 0 }
+        };
+        expectedBoard = new int[][] {
+                { 1 },
+                { 2 },
+                { 3 },
+                { 0 }
+        };
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeBottomRight.invoke(logicInstance, (Object) columnBoardSameLast);
+        assertBoardEquals(expectedBoard, actualBoard);
+
+        // Test a column board with equal numbers in first two rows (test first)
+        int[][] boardFirstTwo = new int[][] {
+                { 1, 1, 1, 1 },
+                { 1, 1, 1, 1 },
+                { 0, 0, 0, 0 },
+                { 0, 0, 0, 0 }
+        };
+        expectedBoard = new int[][] {
+                { 0, 0, 0, 1 },
+                { 0, 0, 0, 2 },
+                { 0, 0, 0, 2 },
+                { 0, 0, 1, 2 }
+        };
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeBottomRight.invoke(logicInstance, (Object) boardFirstTwo);
+        assertBoardEquals(expectedBoard, actualBoard);
+
+        // Test a column board with equal numbers in middle two rows (test middle)
+        int[][] boardMiddleTwo = new int[][] {
+                { 0, 0, 0, 0 },
+                { 1, 1, 1, 1 },
+                { 1, 1, 1, 1 },
+                { 0, 0, 0, 0 }
+        };
+        expectedBoard = new int[][] {
+                { 0, 0, 0, 0 },
+                { 0, 0, 0, 1 },
+                { 0, 0, 0, 2 },
+                { 0, 1, 2, 2 }
+        };
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeBottomRight.invoke(logicInstance, (Object) boardMiddleTwo);
+        assertBoardEquals(expectedBoard, actualBoard);
+
+        // Test a column board with equal numbers in separated rows (test middle)
+        int[][] boardSeparateMiddle = new int[][] {
+                { 0, 0, 0, 0 },
+                { 1, 1, 1, 1 },
+                { 0, 0, 0, 0 },
+                { 1, 1, 1, 1 }
+        };
+        expectedBoard = new int[][] {
+                { 0, 0, 0, 0 },
+                { 0, 0, 0, 1 },
+                { 0, 0, 0, 1 },
+                { 1, 1, 2, 2 }
+        };
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeBottomRight.invoke(logicInstance, (Object) boardSeparateMiddle);
+        assertBoardEquals(expectedBoard, actualBoard);
+
+        // Test a column board with equal numbers in last two rows (test last)
+        int[][] boardLastTwo = new int[][] {
+                { 0, 0, 0, 0 },
+                { 0, 0, 0, 0 },
+                { 1, 1, 1, 1 },
+                { 1, 1, 1, 1 }
+        };
+        expectedBoard = new int[][] {
+                { 0, 0, 0, 0 },
+                { 0, 0, 0, 0 },
+                { 0, 0, 0, 1 },
+                { 1, 2, 2, 2 }
+        };
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeBottomRight.invoke(logicInstance, (Object) boardLastTwo);
+        assertBoardEquals(expectedBoard, actualBoard);
+
+        // Test an example one variant in board format
+        int[][] boardExampleOne = new int[][] {
+                { 0, 1, 1, 1, 1 },
+                { 1, 0, 1, 1, 1 },
+                { 1, 1, 0, 1, 1 }
+        };
+        expectedBoard = new int[][] {
+                { 0, 0, 0, 0, 1 },
+                { 0, 0, 1, 1, 2 },
+                { 1, 2, 0, 2, 2 }
+        };
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeBottomRight.invoke(logicInstance, (Object) boardExampleOne);
+        assertBoardEquals(expectedBoard, actualBoard);
+
+        // Test an example two variant in board format
+        int[][] boardExampleTwo = new int[][] {
+                { 0, 0, 0, 0, 0 },
+                { 1, 1, 0, 3, 1 },
+                { 1, 0, 1, 1, 4 },
+                { 2, 1, 2, 1, 1 }
+        };
+        expectedBoard = new int[][] {
+                { 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 3, 1 },
+                { 0, 1, 1, 0, 4 },
+                { 2, 2, 2, 2, 2 }
+        };
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeBottomRight.invoke(logicInstance, (Object) boardExampleTwo);
+        assertBoardEquals(expectedBoard, actualBoard);
+    }
+
+    // Test the merge up left method
+    @Test
+    public void mergeTopLeftTest()
+            throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, 
+            NoSuchMethodException, SecurityException, ClassNotFoundException, InstantiationException {
+        // Use the private helper method to create the methods
+        logicMethods();
+
+        // Declare board dimensions to prevent null pointer exceptions
+        game.setGameBoard(this.zeroBoard(5, 5));
+
+        // Create arrays to store expected and actual results
+        int[][] expectedBoard;
+        int[][] actualBoard;
+
+        // Test a null board
+        int[][] nullBoard = null;
+        expectedBoard = null;
+        actualBoard = (int[][]) mergeTopLeft.invoke(logicInstance, (Object) nullBoard);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a board of 0 length
+        int[][] emptyBoard = new int[0][0];
+        expectedBoard = null;
+        actualBoard = (int[][]) mergeTopLeft.invoke(logicInstance, (Object) emptyBoard);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a board of 1 length
+        int[][] oneLengthBoard = new int[][] { { 1 } };
+        expectedBoard = oneLengthBoard;
+        actualBoard = (int[][]) mergeTopLeft.invoke(logicInstance, (Object) oneLengthBoard);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a board with two rows full of zeros
+        int[][] boardTwoRows = new int[2][2];
+        expectedBoard = new int[][] {
+                { 0, 0 },
+                { 0, 0 }
+        };
+
+        // Use reflection to test two empty rows
+        actualBoard = (int[][]) mergeTopLeft.invoke(logicInstance, (Object) boardTwoRows);
+        assertBoardEquals(expectedBoard, actualBoard);
+
+        // Test a column board with all different values
+        int[][] columnBoardDiff = new int[][] {
+                { 1 },
+                { 2 },
+                { 3 },
+                { 4 }
+        };
+        expectedBoard = new int[][] {
+                { 1 },
+                { 2 },
+                { 3 },
+                { 4 }
+        };
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeTopLeft.invoke(logicInstance, (Object) columnBoardDiff);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a column board with different values, empty on top (test first)
+        int[][] columnBoardSameFirst = new int[][] {
+                { 0 },
+                { 1 },
+                { 2 },
+                { 3 }
+        };
+        expectedBoard = new int[][] {
+                { 0 },
+                { 1 },
+                { 2 },
+                { 3 }
+        };
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeTopLeft.invoke(logicInstance, (Object) columnBoardSameFirst);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a column board with different values, empty on middle (test middle)
+        int[][] columnBoardSameMiddle = new int[][] {
+                { 1 },
+                { 0 },
+                { 2 },
+                { 3 }
+        };
+        expectedBoard = new int[][] {
+                { 1 },
+                { 0 },
+                { 2 },
+                { 3 }
+        };
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeTopLeft.invoke(logicInstance, (Object) columnBoardSameMiddle);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a column board with different values, empty on bottom (test last)
+        int[][] columnBoardSameLast = new int[][] {
+                { 1 },
+                { 2 },
+                { 3 },
+                { 0 }
+        };
+        expectedBoard = new int[][] {
+                { 1 },
+                { 2 },
+                { 3 },
+                { 0 }
+        };
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeTopLeft.invoke(logicInstance, (Object) columnBoardSameLast);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a column board with equal numbers in first two rows (test first)
+        int[][] boardFirstTwo = new int[][] {
+                { 1, 1, 1, 1 },
+                { 1, 1, 1, 1 },
+                { 0, 0, 0, 0 },
+                { 0, 0, 0, 0 }
+        };
+        expectedBoard = new int[][] {
+                { 2, 2, 2, 1 },
+                { 1, 0, 0, 0 },
+                { 0, 0, 0, 0 },
+                { 0, 0, 0, 0 }
+        };
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeTopLeft.invoke(logicInstance, (Object) boardFirstTwo);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a column board with equal numbers in middle two rows (test middle)
+        int[][] boardMiddleTwo = new int[][] {
+                { 0, 0, 0, 0 },
+                { 1, 1, 1, 1 },
+                { 1, 1, 1, 1 },
+                { 0, 0, 0, 0 }
+        };
+        expectedBoard = new int[][] {
+                { 2, 2, 1, 0 },
+                { 2, 0, 0, 0 },
+                { 1, 0, 0, 0 },
+                { 0, 0, 0, 0 }
+        };
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeTopLeft.invoke(logicInstance, (Object) boardMiddleTwo);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a column board with equal numbers in separated rows (test middle)
+        int[][] boardSeparateMiddle = new int[][] {
+                { 0, 0, 0, 0 },
+                { 1, 1, 1, 1 },
+                { 0, 0, 0, 0 },
+                { 1, 1, 1, 1 }
+        };
+        expectedBoard = new int[][] {
+                { 2, 1, 1, 0 },
+                { 2, 0, 0, 0 },
+                { 1, 0, 0, 0 },
+                { 1, 0, 0, 0 }
+        };
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeTopLeft.invoke(logicInstance, (Object) boardSeparateMiddle);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a column board with equal numbers in last two rows (test last)
+        int[][] boardLastTwo = new int[][] {
+                { 0, 0, 0, 0 },
+                { 0, 0, 0, 0 },
+                { 1, 1, 1, 1 },
+                { 1, 1, 1, 1 }
+        };
+        expectedBoard = new int[][] {
+                { 2, 1, 0, 0 },
+                { 2, 0, 0, 0 },
+                { 2, 0, 0, 0 },
+                { 1, 0, 0, 0 }
+        };
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeTopLeft.invoke(logicInstance, (Object) boardLastTwo);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test an example one variant in board format
+        int[][] boardExampleOne = new int[][] {
+                { 0, 1, 1, 1, 1 },
+                { 1, 0, 1, 1, 1 },
+                { 1, 1, 0, 1, 1 }
+        };
+        expectedBoard = new int[][] {
+                { 0, 2, 2, 2, 1 },
+                { 2, 0, 1, 1, 0 },
+                { 1, 0, 0, 0, 0 }
+        };
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeTopLeft.invoke(logicInstance, (Object) boardExampleOne);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test an example two variant in board format
+        int[][] boardExampleTwo = new int[][] {
+                { 0, 0, 0, 0, 0 },
+                { 1, 1, 0, 3, 1 },
+                { 1, 0, 1, 1, 4 },
+                { 2, 1, 2, 1, 1 }
+        };
+        expectedBoard = new int[][] {
+                { 2, 2, 3, 1, 0 },
+                { 1, 1, 0, 4, 0 },
+                { 2, 2, 0, 0, 0 },
+                { 2, 0, 0, 0, 0 }
+        };
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeTopLeft.invoke(logicInstance, (Object) boardExampleTwo);
+        assertArrayEquals(expectedBoard, actualBoard);
     }
 
     // Test the merge down left method
@@ -1623,15 +2515,200 @@ public class SlideGameTest {
             NoSuchMethodException, SecurityException, ClassNotFoundException, InstantiationException {
         // Use the private helper method to create the methods
         logicMethods();
-    }
-    
-    // Test the merge down right method
-    @Test
-    public void mergeBottomRightTest()
-            throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, 
-            NoSuchMethodException, SecurityException, ClassNotFoundException, InstantiationException {
-        // Use the private helper method to create the methods
-        logicMethods();
+
+        // Declare board dimensions to prevent null pointer exceptions
+        game.setGameBoard(this.zeroBoard(5, 5));
+
+        // Create arrays to store expected and actual results
+        int[][] expectedBoard;
+        int[][] actualBoard;
+
+        // Test a null board
+        int[][] nullBoard = null;
+        expectedBoard = null;
+        actualBoard = (int[][]) mergeBottomLeft.invoke(logicInstance, (Object) nullBoard);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a board of 0 length
+        int[][] emptyBoard = new int[0][0];
+        expectedBoard = null;
+        actualBoard = (int[][]) mergeBottomLeft.invoke(logicInstance, (Object) emptyBoard);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a board of 1 length
+        int[][] oneLengthBoard = new int[][] { { 1 } };
+        expectedBoard = oneLengthBoard;
+        actualBoard = (int[][]) mergeBottomLeft.invoke(logicInstance, (Object) oneLengthBoard);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a board with two rows full of zeros
+        int[][] boardTwoRows = new int[2][2];
+        expectedBoard = new int[][] {
+                { 0, 0 },
+                { 0, 0 }
+        };
+
+        // Use reflection to test two empty rows
+        actualBoard = (int[][]) mergeBottomLeft.invoke(logicInstance, (Object) boardTwoRows);
+        assertBoardEquals(expectedBoard, actualBoard);
+
+        // Test a column board with all different values
+        int[][] columnBoardDiff = new int[][] {
+                { 1 },
+                { 2 },
+                { 3 },
+                { 4 }
+        };
+        expectedBoard = columnBoardDiff;
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeBottomLeft.invoke(logicInstance, (Object) columnBoardDiff);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a column board with different values, empty on top (test first)
+        int[][] columnBoardSameFirst = new int[][] {
+                { 0 },
+                { 1 },
+                { 2 },
+                { 3 }
+        };
+        expectedBoard = columnBoardSameFirst;
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeBottomLeft.invoke(logicInstance, (Object) columnBoardSameFirst);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a column board with different values, empty on middle (test middle)
+        int[][] columnBoardSameMiddle = new int[][] {
+                { 1 },
+                { 0 },
+                { 2 },
+                { 3 }
+        };
+        expectedBoard = columnBoardSameMiddle;
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeBottomLeft.invoke(logicInstance, (Object) columnBoardSameMiddle);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a column board with different values, empty on bottom (test last)
+        int[][] columnBoardSameLast = new int[][] {
+                { 1 },
+                { 2 },
+                { 3 },
+                { 0 }
+        };
+        expectedBoard = columnBoardSameLast;
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeBottomLeft.invoke(logicInstance, (Object) columnBoardSameLast);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a column board with equal numbers in first two rows (test first)
+        int[][] boardFirstTwo = new int[][] {
+                { 1, 1, 1, 1 },
+                { 1, 1, 1, 1 },
+                { 0, 0, 0, 0 },
+                { 0, 0, 0, 0 }
+        };
+        expectedBoard = new int[][] {
+                { 1, 0, 0, 0 },
+                { 2, 0, 0, 0 },
+                { 2, 0, 0, 0 },
+                { 2, 1, 0, 0 }
+        };
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeBottomLeft.invoke(logicInstance, (Object) boardFirstTwo);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a column board with equal numbers in middle two rows (test middle)
+        int[][] boardMiddleTwo = new int[][] {
+                { 0, 0, 0, 0 },
+                { 1, 1, 1, 1 },
+                { 1, 1, 1, 1 },
+                { 0, 0, 0, 0 }
+        };
+        expectedBoard = new int[][] {
+                { 0, 0, 0, 0 },
+                { 1, 0, 0, 0 },
+                { 2, 0, 0, 0 },
+                { 2, 2, 1, 0 }
+        };
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeBottomLeft.invoke(logicInstance, (Object) boardMiddleTwo);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a column board with equal numbers in separated rows (test middle)
+        int[][] boardSeparateMiddle = new int[][] {
+                { 0, 0, 0, 0 },
+                { 1, 1, 1, 1 },
+                { 0, 0, 0, 0 },
+                { 1, 1, 1, 1 }
+        };
+        expectedBoard = new int[][] {
+                { 0, 0, 0, 0 },
+                { 1, 0, 0, 0 },
+                { 1, 0, 0, 0 },
+                { 2, 2, 1, 1 }
+        };
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeBottomLeft.invoke(logicInstance, (Object) boardSeparateMiddle);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test a column board with equal numbers in last two rows (test last)
+        int[][] boardLastTwo = new int[][] {
+                { 0, 0, 0, 0 },
+                { 0, 0, 0, 0 },
+                { 1, 1, 1, 1 },
+                { 1, 1, 1, 1 }
+        };
+        expectedBoard = new int[][] {
+                { 0, 0, 0, 0 },
+                { 0, 0, 0, 0 },
+                { 1, 0, 0, 0 },
+                { 2, 2, 2, 1 }
+        };
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeBottomLeft.invoke(logicInstance, (Object) boardLastTwo);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test an example one variant in board format
+        int[][] boardExampleOne = new int[][] {
+                { 0, 1, 1, 1, 1 },
+                { 1, 0, 1, 1, 1 },
+                { 1, 1, 0, 1, 1 }
+        };
+        expectedBoard = new int[][] {
+                { 0, 0, 0, 0, 0 },
+                { 2, 0, 1, 0, 0 },
+                { 2, 2, 2, 2, 1 }
+        };
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeBottomLeft.invoke(logicInstance, (Object) boardExampleOne);
+        assertArrayEquals(expectedBoard, actualBoard);
+
+        // Test an example two variant in board format
+        int[][] boardExampleTwo = new int[][] {
+                { 0, 0, 0, 0, 0 },
+                { 1, 1, 0, 3, 1 },
+                { 1, 0, 1, 1, 4 },
+                { 2, 1, 2, 1, 1 }
+        };
+        expectedBoard = new int[][] {
+                { 0, 0, 0, 0, 0 },
+                { 1, 0, 0, 0, 0 },
+                { 2, 0, 3, 2, 4 },
+                { 2, 2, 2, 1, 1 }
+        };
+
+        // Use reflection to test column board
+        actualBoard = (int[][]) mergeBottomLeft.invoke(logicInstance, (Object) boardExampleTwo);
+        assertArrayEquals(expectedBoard, actualBoard);
     }
 
     /*

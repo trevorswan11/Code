@@ -6,6 +6,27 @@
     "configurations": [
         {
             "type": "java",
+            "name": "FoldableMenuExample",
+            "request": "launch",
+            "mainClass": "guiPractice.FoldableMenuExample",
+            "projectName": "GUIs"
+        },
+        {
+            "type": "java",
+            "name": "DropdownMenuExample",
+            "request": "launch",
+            "mainClass": "guiPractice.DropdownMenuExample",
+            "projectName": "GUIs"
+        },
+        {
+            "type": "java",
+            "name": "SlideGame",
+            "request": "launch",
+            "mainClass": "guiPractice.SlideGame",
+            "projectName": "GUIs"
+        },
+        {
+            "type": "java",
             "name": "DLNode",
             "request": "launch",
             "mainClass": "prelabcode13.DLNode",
