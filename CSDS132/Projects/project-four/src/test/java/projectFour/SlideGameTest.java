@@ -413,7 +413,7 @@ public class SlideGameTest {
     }
 
     // Test the methods for random index
-    @Test(expected = InvocationTargetException.class)
+    @Test (expected = InvocationTargetException.class)
     public void randomIndexTest()
             throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException {
         // Use the private helper method to create the methods
@@ -587,10 +587,6 @@ public class SlideGameTest {
         // Use reflection to test many
         actualBoard = (int[][]) flipHorizontal.invoke(game);
         assertBoardEquals(expectedBoard, actualBoard);
-
-        // Test many (a 7 x 9 board)
-        int[][] boardManyThree = ascendBoard(7, 9);
-        game.setGameBoard(boardManyThree);
     }
 
     // Test the flip vertical method
@@ -871,7 +867,7 @@ public class SlideGameTest {
 
     // Test the slide left method
     @Test
-    public void slideLeftTest()
+    public void mergeRowLeftTest()
             throws SecurityException, NoSuchMethodException, ClassNotFoundException, IllegalAccessException,
             IllegalArgumentException, InvocationTargetException, InstantiationException {
         // Use the private helper method to create the methods
@@ -1017,7 +1013,7 @@ public class SlideGameTest {
 
     // Test the slide right method
     @Test
-    public void slideRightTest()
+    public void mergeRowRightTest()
             throws SecurityException, NoSuchMethodException, ClassNotFoundException, IllegalAccessException,
             IllegalArgumentException, InvocationTargetException, InstantiationException {
         // Use the private helper method to create the methods
@@ -1728,7 +1724,7 @@ public class SlideGameTest {
         // Test dimensions with other 0
         inputDiagonals = new int[0][0];
         expectedBoard = null;
-        actualBoard = (int[][]) reconstructDiagonals.invoke(logicInstance, new int[] { 0, 5}, (Object) inputDiagonals);
+        actualBoard = (int[][]) reconstructDiagonals.invoke(logicInstance, new int[] { 0, 5 }, (Object) inputDiagonals);
         assertArrayEquals(expectedBoard, actualBoard);
 
         // Test dimensions with both 0
@@ -2737,7 +2733,7 @@ public class SlideGameTest {
 
     // Tests the slide left method
     @Test
-    public void testSlideLeft() throws SecurityException, NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+    public void slideLeftTest() throws SecurityException, NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         // Use the private helper method to create the methods
         privateMethods();
         behavior();
@@ -2855,10 +2851,10 @@ public class SlideGameTest {
 
         // Assign expected board
         expectedBoard = new int[][] {
-            { 0, 0, 0, 0 },
-            { 2, 2, 0, 0 },
-            { 2, 2, 0, 0 },
-            { 0, 0, 0, 0 }
+                { 0, 0, 0, 0 },
+                { 2, 2, 0, 0 },
+                { 2, 2, 0, 0 },
+                { 0, 0, 0, 0 }
         };
 
         // Use reflection to test columns - expected board should not change
@@ -2876,10 +2872,10 @@ public class SlideGameTest {
 
         // Assign expected board
         expectedBoard = new int[][] {
-            { 0, 0, 0, 0 },
-            { 2, 2, 0, 0 },
-            { 0, 0, 0, 0 },
-            { 2, 2, 0, 0 }
+                { 0, 0, 0, 0 },
+                { 2, 2, 0, 0 },
+                { 0, 0, 0, 0 },
+                { 2, 2, 0, 0 }
         };
 
         // Use reflection to test columns - expected board should not change
@@ -2897,10 +2893,10 @@ public class SlideGameTest {
 
         // Assign expected board
         expectedBoard = new int[][] {
-            { 0, 0, 0, 0 },
-            { 0, 0, 0, 0 },
-            { 2, 2, 0, 0 },
-            { 2, 2, 0, 0 }
+                { 0, 0, 0, 0 },
+                { 0, 0, 0, 0 },
+                { 2, 2, 0, 0 },
+                { 2, 2, 0, 0 }
         };
 
         // Use reflection to test columns - expected board should not change
@@ -2952,7 +2948,7 @@ public class SlideGameTest {
 
     // Test the slide right method
     @Test
-    public void testSlideRight() throws SecurityException, NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+    public void slideRightTest() throws SecurityException, NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         // Use the private helper method to create the methods
         privateMethods();
         behavior();
