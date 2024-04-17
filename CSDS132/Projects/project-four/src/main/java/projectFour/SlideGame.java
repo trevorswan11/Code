@@ -45,6 +45,9 @@ public class SlideGame extends Application {
     
     // An object to store the logic of the game
     private final Logic logic;
+    
+    // An object to store the buttons for the game
+    private Button[][] buttons;
 
     /**
      * An enum to indicate the movement associated with a button.
@@ -127,6 +130,7 @@ public class SlideGame extends Application {
      */
     public void setGameBoard(int[][] gameBoard) {
         this.setBoardDim(new int[] { gameBoard.length, gameBoard[0].length });
+        this.setButtons(new Button[gameBoard.length][gameBoard[0].length]);
         this.gameBoard = gameBoard;
     }
 
@@ -155,6 +159,24 @@ public class SlideGame extends Application {
      */
     public String getColor() {
         return this.color;
+    }
+
+    /**
+     * A getter for the buttons
+     *
+     * @return The game's buttons
+     */
+    public Button[][] getButtons() {
+        return buttons;
+    }
+
+    /**
+     * A setter for the buttons
+     * 
+     * @param buttons The game's buttons
+     */
+    public void setButtons(Button[][] buttons) {
+        this.buttons = buttons;
     }
 
     /**
@@ -324,7 +346,7 @@ public class SlideGame extends Application {
         int col = this.getBoardDim()[1];
 
         // Create a GridPane of buttons fitting the dimensions of the board
-        Button[][] buttons = new Button[row][col];
+        Button[][] buttons = this.getButtons();
 
         /*
          * Creates buttons and adds them to the button pane.
