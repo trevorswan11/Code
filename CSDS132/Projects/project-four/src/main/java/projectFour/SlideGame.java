@@ -933,7 +933,7 @@ public class SlideGame extends Application {
 
         // An object to store the dimensions of the board
         private int[] dimensions;
-
+        
         /**
          * Slides the elements in a row to the left. Equivalent values are combined, and
          * vacant slots become zeros.

@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "DoubleLinkedList",
+            "request": "launch",
+            "mainClass": "labcode13.DoubleLinkedList",
+            "projectName": "Lab13"
+        },
+        {
+            "type": "java",
             "name": "DLNode",
             "request": "launch",
             "mainClass": "prelabcode13.DLNode",

@@ -820,9 +820,9 @@ public class SlideGameTest {
         Logic = Class.forName("projectFour.SlideGame$Logic");
 
         // Grab an instance of logic
-        Constructor<?> logicConstructor = Logic.getDeclaredConstructor(SlideGame.class);
+        Constructor<?> logicConstructor = Logic.getDeclaredConstructor();
         logicConstructor.setAccessible(true);
-        logicInstance = logicConstructor.newInstance(game);
+        logicInstance = logicConstructor.newInstance();
 
         // Grab the mergeLeft method
         mergeLeft = Logic.getDeclaredMethod("mergeLeft", int[].class);
