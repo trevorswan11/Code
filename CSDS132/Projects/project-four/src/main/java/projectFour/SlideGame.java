@@ -67,7 +67,7 @@ public class SlideGame extends Application {
      * A constructor for the SlideGame class to prevent stack overflows.
      */
     public SlideGame() {
-        this.logic = new Logic(this);
+        this.logic = new Logic();
     }
 
     /**
@@ -906,18 +906,7 @@ public class SlideGame extends Application {
      * @author Trevor Swan
      * @version CSDS132 - Spring 2024
      */
-    private static class Logic {
-        private SlideGame arbitraryGame;
-
-        /**
-         * A constructor for the logic class to prevent stack overflows.
-         *
-         * @param game An instance of the game
-         */
-        public Logic(SlideGame game) {
-            this.arbitraryGame = game;
-        }
-
+    private class Logic {
         /**
          * Slides the elements in a row to the left. Equivalent values are combined, and
          * vacant slots become zeros.
@@ -994,25 +983,25 @@ public class SlideGame extends Application {
             }
 
             // copy the game board to prevent overwriting
-            int[][] copyBoard = arbitraryGame.copyBoard(arbitraryGame.getGameBoard());
+            int[][] copyBoard = SlideGame.this.copyBoard(SlideGame.this.getGameBoard());
 
             /*
              * Set and retrieve the board after flipping vertically. mergeLeft is used once
              * board is flipped, as they are effectively the same.
              */
-            arbitraryGame.setGameBoard(new int[][] { row });
-            arbitraryGame.setGameBoard(arbitraryGame.flipVertical());
-            int[][] gameBoard = arbitraryGame.getGameBoard();
+            SlideGame.this.setGameBoard(new int[][] { row });
+            SlideGame.this.setGameBoard(SlideGame.this.flipVertical());
+            int[][] gameBoard = SlideGame.this.getGameBoard();
 
             // Use the mergeLeft method to shift the array
             int[] shiftedRight = this.mergeLeft(gameBoard[0]);
 
             // Flip the board back
-            arbitraryGame.setGameBoard(new int[][] { shiftedRight });
-            gameBoard = arbitraryGame.flipVertical();
+            SlideGame.this.setGameBoard(new int[][] { shiftedRight });
+            gameBoard = SlideGame.this.flipVertical();
 
             // Set the game board to its original state
-            arbitraryGame.setGameBoard(copyBoard);
+            SlideGame.this.setGameBoard(copyBoard);
 
             // Return the shifted array
             return gameBoard[0];
@@ -1041,9 +1030,9 @@ public class SlideGame extends Application {
              * Set and retrieve the board after transposing. mergeLeft is used once
              * board is transposed, as they are effectively the same.
              */
-            arbitraryGame.setGameBoard(board);
-            arbitraryGame.setGameBoard(arbitraryGame.transpose());
-            int[][] gameBoard = arbitraryGame.getGameBoard();
+            SlideGame.this.setGameBoard(board);
+            SlideGame.this.setGameBoard(SlideGame.this.transpose());
+            int[][] gameBoard = SlideGame.this.getGameBoard();
 
             /*
              * Create a resulting board with different dimensions to account for non-square
@@ -1058,14 +1047,14 @@ public class SlideGame extends Application {
 
             /*
              * Transpose the result board to return to the original orientation. Do this
-             * using the arbitraryGame
+             * using the SlideGame.this
              * object, which is effectively a wrapper for the gameBoard.
              */
-            arbitraryGame.setGameBoard(resultBoard);
-            arbitraryGame.setGameBoard(arbitraryGame.transpose());
+            SlideGame.this.setGameBoard(resultBoard);
+            SlideGame.this.setGameBoard(SlideGame.this.transpose());
 
             // Return the new board
-            return arbitraryGame.getGameBoard();
+            return SlideGame.this.getGameBoard();
         }
 
         /**
@@ -1091,10 +1080,10 @@ public class SlideGame extends Application {
              * Set and retrieve the board after transposing. A vertical flip is used once
              * board is transposed, as this simulates downward movement
              */
-            arbitraryGame.setGameBoard(board);
-            arbitraryGame.setGameBoard(arbitraryGame.transpose());
-            arbitraryGame.setGameBoard(arbitraryGame.flipVertical());
-            int[][] gameBoard = arbitraryGame.getGameBoard();
+            SlideGame.this.setGameBoard(board);
+            SlideGame.this.setGameBoard(SlideGame.this.transpose());
+            SlideGame.this.setGameBoard(SlideGame.this.flipVertical());
+            int[][] gameBoard = SlideGame.this.getGameBoard();
 
             /*
              * Create a resulting board with different dimensions to account for non-square
@@ -1108,12 +1097,12 @@ public class SlideGame extends Application {
             }
 
             // Perform the inverse transformation to get the original orientation.
-            arbitraryGame.setGameBoard(resultBoard);
-            arbitraryGame.setGameBoard(arbitraryGame.flipVertical());
-            arbitraryGame.setGameBoard(arbitraryGame.transpose());
+            SlideGame.this.setGameBoard(resultBoard);
+            SlideGame.this.setGameBoard(SlideGame.this.flipVertical());
+            SlideGame.this.setGameBoard(SlideGame.this.transpose());
 
             // Return the new board
-            return arbitraryGame.getGameBoard();
+            return SlideGame.this.getGameBoard();
         }
 
         /**
@@ -1285,9 +1274,9 @@ public class SlideGame extends Application {
              * Set and retrieve the board after flipping horizontally. mergeLeft is used
              * once board is diagonalized, as this accomplishes the shift
              */
-            arbitraryGame.setGameBoard(board);
-            arbitraryGame.setGameBoard(arbitraryGame.flipHorizontal());
-            int[][] gameBoard = arbitraryGame.getGameBoard();
+            SlideGame.this.setGameBoard(board);
+            SlideGame.this.setGameBoard(SlideGame.this.flipHorizontal());
+            int[][] gameBoard = SlideGame.this.getGameBoard();
 
             // Deconstruct the board first and preserve the dimensions of the board
             int[][] deconstructed = extractDiagonals(gameBoard);
@@ -1300,13 +1289,13 @@ public class SlideGame extends Application {
 
             /*
              * Flip the board back to its original orientation.
-             * Do this to the arbitraryGame object after reconstructing the board.
+             * Do this to the SlideGame.this object after reconstructing the board.
              */
-            arbitraryGame.setGameBoard(reconstructDiagonals(dimensions, deconstructed));
-            arbitraryGame.setGameBoard(arbitraryGame.flipHorizontal());
+            SlideGame.this.setGameBoard(reconstructDiagonals(dimensions, deconstructed));
+            SlideGame.this.setGameBoard(SlideGame.this.flipHorizontal());
 
             // Reconstruct the board
-            return arbitraryGame.getGameBoard();
+            return SlideGame.this.getGameBoard();
         }
 
         /**
@@ -1332,9 +1321,9 @@ public class SlideGame extends Application {
              * Set and retrieve the board after flipping horizontally. mergeLeft is used
              * once board is diagonalized, as this accomplishes the shift
              */
-            arbitraryGame.setGameBoard(board);
-            arbitraryGame.setGameBoard(arbitraryGame.flipHorizontal());
-            int[][] gameBoard = arbitraryGame.getGameBoard();
+            SlideGame.this.setGameBoard(board);
+            SlideGame.this.setGameBoard(SlideGame.this.flipHorizontal());
+            int[][] gameBoard = SlideGame.this.getGameBoard();
 
             // Deconstruct the board first and preserve the dimensions of the board
             int[][] deconstructed = extractDiagonals(gameBoard);
@@ -1347,13 +1336,13 @@ public class SlideGame extends Application {
 
             /*
              * Flip the board back to its original orientation.
-             * Do this to the arbitraryGame object after reconstructing the board.
+             * Do this to the SlideGame.this object after reconstructing the board.
              */
-            arbitraryGame.setGameBoard(reconstructDiagonals(dimensions, deconstructed));
-            arbitraryGame.setGameBoard(arbitraryGame.flipHorizontal());
+            SlideGame.this.setGameBoard(reconstructDiagonals(dimensions, deconstructed));
+            SlideGame.this.setGameBoard(SlideGame.this.flipHorizontal());
 
             // Reconstruct the board
-            return arbitraryGame.getGameBoard();
+            return SlideGame.this.getGameBoard();
         }
 
         /**
