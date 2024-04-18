@@ -907,6 +907,33 @@ public class SlideGame extends Application {
      * @version CSDS132 - Spring 2024
      */
     private class Logic {
+        // An object to store the game board
+        private int[][] gameBoard;
+
+        // An object to store the resulting board
+        private int[][] resultBoard;
+
+        // An object to store a row board
+        private int[][] rowBoard = { { 0 } };
+
+        // An object to store the resulting row
+        private int[] resultRow;
+
+        // An object to store a resulting shift
+        private int[] resultShift;
+
+        // An object to store a copy of the board
+        private int[][] copyBoard;
+
+        // An object to store the diagonals
+        private int[][] diagonals;
+
+        // An object to store a deconstructed board
+        private int[][] deconstructed;
+
+        // An object to store the dimensions of the board
+        private int[] dimensions;
+
         /**
          * Slides the elements in a row to the left. Equivalent values are combined, and
          * vacant slots become zeros.
@@ -926,7 +953,7 @@ public class SlideGame extends Application {
             }
 
             // Create a new array for the result
-            int[] resultRow = new int[row.length];
+            resultRow = new int[row.length];
 
             // Index to keep track of the position in the result array
             int resultIndex = 0;
@@ -983,21 +1010,23 @@ public class SlideGame extends Application {
             }
 
             // copy the game board to prevent overwriting
-            int[][] copyBoard = SlideGame.this.copyBoard(SlideGame.this.getGameBoard());
+            copyBoard = SlideGame.this.copyBoard(SlideGame.this.getGameBoard());
 
             /*
              * Set and retrieve the board after flipping vertically. mergeLeft is used once
              * board is flipped, as they are effectively the same.
              */
-            SlideGame.this.setGameBoard(new int[][] { row });
+            rowBoard[0] = row;
+            SlideGame.this.setGameBoard(rowBoard);
             SlideGame.this.setGameBoard(SlideGame.this.flipVertical());
-            int[][] gameBoard = SlideGame.this.getGameBoard();
+            gameBoard = SlideGame.this.getGameBoard();
 
             // Use the mergeLeft method to shift the array
-            int[] shiftedRight = this.mergeLeft(gameBoard[0]);
+            resultShift = this.mergeLeft(gameBoard[0]);
 
             // Flip the board back
-            SlideGame.this.setGameBoard(new int[][] { shiftedRight });
+            rowBoard[0] = resultShift;
+            SlideGame.this.setGameBoard(rowBoard);
             gameBoard = SlideGame.this.flipVertical();
 
             // Set the game board to its original state
@@ -1032,13 +1061,13 @@ public class SlideGame extends Application {
              */
             SlideGame.this.setGameBoard(board);
             SlideGame.this.setGameBoard(SlideGame.this.transpose());
-            int[][] gameBoard = SlideGame.this.getGameBoard();
+            gameBoard = SlideGame.this.getGameBoard();
 
             /*
              * Create a resulting board with different dimensions to account for non-square
              * boards
              */
-            int[][] resultBoard = new int[gameBoard.length][gameBoard[0].length];
+            resultBoard = new int[gameBoard.length][gameBoard[0].length];
 
             // Loop through the gameBoard and merge each row
             for (int i = 0; i < gameBoard.length; i++) {
@@ -1083,13 +1112,13 @@ public class SlideGame extends Application {
             SlideGame.this.setGameBoard(board);
             SlideGame.this.setGameBoard(SlideGame.this.transpose());
             SlideGame.this.setGameBoard(SlideGame.this.flipVertical());
-            int[][] gameBoard = SlideGame.this.getGameBoard();
+            gameBoard = SlideGame.this.getGameBoard();
 
             /*
              * Create a resulting board with different dimensions to account for non-square
              * boards
              */
-            int[][] resultBoard = new int[gameBoard.length][gameBoard[0].length];
+            resultBoard = new int[gameBoard.length][gameBoard[0].length];
 
             // Loop through the gameBoard and merge each row
             for (int i = 0; i < gameBoard.length; i++) {
@@ -1129,7 +1158,7 @@ public class SlideGame extends Application {
 
             // Create a diagonal array based on diag formula
             int numDiag = (row + col - 1);
-            int[][] diagonals = new int[numDiag][];
+            diagonals = new int[numDiag][];
 
             // Extract main diagonals
             for (int i = 0; i < row; i++) {
@@ -1194,7 +1223,7 @@ public class SlideGame extends Application {
             int requestedCol = dimensions[1];
 
             // Create the resulting board with requested dimensions
-            int[][] resultBoard = new int[requestedRow][requestedCol];
+            resultBoard = new int[requestedRow][requestedCol];
 
             // Loop through the diagonals
             for (int i = 0; i < diagonals.length; i++) {
@@ -1239,8 +1268,8 @@ public class SlideGame extends Application {
             }
 
             // Deconstruct the board first and preserve the dimensions of the board
-            int[][] deconstructed = extractDiagonals(board);
-            int[] dimensions = new int[] { board.length, board[0].length };
+            deconstructed = extractDiagonals(board);
+            dimensions = new int[] { board.length, board[0].length };
 
             // Merge the diagonals right in each row
             for (int i = 0; i < deconstructed.length; i++) {
@@ -1276,11 +1305,11 @@ public class SlideGame extends Application {
              */
             SlideGame.this.setGameBoard(board);
             SlideGame.this.setGameBoard(SlideGame.this.flipHorizontal());
-            int[][] gameBoard = SlideGame.this.getGameBoard();
+            gameBoard = SlideGame.this.getGameBoard();
 
             // Deconstruct the board first and preserve the dimensions of the board
-            int[][] deconstructed = extractDiagonals(gameBoard);
-            int[] dimensions = new int[] { gameBoard.length, gameBoard[0].length };
+            deconstructed = extractDiagonals(gameBoard);
+            dimensions = new int[] { gameBoard.length, gameBoard[0].length };
 
             // Merge the diagonals right in each row
             for (int i = 0; i < deconstructed.length; i++) {
@@ -1323,11 +1352,11 @@ public class SlideGame extends Application {
              */
             SlideGame.this.setGameBoard(board);
             SlideGame.this.setGameBoard(SlideGame.this.flipHorizontal());
-            int[][] gameBoard = SlideGame.this.getGameBoard();
+            gameBoard = SlideGame.this.getGameBoard();
 
             // Deconstruct the board first and preserve the dimensions of the board
-            int[][] deconstructed = extractDiagonals(gameBoard);
-            int[] dimensions = new int[] { gameBoard.length, gameBoard[0].length };
+            deconstructed = extractDiagonals(gameBoard);
+            dimensions = new int[] { gameBoard.length, gameBoard[0].length };
 
             // Merge the diagonals right in each row
             for (int i = 0; i < deconstructed.length; i++) {
@@ -1365,8 +1394,8 @@ public class SlideGame extends Application {
             }
 
             // Deconstruct the board and preserve the dimensions of the board
-            int[][] deconstructed = extractDiagonals(board);
-            int[] dimensions = new int[] { board.length, board[0].length };
+            deconstructed = extractDiagonals(board);
+            dimensions = new int[] { board.length, board[0].length };
 
             // Merge the diagonals left in each row
             for (int i = 0; i < deconstructed.length; i++) {
