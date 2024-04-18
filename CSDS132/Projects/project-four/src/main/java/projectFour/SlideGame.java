@@ -69,6 +69,11 @@ public class SlideGame extends Application {
     public SlideGame() {
         this.logic = new Logic();
     }
+    
+    public SlideGame(Parameters params) {
+        this.parseArgs(params);
+        this.logic = new Logic();
+    }
 
     /**
      * A method to retrieve the boards dimensions.

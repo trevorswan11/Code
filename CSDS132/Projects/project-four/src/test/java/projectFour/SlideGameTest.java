@@ -817,12 +817,12 @@ public class SlideGameTest {
             throws SecurityException, NoSuchMethodException, ClassNotFoundException, InstantiationException,
             IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         // Grab the SlideGame class
-        Logic = Class.forName("projectFour.SlideGame$Logic");
+        Logic = SlideGame.class.getDeclaredClasses()[1];
 
         // Grab an instance of logic
-        Constructor<?> logicConstructor = Logic.getDeclaredConstructor();
+        Constructor<?> logicConstructor = Logic.getDeclaredConstructor(SlideGame.class);
         logicConstructor.setAccessible(true);
-        logicInstance = logicConstructor.newInstance();
+        logicInstance = logicConstructor.newInstance(game);
 
         // Grab the mergeLeft method
         mergeLeft = Logic.getDeclaredMethod("mergeLeft", int[].class);
