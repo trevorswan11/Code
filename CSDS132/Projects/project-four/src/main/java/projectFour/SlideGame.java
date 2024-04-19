@@ -975,7 +975,88 @@ public class SlideGame extends Application {
 
         // An object to store the dimensions of the board
         private int[] dimensions;
-        
+
+        /**
+         * Sets the game board in the local pool.
+         *
+         * @param gameBoard
+         */
+        private void setGameBoard(int[][] gameBoard) {
+            this.gameBoard = gameBoard;
+        }
+
+        /**
+         * Sets the result board in the local pool.
+         *
+         * @param resultBoard
+         */
+        private void setResultBoard(int[][] resultBoard) {
+            this.resultBoard = resultBoard;
+        }
+
+        /**
+         * Sets the row board in the local pool.
+         *
+         * @param rowBoard
+         */
+        private void setRowBoard(int[][] rowBoard) {
+            this.rowBoard = rowBoard;
+        }
+
+        /**
+         * Sets the result row in the local pool.
+         *
+         * @param resultRow
+         */
+        private void setResultRow(int[] resultRow) {
+            this.resultRow = resultRow;
+        }
+
+        /**
+         * Sets the result shift in the local pool.
+         *
+         * @param resultShift
+         */
+        private void setResultShift(int[] resultShift) {
+            this.resultShift = resultShift;
+        }
+
+        /**
+         * Sets the copy board in the local pool.
+         *
+         * @param copyBoard
+         */
+        private void setCopyBoard(int[][] copyBoard) {
+            this.copyBoard = copyBoard;
+        }
+
+        /**
+         * Sets the diagonals in the local pool.
+         *
+         * @param diagonals
+         */
+        private void setDiagonals(int[][] diagonals) {
+            this.diagonals = diagonals;
+        }
+
+        /**
+         * Sets the deconstructed board in the local pool.
+         *
+         * @param deconstructed
+         */
+        private void setDeconstructed(int[][] deconstructed) {
+            this.deconstructed = deconstructed;
+        }
+
+        /**
+         * Sets the dimensions in the local pool.
+         *
+         * @param dimensions
+         */
+        private void setDimensions(int[] dimensions) {
+            this.dimensions = dimensions;
+        }
+
         /**
          * Slides the elements in a row to the left. Equivalent values are combined, and
          * vacant slots become zeros.
@@ -995,7 +1076,7 @@ public class SlideGame extends Application {
             }
 
             // Create a new array for the result
-            resultRow = new int[row.length];
+            this.setResultRow(new int[row.length]);
 
             // Index to keep track of the position in the result array
             int resultIndex = 0;
@@ -1052,7 +1133,7 @@ public class SlideGame extends Application {
             }
 
             // copy the game board to prevent overwriting
-            copyBoard = SlideGame.this.copyBoard(SlideGame.this.getGameBoard());
+            this.setCopyBoard(SlideGame.this.copyBoard(SlideGame.this.getGameBoard()));
 
             /*
              * Set and retrieve the board after flipping vertically. mergeLeft is used once
@@ -1061,15 +1142,15 @@ public class SlideGame extends Application {
             rowBoard[0] = row;
             SlideGame.this.setGameBoard(rowBoard);
             SlideGame.this.setGameBoard(SlideGame.this.flipVertical());
-            gameBoard = SlideGame.this.getGameBoard();
+            this.setGameBoard(SlideGame.this.getGameBoard());
 
             // Use the mergeLeft method to shift the array
-            resultShift = this.mergeLeft(gameBoard[0]);
+            this.setResultShift(this.mergeLeft(gameBoard[0]));
 
             // Flip the board back
             rowBoard[0] = resultShift;
             SlideGame.this.setGameBoard(rowBoard);
-            gameBoard = SlideGame.this.flipVertical();
+            this.setGameBoard(SlideGame.this.flipVertical());
 
             // Set the game board to its original state
             SlideGame.this.setGameBoard(copyBoard);
@@ -1103,13 +1184,13 @@ public class SlideGame extends Application {
              */
             SlideGame.this.setGameBoard(board);
             SlideGame.this.setGameBoard(SlideGame.this.transpose());
-            gameBoard = SlideGame.this.getGameBoard();
+            this.setGameBoard(SlideGame.this.getGameBoard());
 
             /*
              * Create a resulting board with different dimensions to account for non-square
              * boards
              */
-            resultBoard = new int[gameBoard.length][gameBoard[0].length];
+            this.setResultBoard(new int[gameBoard.length][gameBoard[0].length]);
 
             // Loop through the gameBoard and merge each row
             for (int i = 0; i < gameBoard.length; i++) {
@@ -1154,13 +1235,13 @@ public class SlideGame extends Application {
             SlideGame.this.setGameBoard(board);
             SlideGame.this.setGameBoard(SlideGame.this.transpose());
             SlideGame.this.setGameBoard(SlideGame.this.flipVertical());
-            gameBoard = SlideGame.this.getGameBoard();
+            this.setGameBoard(SlideGame.this.getGameBoard());
 
             /*
              * Create a resulting board with different dimensions to account for non-square
              * boards
              */
-            resultBoard = new int[gameBoard.length][gameBoard[0].length];
+            this.setResultBoard(new int[gameBoard.length][gameBoard[0].length]);
 
             // Loop through the gameBoard and merge each row
             for (int i = 0; i < gameBoard.length; i++) {
@@ -1200,7 +1281,7 @@ public class SlideGame extends Application {
 
             // Create a diagonal array based on diag formula
             int numDiag = (row + col - 1);
-            diagonals = new int[numDiag][];
+            this.setDiagonals(new int[numDiag][]);
 
             // Extract main diagonals
             for (int i = 0; i < row; i++) {
@@ -1265,7 +1346,7 @@ public class SlideGame extends Application {
             int requestedCol = dimensions[1];
 
             // Create the resulting board with requested dimensions
-            resultBoard = new int[requestedRow][requestedCol];
+            this.setResultBoard(new int[requestedRow][requestedCol]);
 
             // Loop through the diagonals
             for (int i = 0; i < diagonals.length; i++) {
