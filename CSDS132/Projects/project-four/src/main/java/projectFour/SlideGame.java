@@ -371,7 +371,7 @@ public class SlideGame extends Application {
                 // Set the text of the button to the text in the game board
                 String text = Integer.toString(this.getGameBoard()[i][j]);
                 button.setText(text.equals("0") ? "" : text);
-                button.setStyle("-fx-font-weight: bold;");
+                button.setStyle("-fx-font-weight: bold; -fx-background-color: " + this.buttonColor(button) + "; -fx-border-color: black;");
 
                 // Add the button to the pane
                 pane.add(button, j, i);
@@ -380,6 +380,43 @@ public class SlideGame extends Application {
 
         // return the array of buttons
         return buttons;
+    }
+
+    /**
+     * This method returns a color based on the text in the button.
+     * 
+     * @return The color of the button
+     */
+    private String buttonColor(Button button) {
+        // Switch based on number in button
+        switch (button.getText()) {
+            case "":
+                return "darkgray";
+            case "1":
+                return "orangered";
+            case "2":
+                return "orange";
+            case "4":
+                return "lemonchiffon";
+            case "8":
+                return "lightgreen";
+            case "16":
+                return "lightskyblue";
+            case "32":
+                return "thistle";
+            case "64":
+                return "pink";
+            case "128":
+                return "rosybrown";
+            case "256":
+                return "darksalmon";
+            case "512":
+                return "crimson";
+            case "1024":
+                return "coral";
+            default:
+                return "gold";
+        }
     }
 
     /**
