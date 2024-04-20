@@ -52,6 +52,9 @@ public class SlideGame extends Application {
     // A field to store a board that is operated on
     private int[][] resultBoard;
 
+    // An object to store the move
+    private MoveOnAction move = new MoveOnAction();
+
     /**
      * An enum to indicate the movement associated with a button.
      */
@@ -444,7 +447,7 @@ public class SlideGame extends Application {
      * This helper method resets the state of the game.
      */
     private void reset() {
-        // Reset the game
+        // Reset the game board
         this.setGameBoard(this.emptyBoard(this.getBoardDim()));
         this.setPosition(1, this.randomIndex());
         this.setButtonActions(this.updateGameBoard(this.getGameGrid()));
@@ -471,7 +474,7 @@ public class SlideGame extends Application {
                         @Override
                         public void handle(ActionEvent e) {
                             // Use nested class to process event
-                            MoveOnAction move = new MoveOnAction(Direction.UP_LEFT);
+                            move.setDirection(Direction.UP_LEFT);
                             move.performAction(buttons);
                         }
                     });
@@ -488,7 +491,7 @@ public class SlideGame extends Application {
                         @Override
                         public void handle(ActionEvent e) {
                             // Use nested class to process event
-                            MoveOnAction move = new MoveOnAction(Direction.UP);
+                            move.setDirection(Direction.UP);
                             move.performAction(buttons);
                         }
                     });
@@ -505,7 +508,7 @@ public class SlideGame extends Application {
                         @Override
                         public void handle(ActionEvent e) {
                             // Use nested class to process event
-                            MoveOnAction move = new MoveOnAction(Direction.UP_RIGHT);
+                            move.setDirection(Direction.UP_RIGHT);
                             move.performAction(buttons);
                         }
                     });
@@ -522,7 +525,7 @@ public class SlideGame extends Application {
                         @Override
                         public void handle(ActionEvent e) {
                             // Use nested class to process event
-                            MoveOnAction move = new MoveOnAction(Direction.LEFT);
+                            move.setDirection(Direction.LEFT);
                             move.performAction(buttons);
                         }
                     });
@@ -538,7 +541,7 @@ public class SlideGame extends Application {
                          */
                         @Override
                         public void handle(ActionEvent e) {
-                            MoveOnAction move = new MoveOnAction(Direction.RIGHT);
+                            move.setDirection(Direction.RIGHT);
                             move.performAction(buttons);
                         }
                     });
@@ -555,7 +558,7 @@ public class SlideGame extends Application {
                         @Override
                         public void handle(ActionEvent e) {
                             // Use nested class to process event
-                            MoveOnAction move = new MoveOnAction(Direction.DOWN_LEFT);
+                            move.setDirection(Direction.DOWN_LEFT);
                             move.performAction(buttons);
                         }
                     });
@@ -572,7 +575,7 @@ public class SlideGame extends Application {
                         @Override
                         public void handle(ActionEvent e) {
                             // Use nested class to process event
-                            MoveOnAction move = new MoveOnAction(Direction.DOWN);
+                            move.setDirection(Direction.DOWN);
                             move.performAction(buttons);
                         }
                     });
@@ -589,7 +592,7 @@ public class SlideGame extends Application {
                         @Override
                         public void handle(ActionEvent e) {
                             // Use nested class to process event
-                            MoveOnAction move = new MoveOnAction(Direction.DOWN_RIGHT);
+                            move.setDirection(Direction.DOWN_RIGHT);
                             move.performAction(buttons);
                         }
                     });
@@ -620,43 +623,43 @@ public class SlideGame extends Application {
                 switch (e.getCode()) {
                     case H:
                         // Use nested class to process event
-                        MoveOnAction moveLeft = new MoveOnAction(Direction.LEFT);
-                        moveLeft.performAction(buttons);
+                        move.setDirection(Direction.LEFT);
+                        move.performAction(buttons);
                         break;
                     case J:
                         // Use nested class to process event
-                        MoveOnAction moveDown = new MoveOnAction(Direction.DOWN);
-                        moveDown.performAction(buttons);
+                        move.setDirection(Direction.DOWN);
+                        move.performAction(buttons);
                         break;
                     case K:
                         // Use nested class to process event
-                        MoveOnAction moveUp = new MoveOnAction(Direction.UP);
-                        moveUp.performAction(buttons);
+                        move.setDirection(Direction.UP);
+                        move.performAction(buttons);
                         break;
                     case L:
                         // Use nested class to process event
-                        MoveOnAction moveRight = new MoveOnAction(Direction.RIGHT);
-                        moveRight.performAction(buttons);
+                        move.setDirection(Direction.RIGHT);
+                        move.performAction(buttons);
                         break;
                     case A:
                         // Use nested class to process event
-                        MoveOnAction moveUpLeft = new MoveOnAction(Direction.UP_LEFT);
-                        moveUpLeft.performAction(buttons);
+                        move.setDirection(Direction.UP_LEFT);
+                        move.performAction(buttons);
                         break;
                     case S:
                         // Use nested class to process event
-                        MoveOnAction moveDownLeft = new MoveOnAction(Direction.DOWN_LEFT);
-                        moveDownLeft.performAction(buttons);
+                        move.setDirection(Direction.DOWN_LEFT);
+                        move.performAction(buttons);
                         break;
                     case D:
                         // Use nested class to process event
-                        MoveOnAction moveDownRight = new MoveOnAction(Direction.DOWN_RIGHT);
-                        moveDownRight.performAction(buttons);
+                        move.setDirection(Direction.DOWN_RIGHT);
+                        move.performAction(buttons);
                         break;
                     case F:
                         // Use nested class to process event
-                        MoveOnAction moveUpRight = new MoveOnAction(Direction.UP_RIGHT);
-                        moveUpRight.performAction(buttons);
+                        move.setDirection(Direction.DOWN_RIGHT);
+                        move.performAction(buttons);
                         break;
                     case R:
                         // Reset the game
@@ -684,14 +687,8 @@ public class SlideGame extends Application {
         // The direction of the move
         private Direction direction;
 
-        /**
-         * A constructor for the MoveOnAction class to set the direction.
-         * 
-         * @param direction The direction of the move from the enum
-         */
-        private MoveOnAction(Direction direction) {
-            this.direction = direction;
-        }
+        // A local copy of the board
+        private int[][] copyBoard;
 
         /**
          * Returns the direction of the move.
@@ -702,9 +699,41 @@ public class SlideGame extends Application {
             return direction;
         }
 
+        /**
+         * A constructor for the MoveOnAction class to set the direction.
+         * 
+         * @param direction The direction of the move from the enum
+         */
+        public void setDirection(Direction direction) {
+            this.direction = direction;
+        }
+
+        /**
+         * Returns the local copy of the board.
+         * 
+         * @return The local copy of the board
+         */
+        public int[][] getCopyBoard() {
+            return copyBoard;
+        }
+
+        /**
+         * Sets the local copy of the board.
+         * 
+         * @param copyBoard The local copy of the board
+         */
+        public void setCopyBoard(int[][] copyBoard) {
+            this.copyBoard = copyBoard;
+        }
+
+        /**
+         * A helper method to perform the action of a button.
+         *
+         * @param buttonBoard The buttons to act on
+         */
         private void performAction(Button[][] buttonBoard) {
             // Copy the board for comparison and slide up
-            int[][] copy = copyBoard(getGameBoard());
+            this.setCopyBoard(SlideGame.this.copyBoard(SlideGame.this.getGameBoard()));
 
             // Perform the move based on enum value
             switch (this.getDirection()) {
@@ -737,18 +766,18 @@ public class SlideGame extends Application {
             }
 
             // If nothing changed, return
-            if (Arrays.deepEquals(copy, getGameBoard())) {
+            if (Arrays.deepEquals(this.getCopyBoard(), SlideGame.this.getGameBoard())) {
                 return;
             }
 
             // Otherwise set a random position to 1
-            setPosition(1, randomIndex());
+            SlideGame.this.setPosition(1, SlideGame.this.randomIndex());
 
             // Update the button pane
-            buttonBoard = updateGameBoard(getGameGrid());
+            buttonBoard = SlideGame.this.updateGameBoard(SlideGame.this.getGameGrid());
 
             // Reset the button actions
-            setButtonActions(buttonBoard);
+            SlideGame.this.setButtonActions(buttonBoard);
         }
     }
 
