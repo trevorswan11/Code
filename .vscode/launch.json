@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CoolButtonGUI",
+            "request": "launch",
+            "mainClass": "guiPractice.CoolButtonGUI",
+            "projectName": "GUIs"
+        },
+        {
+            "type": "java",
             "name": "DoubleLinkedList",
             "request": "launch",
             "mainClass": "labcode13.DoubleLinkedList",

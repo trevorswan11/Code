@@ -43,8 +43,10 @@ public class CoolButtonGUI extends Application {
 
         // button 1 has a boring event handler
         button1.setOnAction(new EventHandler<ActionEvent>() {
+            private int time = 0;
             public void handle(ActionEvent e) {
-                System.out.println("I was clicked");
+                ++time;
+                System.out.println("I was clicked: " + time + " times!");
             }
         });
 
@@ -58,6 +60,18 @@ public class CoolButtonGUI extends Application {
          * });
          */
         button3.setOnAction(e -> button3.setRotate(button3.getRotate() + 20));
+        
+        /*
+         * If you try to reference this, an error occurs because anon class lives in
+         * heap but variable is in the stack.
+         */        
+        int rotateDelta = 25;
+        button4.setOnAction(e -> {
+            // need to have 'field' in lambda expression, cannot be private.
+            int fourRotation = 0;
+            fourRotation+=rotateDelta;
+            button4.setRotate(button4.getRotate() + fourRotation);
+        });
 
         // this button will rotate all the buttons of the gui and reduce the rotation
         // amount with each click
