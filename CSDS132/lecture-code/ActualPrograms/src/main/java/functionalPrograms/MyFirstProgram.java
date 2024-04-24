@@ -1,4 +1,4 @@
-package code;
+package functionalPrograms;
 
 /** My first Java stand-alone program */
 public class MyFirstProgram {
@@ -61,3 +61,4 @@ public class MyFirstProgram {
 		System.out.println(power(2, -3));
 	}
 }
+

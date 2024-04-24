@@ -1,3 +1,5 @@
+package employee;
+
 public class HourlyEmployee extends Employee {
     private double hourlyRate = 0.;
     private double hoursWorked = 0.;

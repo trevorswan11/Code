@@ -1,9 +1,10 @@
+package comparatorEmployee;
+
 import java.util.Comparator;
 
 /* A class that represents employees */
 
-public class EmployeeTwo implements Comparable<EmployeeTwo> {
-
+public class Employee implements Comparable<Employee> {
     // store the employee name
     private String name;
 
@@ -14,20 +15,20 @@ public class EmployeeTwo implements Comparable<EmployeeTwo> {
     private double salary;
 
     // store the last employee number used
-    private static int lastEmployeeTwoNumber = 0;
+    private static int lastEmployeeNumber = 0;
 
     /* A constructor that takes the name and number as input */
-    public EmployeeTwo(String name, int number) {
+    public Employee(String name, int number) {
         super();
         this.name = name;
         this.number = number;
-        if (number > EmployeeTwo.lastEmployeeTwoNumber)
-            EmployeeTwo.lastEmployeeTwoNumber = number;
+        if (number > Employee.lastEmployeeNumber)
+            Employee.lastEmployeeNumber = number;
     }
 
     /* A constructor that takes the name as input */
-    public EmployeeTwo(String name) {
-        this(name, EmployeeTwo.lastEmployeeTwoNumber + 1);
+    public Employee(String name) {
+        this(name, Employee.lastEmployeeNumber + 1);
     }
 
     /* retrieve the employee salary */
@@ -65,8 +66,8 @@ public class EmployeeTwo implements Comparable<EmployeeTwo> {
      * if they have the same name and same number
      */
     public boolean equals(Object o) {
-        if (o instanceof EmployeeTwo) {
-            EmployeeTwo e = (EmployeeTwo) o;
+        if (o instanceof Employee) {
+            Employee e = (Employee) o;
             return e.getNumber() == this.getNumber() &&
                     e.getName().equals(this.getName());
         } else
@@ -74,7 +75,7 @@ public class EmployeeTwo implements Comparable<EmployeeTwo> {
     }
 
     /* return true if this employee makes more money than the input e */
-    public boolean earnsMoreThan(EmployeeTwo e) {
+    public boolean earnsMoreThan(Employee e) {
         return this.getSalary() > e.getSalary();
     }
 
@@ -83,14 +84,14 @@ public class EmployeeTwo implements Comparable<EmployeeTwo> {
      * The default is to order by number.
      */
     @Override
-    public int compareTo(EmployeeTwo e) {
+    public int compareTo(Employee e) {
         return this.getNumber() - e.getNumber();
     }
 
     /*
      * Returns a comparator that compares employees by salary
      */
-    public static Comparator<EmployeeTwo> getCompareBySalary() {
+    public static Comparator<Employee> getCompareBySalary() {
         return new CompareBySalary();
     }
 
@@ -98,27 +99,21 @@ public class EmployeeTwo implements Comparable<EmployeeTwo> {
      * Returns a comparator that compares employees by name.
      * This is an example of an anonymous class.
      */
-    /*
-     * public static Comparator<EmployeeTwo> getCompareByName() {
-     * return new Comparator<EmployeeTwo>() {
-     * public int compare(EmployeeTwo e1, EmployeeTwo e2) {
-     * return e1.getName().compareTo(e2.getName());
-     * }
-     * };
-     * }
-     */
-
-    public static Comparator<EmployeeTwo> getCompareByName() {
-        return (e1, e2) -> e1.getName().compareTo(e2.getName());
+    public static Comparator<Employee> getCompareByName() {
+        return new Comparator<Employee>() {
+            public int compare(Employee e1, Employee e2) {
+                return e1.getName().compareTo(e2.getName());
+            }
+        };
     }
 
     /*
      * An example of a static nested class creates a comparator that
      * orders employees by salary.
      */
-    public static class CompareBySalary implements Comparator<EmployeeTwo> {
+    public static class CompareBySalary implements Comparator<Employee> {
 
-        public int compare(EmployeeTwo e1, EmployeeTwo e2) {
+        public int compare(Employee e1, Employee e2) {
             return (int) ((e1.getSalary() - e2.getSalary()) * 100);
         }
     }
@@ -127,11 +122,12 @@ public class EmployeeTwo implements Comparable<EmployeeTwo> {
      * An example of a non-static nested class.
      * Order employees by how close the employee is to "this" employee
      */
-    public class CompareSalaryToThisEmployeeTwo implements Comparator<EmployeeTwo> {
+    public class CompareSalaryToThisEmployee implements Comparator<Employee> {
 
-        public int compare(EmployeeTwo e1, EmployeeTwo e2) {
-            return (int) ((Math.abs(e1.getSalary() - EmployeeTwo.this.getSalary()) -
-                    Math.abs(e2.getSalary() - EmployeeTwo.this.getSalary())) * 100);
+        public int compare(Employee e1, Employee e2) {
+            return (int) ((Math.abs(e1.getSalary() - Employee.this.getSalary()) -
+                    Math.abs(e2.getSalary() - Employee.this.getSalary())) * 100);
         }
     }
 }
+

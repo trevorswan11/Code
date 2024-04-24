@@ -1,3 +1,5 @@
+package employee;
+
 // Use this import to get user input from the command line
 import java.util.Scanner;
 

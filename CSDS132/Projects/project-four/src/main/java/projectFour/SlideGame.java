@@ -626,7 +626,17 @@ public class SlideGame extends Application {
                         move.setDirection(Direction.LEFT);
                         move.performAction(buttons);
                         break;
+                    case LEFT:
+                        // Use nested class to process event
+                        move.setDirection(Direction.LEFT);
+                        move.performAction(buttons);
+                        break;
                     case J:
+                        // Use nested class to process event
+                        move.setDirection(Direction.DOWN);
+                        move.performAction(buttons);
+                        break;
+                    case DOWN:
                         // Use nested class to process event
                         move.setDirection(Direction.DOWN);
                         move.performAction(buttons);
@@ -636,7 +646,17 @@ public class SlideGame extends Application {
                         move.setDirection(Direction.UP);
                         move.performAction(buttons);
                         break;
+                    case UP:
+                        // Use nested class to process event
+                        move.setDirection(Direction.UP);
+                        move.performAction(buttons);
+                        break;
                     case L:
+                        // Use nested class to process event
+                        move.setDirection(Direction.RIGHT);
+                        move.performAction(buttons);
+                        break;
+                    case RIGHT:
                         // Use nested class to process event
                         move.setDirection(Direction.RIGHT);
                         move.performAction(buttons);
@@ -827,6 +847,8 @@ public class SlideGame extends Application {
         // Set the color of the two boxes
         moves.setStyle(color);
         formatBox.setStyle(color);
+        formatBox.setMouseTransparent(true);
+        formatBox.setFocusTraversable(false);
 
         // Return the text area
         return formatBox;

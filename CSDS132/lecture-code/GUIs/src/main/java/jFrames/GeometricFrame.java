@@ -1,3 +1,5 @@
+package jFrames;
+
 import javax.swing.JFrame;
 
 /* Create a class that adds new features to JFrame.
@@ -68,8 +70,9 @@ public class GeometricFrame extends JFrame {
     public static void main(String[] args) {
         GeometricFrame g = new GeometricFrame();
         g.setVisible(true);
-        g.setSize(600,600);
+        g.setSize(600, 600);
         g.setTitle("Trevor");
         g.addSizeToTitle(true);
     }
 }
+
