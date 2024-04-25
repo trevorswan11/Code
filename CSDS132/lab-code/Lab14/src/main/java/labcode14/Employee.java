@@ -256,7 +256,7 @@ public class Employee {
      * Returns true if this employee makes more than e does
      * 
      * @param e an Employee to compare against this Employee
-     * @return true if this employee eanrs more than e does
+     * @return true if this employee earns more than e does
      */
     public boolean earnsMoreThan(Employee e) {
         return (this.getSalary() > e.getSalary());

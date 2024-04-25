@@ -15,7 +15,9 @@
         "Eulers",
         "fopen",
         "globworld",
+        "Harcourt",
         "inht",
+        "Kaler",
         "keymappings",
         "labcode",
         "lemonchiffon",
@@ -43,7 +45,8 @@
         "userinput",
         "Whoville",
         "woah",
-        "womp"
+        "womp",
+        "zipcode"
     ],
     "java.debug.settings.onBuildFailureProceed": true,
     "java.dependency.packagePresentation": "hierarchical",

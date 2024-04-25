@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "EmployeeQuery",
+            "request": "launch",
+            "mainClass": "labcode14.EmployeeQuery",
+            "projectName": "Lab14"
+        },
+        {
+            "type": "java",
             "name": "CoolButtonGUI",
             "request": "launch",
             "mainClass": "guiPractice.CoolButtonGUI",
