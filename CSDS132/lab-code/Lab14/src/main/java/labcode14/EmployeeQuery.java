@@ -133,7 +133,7 @@ public class EmployeeQuery {
                         String thisOne = user.next();
                         switch (thisOne) {
                             case "int":
-                                inputs[i] = (Integer)Integer.parseInt(thisOne);
+                                inputs[i] = (Integer) Integer.parseInt(thisOne);
                                 break;
                             case "double":
                                 inputs[i] = (Double) Double.parseDouble(thisOne);
