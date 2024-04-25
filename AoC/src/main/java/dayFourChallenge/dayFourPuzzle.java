@@ -123,7 +123,7 @@ public class dayFourPuzzle {
 			// Create a StringBuilder to reformat the input
 			StringBuilder format = new StringBuilder();
 
-			// Dont append anything to the builder until the index is two after the :
+			// Don't append anything to the builder until the index is two after the :
 			int i = 0;
 			boolean colon = true;
 			while (i < line.length()) {
@@ -232,7 +232,7 @@ public class dayFourPuzzle {
 		for (int i = 0; i < contents.length; i++) {
 			// Go through each of the winners
 			for (int j = 0; j < winners.length; j++) {
-				// If the value is 0, set it to 1 initialy
+				// If the value is 0, set it to 1 initially
 				if (contents[i] == winners[j] && value == 0) {
 					value = 1;
 				}
