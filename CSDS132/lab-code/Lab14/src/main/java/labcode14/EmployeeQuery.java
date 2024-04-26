@@ -97,6 +97,42 @@ public class EmployeeQuery {
     }
 
     /**
+     * Checks to see if an input is an Employee.
+     * 
+     * @param type The string representation of a new Object
+     * @return A boolean indicating if the type is an Employee instance.
+     */
+    public static boolean isEmployee(String type) {
+        String modelInstance = "new Employee(first, middle, last)";
+        boolean inArgs = false;
+        // Check the equality up to the args of the constructor
+        for (int i = 0; i < type.length() && !inArgs; i++) {
+            if (type.charAt(i) != modelInstance.charAt(i)) {
+                return false;
+            } else if (type.charAt(i) == '(') {
+                inArgs = true;
+            }
+        }
+
+        // Check for 2 separate args in the constructor
+        int numCommas = 0;
+        int endIndex;
+        for (endIndex = 12; type.charAt(endIndex) != ')'; endIndex++) {
+            if (type.charAt(endIndex) == ',') {
+                numCommas += 1;
+            }
+        }
+
+        if (numCommas != 2) {
+            return false;
+        } else if (endIndex != type.length() - 1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
      * The program has a loop that lets a user enter queries about an employee and
      * stops when
      * the user enters "quit".
@@ -130,24 +166,25 @@ public class EmployeeQuery {
                     Object[] inputs = new Object[parameterTypes.length];
                     for (int i = 0; i < parameterTypes.length; i++) {
                         System.out.println("Enter a " + parameterTypes[i] + ": ");
-                        String thisOne = user.next();
-                        switch (thisOne) {
-                            case "int":
-                                inputs[i] = (Integer) Integer.parseInt(thisOne);
-                                break;
-                            case "double":
-                                inputs[i] = (Double) Double.parseDouble(thisOne);
-                                break;
-                            case "Object":
-                                inputs[i] = (Object) thisOne;
-                                break;
-                            default:
-                                inputs[i] = thisOne;
-                                break;
-                        }
+                        inputs[i] = user.next();
                     }
 
-                    m.invoke(e, inputs);
+                    // Some methods accept primitive values, and they only take one with no variance
+                    if (EmployeeQuery.isPrimitive(parameterTypes[0])) {
+                        String thisType = parameterTypes[0];
+                        switch (thisType) {
+                            case "int":
+                                int inputInt = Integer.parseInt(inputs[0].toString());
+                                m.invoke(e, inputInt);
+                                break;
+                            case "double":
+                                double inputDouble = Double.parseDouble(inputs[0].toString());
+                                m.invoke(e, inputDouble);
+                                break;
+                        }
+                    } else {
+                        m.invoke(e, inputs);
+                    }
                 }
 
                 else {
