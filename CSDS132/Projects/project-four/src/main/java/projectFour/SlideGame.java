@@ -3,7 +3,6 @@ package projectFour;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Random;
 
 import javafx.application.Application;
@@ -315,8 +314,12 @@ public class SlideGame extends Application {
         }
 
         // If indices are out of bounds, return the base board
-        catch (Exception e) {
-            this.setGameBoard(gameBoard);
+        catch (ArrayIndexOutOfBoundsException e) {
+            if (logic.play()) {
+                this.setGameBoard(gameBoard);
+            } else {
+                System.out.println("You Lose!");
+            }
         }
     }
 
@@ -787,6 +790,9 @@ public class SlideGame extends Application {
 
             // If nothing changed, return
             if (Arrays.deepEquals(this.getCopyBoard(), SlideGame.this.getGameBoard())) {
+                if (!logic.play()) {
+                    System.out.println("You Lose!");
+                }
                 return;
             }
 
@@ -889,10 +895,9 @@ public class SlideGame extends Application {
      * criteria is that it contains 0.
      * 
      * @return An array in form {row, column} which is randomly chosen from a pool
-     *         of zero-values
-     * @throws NoSuchElementException when no indices fir the criteria of being zero
+     *         of zero-values. Out of bounds if doesn't exists
      */
-    private int[] randomIndex() throws NoSuchElementException {
+    private int[] randomIndex() {
         // Grab the board field
         int[][] board = this.getGameBoard();
 
@@ -910,7 +915,7 @@ public class SlideGame extends Application {
 
         // If no zero values found, throw exception
         if (zeroIndices.isEmpty()) {
-            throw new NoSuchElementException("No spaces on the board are empty.");
+            return new int[] { -1, -1 };
         }
 
         // Select a random index from zeroIndices
@@ -1048,6 +1053,9 @@ public class SlideGame extends Application {
         // An object to store the dimensions of the board
         private int[] dimensions;
 
+        // An object to store the check
+        private int[][] check;
+
         /**
          * Sets the game board in the local pool.
          *
@@ -1127,6 +1135,15 @@ public class SlideGame extends Application {
          */
         private void setDimensions(int[] dimensions) {
             this.dimensions = dimensions;
+        }
+
+        /**
+         * Sets the checking position in the pool.
+         *
+         * @param check The check variable
+         */
+        private void setCheck(int[][] check) {
+            this.check = check;
         }
 
         /**
@@ -1599,6 +1616,65 @@ public class SlideGame extends Application {
 
             // Reconstruct the board
             return this.reconstructDiagonals(dimensions, deconstructed);
+        }
+
+        /**
+         * Sweeps around a position in the board and determines if there are any
+         * non-zero matches to the board
+         * 
+         * @param position An array representing the coordinates to check.
+         * @param board    The board to examine
+         * @return true if the position is zero or is non-zero with equivalent value in
+         *         adjacent position. False otherwise
+         */
+        private boolean adjacentSweep(int[] position, int[][] board) {
+            int positionValue = board[position[0]][position[1]];
+
+            // Return true if zero is in position
+            if (positionValue == 0) {
+                return true;
+            }
+
+            // Create an array to store indices in a square around position
+            this.setCheck(new int[][] {
+                { position[0] - 1, position[1] - 1},
+                { position[0] - 1, position[1] },
+                { position[0] - 1, position[1] + 1 },
+                { position[0], position[1] - 1},
+                { position[0], position[1] + 1 },
+                { position[0] + 1, position[1] - 1},
+                { position[0] + 1, position[1] },
+                { position[0] + 1, position[1] + 1 },
+            });
+
+            for (int i = 0; i < 8; i++) {
+                try {
+                    if (positionValue == board[this.check[i][0]][this.check[i][1]]) {
+                        return true;
+                    }
+                } catch (Exception e) {}
+            }
+
+            return false;
+        }
+
+        /**
+         * Checks to see if the user lost or not.
+         * 
+         * @return true if the user can continue playing, false otherwise
+         */
+        private boolean play() {
+            // Check each position with adjacent method
+            for (int i = 0; i < SlideGame.this.getGameBoard().length; i++) {
+                for (int j = 0; j < SlideGame.this.getGameBoard()[0].length; j++) {
+                    if (this.adjacentSweep(new int[] { i, j }, SlideGame.this.getGameBoard())) {
+                        return true;
+                    }
+                }
+            }
+
+            // If none of the positions triggered, then the user lost
+            return false;
         }
     }
 
