@@ -669,7 +669,6 @@ public class SlideGame extends Application {
                 // Board copy and button pane
                 Button[][] buttons = buttonBoard;
                 switch (e.getCode()) {
-                
                     case H:
                         // Use nested class to process event
                         move.setDirection(Direction.LEFT);
