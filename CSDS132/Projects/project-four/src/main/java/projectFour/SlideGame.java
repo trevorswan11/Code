@@ -38,6 +38,9 @@ public class SlideGame extends Application {
 
     // The GridPane for the game
     private GridPane gameGrid;
+    
+    // The Text box for the game
+    private HBox info = this.getMoveArea();
 
     // An object to store the background color
     private String color = "-fx-background-color: lightblue;";
@@ -53,6 +56,9 @@ public class SlideGame extends Application {
 
     // An object to store the move
     private MoveOnAction move = new MoveOnAction();
+
+    // A field to store the game state
+    private boolean canPlay = true;
 
     /**
      * An enum to indicate the movement associated with a button.
@@ -72,11 +78,6 @@ public class SlideGame extends Application {
      * A constructor for the SlideGame class to prevent stack overflows.
      */
     public SlideGame() {
-        this.logic = new Logic();
-    }
-    
-    public SlideGame(Parameters params) {
-        this.parseArgs(params);
         this.logic = new Logic();
     }
 
@@ -163,6 +164,24 @@ public class SlideGame extends Application {
     }
 
     /**
+     * Returns the info of the game.
+     * 
+     * @return The game's text info
+     */
+    public HBox getInfo() {
+        return this.info;
+    }
+
+    /**
+     * Sets the info of the game.
+     * 
+     * @param info The info to set
+     */
+    public void setInfo(HBox info) {
+        this.info = info;
+    }
+
+    /**
      * A method to get the color of the board.
      * 
      * @return The color of the board
@@ -205,6 +224,24 @@ public class SlideGame extends Application {
      */
     public void setResultBoard(int[][] resultBoard) {
         this.resultBoard = resultBoard;
+    }
+
+    /**
+     * Returns the status of the game
+     * 
+     * @return true if the user can play, false otherwise
+     */
+    public boolean getPlayStatus() {
+        return this.canPlay;
+    }
+
+    /**
+     * Sets the status of the game.
+     * 
+     * @param canPlay true if the user can play, false otherwise
+     */
+    public void setPlayStatus(boolean canPlay) {
+        this.canPlay = canPlay;
     }
 
     /**
@@ -317,9 +354,7 @@ public class SlideGame extends Application {
         catch (ArrayIndexOutOfBoundsException e) {
             if (logic.play()) {
                 this.setGameBoard(gameBoard);
-            } else {
-                System.out.println("You Lose!");
-            }
+            } 
         }
     }
 
@@ -351,6 +386,7 @@ public class SlideGame extends Application {
                 Arrays.equals(this.getBoardDim(), new int[] { 4, 4 }) ? 0 : 15, 0));
         slideGame.setRight(gameGrid);
         slideGame.setLeft(this.getMoveArea());
+        this.setInfo(info);
         slideGame.setStyle(this.getColor());
 
         // Create/set/show the scene
@@ -447,6 +483,13 @@ public class SlideGame extends Application {
     }
 
     /**
+     * This helper method informs the user that they lost.
+     */
+    private void lost() {
+        this.setLoseArea();
+    }
+
+    /**
      * This helper method resets the state of the game.
      */
     private void reset() {
@@ -454,6 +497,8 @@ public class SlideGame extends Application {
         this.setGameBoard(this.emptyBoard(this.getBoardDim()));
         this.setPosition(1, this.randomIndex());
         this.setButtonActions(this.updateGameBoard(this.getGameGrid()));
+        this.setInfo(this.getMoveArea());
+        this.setPlayStatus(true);
     }
 
     /**
@@ -624,6 +669,7 @@ public class SlideGame extends Application {
                 // Board copy and button pane
                 Button[][] buttons = buttonBoard;
                 switch (e.getCode()) {
+                
                     case H:
                         // Use nested class to process event
                         move.setDirection(Direction.LEFT);
@@ -758,56 +804,60 @@ public class SlideGame extends Application {
             // Copy the board for comparison and slide up
             this.setCopyBoard(SlideGame.this.copyBoard(SlideGame.this.getGameBoard()));
 
-            // Perform the move based on enum value
-            switch (this.getDirection()) {
-                case LEFT:
-                    slideLeft();
-                    break;
-                case RIGHT:
-                    slideRight();
-                    break;
-                case UP:
-                    slideUp();
-                    break;
-                case DOWN:
-                    slideDown();
-                    break;
-                case UP_LEFT:
-                    slideUpLeft();
-                    break;
-                case DOWN_LEFT:
-                    slideDownLeft();
-                    break;
-                case DOWN_RIGHT:
-                    slideDownRight();
-                    break;
-                case UP_RIGHT:
-                    slideUpRight();
-                    break;
-                default:
-                    break;
-            }
-
-            // If nothing changed, return
-            if (Arrays.deepEquals(this.getCopyBoard(), SlideGame.this.getGameBoard())) {
-                if (!logic.play()) {
-                    System.out.println("You Lose!");
+            if (SlideGame.this.getPlayStatus()) {
+                // Perform the move based on enum value
+                switch (this.getDirection()) {
+                    case LEFT:
+                        SlideGame.this.slideLeft();
+                        break;
+                    case RIGHT:
+                        SlideGame.this.slideRight();
+                        break;
+                    case UP:
+                        SlideGame.this.slideUp();
+                        break;
+                    case DOWN:
+                        SlideGame.this.slideDown();
+                        break;
+                    case UP_LEFT:
+                        SlideGame.this.slideUpLeft();
+                        break;
+                    case DOWN_LEFT:
+                        SlideGame.this.slideDownLeft();
+                        break;
+                    case DOWN_RIGHT:
+                        SlideGame.this.slideDownRight();
+                        break;
+                    case UP_RIGHT:
+                        SlideGame.this.slideUpRight();
+                        break;
+                    default:
+                        break;
                 }
-                return;
+
+                // If nothing changed, return
+                if (Arrays.deepEquals(this.getCopyBoard(), SlideGame.this.getGameBoard())) {
+                    if (!logic.play()) {
+                        SlideGame.this.setPlayStatus(false);
+                    }
+                    return;
+                }
+
+                // Otherwise set a random position to 1
+                SlideGame.this.setPosition(1, SlideGame.this.randomIndex());
+
+                // Update the button pane
+                buttonBoard = SlideGame.this.updateGameBoard(SlideGame.this.getGameGrid());
+
+                // Reset the button actions
+                SlideGame.this.setButtonActions(buttonBoard);
+            } else {
+                SlideGame.this.lost();
             }
-
-            // Otherwise set a random position to 1
-            SlideGame.this.setPosition(1, SlideGame.this.randomIndex());
-
-            // Update the button pane
-            buttonBoard = SlideGame.this.updateGameBoard(SlideGame.this.getGameGrid());
-
-            // Reset the button actions
-            SlideGame.this.setButtonActions(buttonBoard);
         }
     }
 
-    /*
+    /**
      * This helper method declares the text area for the rules.
      * 
      * @return The text area for the rules
@@ -858,6 +908,22 @@ public class SlideGame extends Application {
 
         // Return the text area
         return formatBox;
+    }
+
+    /**
+     * This helper method declares the losing text. 
+     *
+     * @return An HBox for the lost info
+     */
+    private void setLoseArea() {
+        // Create a StringBuilder to store the rules
+        StringBuilder builder = new StringBuilder();
+        builder.append("You Lose...\n");
+        builder.append("Press R to Reset, Q to Quit");
+
+        // Grab and set the info
+        ((TextArea) ((VBox) this.getInfo().getChildren().get(0))
+                .getChildren().get(1)).setText(builder.toString());;
     }
 
     /**
