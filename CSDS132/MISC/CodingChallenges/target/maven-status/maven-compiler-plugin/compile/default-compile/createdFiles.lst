@@ -1,10 +1,10 @@
-ArrayChallenges\MArraysChallenge.class
 InterfaceChallenge\PrintGreetings.class
-AbstractChallenge\Ellipse.class
 MainMethodChallenge\Echo.class
-InterfaceChallenge\HourlyEmployee.class
+AbstractChallenge\Ellipse.class
 InterfaceChallenge\Employee.class
+InterfaceChallenge\GeometricFrame.class
 InterfaceChallenge\Friendly.class
 AbstractChallenge\Circle.class
-InterfaceChallenge\GeometricFrame.class
 AbstractChallenge\Shape.class
+ArrayChallenges\MArraysChallenge.class
+InterfaceChallenge\HourlyEmployee.class
