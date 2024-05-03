@@ -3,6 +3,7 @@ package ComparableChallenge;
 import org.junit.*;
 import static org.junit.Assert.*;
 
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
@@ -47,5 +48,22 @@ public class ComparisonTester {
         } catch (Exception e) {
             fail("Unhandled Exception Thrown: " + e.getClass());
         }
+    }
+
+    // Tests the Person class with method reference
+    @Test
+    public void personTester() {
+        Person p1 = new Person(0);
+        Person p2 = new Person(4);
+        Person p3 = new Person(9);
+
+        assertEquals(0, Person.ageDifference(p1, p1));
+        assertEquals(5, Person.ageDifference(p3, p2));
+        assertEquals(-5, Person.ageDifference(p2, p3));
+
+        Comparator<Person> personComparator = Person.getComparator();
+        assertEquals(0, personComparator.compare(p1, p1));
+        assertEquals(-5, personComparator.compare(p2, p3));
+        assertEquals(5, personComparator.compare(p3, p2));
     }
 }
