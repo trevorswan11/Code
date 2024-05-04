@@ -36,17 +36,14 @@ class TestArrayManipulator(unittest.TestCase):
 
     def test_vertical_flip(self):
         result = self.arr_manipulator.vertical_flip(self.arr)
-        print(result)
         self.assertEqual(result, self.expected_vertical_flip)
 
     def test_horizontal_flip(self):
         result = self.arr_manipulator.horizontal_flip(self.arr)
-        print(result)
         self.assertEqual(result, self.expected_horizontal_flip)
 
     def test_transpose(self):
         result = self.arr_manipulator.transpose(self.arr)
-        print(result)
         self.assertEqual(result, self.expected_transpose)
 
 if __name__ == '__main__':
