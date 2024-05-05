@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "PhoneMain",
+            "request": "launch",
+            "mainClass": "inheritance.PhoneMain",
+            "projectName": "FinalReview"
+        },
+        {
+            "type": "java",
             "name": "MyWindow",
             "request": "launch",
             "mainClass": "JavaFXChallenge.MyWindow",
