@@ -1,0 +1,33 @@
+// Question 50
+public class AndroidPhone extends Phone {
+    private String company;
+
+    public AndroidPhone(double price, String name, int numPixels, String company) {
+        super(price, "AndroidOS", name, numPixels);
+        this.company = company;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    // Question 51
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof AndroidPhone) {
+            AndroidPhone p = (AndroidPhone) o;
+            return super.equals(p) && p.getCompany().equals(getCompany());
+        }
+
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return getCompany() + " " + getName();
+    }
+}

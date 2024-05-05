@@ -1,0 +1,37 @@
+import java.util.Arrays;
+
+// Question 55
+public class PhoneMain {
+    public static void printPhones(PhoneStore<?> phoneStore) {
+        for (Phone p : phoneStore) {
+            System.out.println(p);
+        }
+    }
+
+    public static double totalPrice(PhoneStore<?> phoneStore) {
+        double total = 0.0;
+        for (Phone p : phoneStore) {
+            total += p.getPrice();
+        }
+
+        return total;
+    }
+
+    // Question 56
+    public static void printByPrice(PhoneStore<?> phoneStore) {
+        Phone[] phones = phoneStore.getArray();
+        Arrays.sort(phones, Phone.compareByPrice());
+        Arrays.stream(phones).forEach(System.out::println);
+    }
+
+    // Test method
+    public static void main(String[] args) {
+        PhoneStore<Phone> phoneStore = new PhoneStore<>(5);
+        phoneStore.add(new IPhone(2000, "iPhone 13 Pro", 2962440, "16.0"));
+        phoneStore.replenishStock(new AndroidPhone(500, "Galaxy S20", 4608000, "Samsung"));
+
+        printPhones(phoneStore);
+        System.out.println("Total Price of Store:" + totalPrice(phoneStore));
+        printByPrice(phoneStore);
+    }
+}

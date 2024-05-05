@@ -1,0 +1,51 @@
+import java.util.LinkedList;
+import java.util.ListIterator;
+
+// Question 60
+public class Loops {
+    public static void printList(LinkedList<LinkedList<String>> list) {
+        // For each loop
+        for (LinkedList<String> subList : list) {
+            ListIterator<String> iterator = subList.listIterator();
+
+            // While loop
+            while (iterator.hasNext()) {
+                String s = iterator.next();
+
+                // For loop
+                for (int i = 0; i < s.length(); i++) {
+                    System.out.println(s.charAt(i));
+                }
+            }
+        }
+    }
+
+    // For testing
+    public static void main(String[] args) {
+        LinkedList<LinkedList<String>> list = new LinkedList<>();
+
+        LinkedList<String> list1 = new LinkedList<>();
+        LinkedList<String> list2 = new LinkedList<>();
+        LinkedList<String> list3 = new LinkedList<>();
+
+        list1.add("Connamacher");
+        list1.add("Is");
+        list1.add("The");
+        list1.add("Best");
+
+        list2.add("Nobel");
+        list2.add("Should");
+        list2.add("Go");
+        list2.add("To");
+        list2.add("Sleep");
+
+        list3.add("Bye");
+        list3.add("Bye");
+
+        list.add(list1);
+        list.add(list2);
+        list.add(list3);
+
+        printList(list);
+    }
+}

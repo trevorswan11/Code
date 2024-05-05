@@ -1,0 +1,52 @@
+// Question 57
+public class ToDo {
+    String[] tasks;
+
+    public ToDo(String[] tasks) {
+        this.tasks = tasks;
+    }
+
+    public void addToTasks(String descToAdd) {
+        for (int i = 0; i < tasks.length; i++) {
+            tasks[i] += descToAdd;
+        }
+    }
+
+    // Question 58
+    public void addToTasks(String descToAdd, int start, int end) {
+        try {
+            for (int i = start; i <= end; i++) {
+                tasks[i] += descToAdd;
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Invalid start or end index.");
+        }
+    }
+
+    // Question 59
+    public void makeExcited(int index) {
+        StringBuilder stringBuilder = new StringBuilder();
+        String currTask = tasks[index];
+        for (int i = 0; i < currTask.length(); i++) {
+            if (currTask.charAt(i) == '.') {
+                stringBuilder.append('!');
+            } else {
+                stringBuilder.append(currTask.charAt(i));
+            }
+        }
+        tasks[index] = stringBuilder.toString();
+    }
+
+    public boolean taskExists(String task) {
+        for (int i = 0; i < tasks.length; i++) {
+            if (task.equals(tasks[i])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String[] getTasks() {
+        return tasks;
+    }
+}

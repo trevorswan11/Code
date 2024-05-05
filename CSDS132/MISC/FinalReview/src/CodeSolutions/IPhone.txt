@@ -1,0 +1,33 @@
+// Question 50
+public class IPhone extends Phone {
+    private String iOSVersion;
+
+    public IPhone(double price, String name, int numPixels, String iOSVersion) {
+        super(price, "iOS", name, numPixels);
+        this.iOSVersion = iOSVersion;
+    }
+
+    public String getIOSVersion() {
+        return iOSVersion;
+    }
+
+    public void setIOSVersion(String iOSVersion) {
+        this.iOSVersion = iOSVersion;
+    }
+
+    // Question 51
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof IPhone) {
+            IPhone p = (IPhone) o;
+            return super.equals(p) && p.getIOSVersion().equals(((IPhone) o).getIOSVersion());
+        }
+
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return getName() + ", iOS " + getIOSVersion();
+    }
+}

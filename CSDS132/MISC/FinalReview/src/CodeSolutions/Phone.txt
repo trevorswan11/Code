@@ -1,0 +1,78 @@
+import java.util.Comparator;
+
+// Question 48
+public abstract class Phone implements Comparable<Phone> {
+    private double price;
+    private String operatingSystem;
+    private String name;
+    private int numPixels;
+
+    public Phone(double price, String operatingSystem, String name, int numPixels) {
+        this.price = price;
+        this.operatingSystem = operatingSystem;
+        this.name = name;
+        this.numPixels = numPixels;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public String getOperatingSystem() {
+        return operatingSystem;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getNumPixels() {
+        return numPixels;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    // Question 49
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Phone) {
+            Phone p = (Phone) o;
+            return getNumPixels() == p.getNumPixels() && p.getOperatingSystem().equals(getOperatingSystem());
+        }
+
+        return false;
+    }
+
+    @Override
+    public int compareTo(Phone p) {
+        int pixels = getNumPixels() - p.getNumPixels();
+        if (pixels == 0) {
+            if (getPrice() < p.getPrice())
+                return -1;
+            else if (getPrice() > p.getPrice())
+                return 1;
+            else return 0;
+        }
+
+        return pixels;
+    }
+
+    public static Comparator<Phone> compareByPrice() {
+        return (o1, o2) -> {
+            if (o1 == null && o2 == null)
+                return 0;
+            else if (o1 == null)
+                return 1;
+            else if (o2 == null)
+                return -1;
+
+            if (o1.getPrice() < o2.getPrice())
+                return -1;
+            else if (o1.getPrice() > o2.getPrice())
+                return 1;
+            else return 0;
+        };
+    }
+}

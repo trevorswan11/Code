@@ -1,0 +1,77 @@
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+// Question 52
+public class PhoneStore<T extends Phone> implements Iterable<T> {
+    T[] array;
+
+    public PhoneStore(int numPhones) {
+        array = (T[]) new Phone[numPhones]; // This is the only way to make a generic array, don't expect you to know this. Oops!
+    }
+
+    public T[] getArray() {
+        return array;
+    }
+
+    public T remove(int index) throws NoSuchElementException {
+        if (index < 0 || index >= array.length)
+            throw new NoSuchElementException();
+
+        T save = array[index];
+        if (save == null)
+            throw new NoSuchElementException();
+
+        return save;
+    }
+
+    public void add(T phone) throws IllegalStateException {
+        int i = 0;
+        while (i < array.length && array[i] != null) {
+            i++;
+        }
+
+        if (i < array.length)
+            array[i] = phone;
+        else throw new IllegalStateException();
+    }
+
+    // Question 53
+    @Override
+    public Iterator<T> iterator() {
+        return new PhoneStoreIterator();
+    }
+
+    private class PhoneStoreIterator implements Iterator<T> {
+        private int index;
+
+        public PhoneStoreIterator() {
+            index = 0;
+        }
+
+        @Override
+        public boolean hasNext() {
+            while (index < array.length && array[index] == null) {
+                index++;
+            }
+
+            return (index < array.length);
+        }
+
+        @Override
+        public T next() throws NoSuchElementException {
+            if (!hasNext())
+                throw new NoSuchElementException();
+            else {
+                return array[index++];
+            }
+        }
+    }
+
+    // Question 54
+    public void replenishStock(T phone) {
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] == null)
+                array[i] = phone;
+        }
+    }
+}
