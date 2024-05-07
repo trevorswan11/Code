@@ -9,7 +9,7 @@ public class PhoneMain {
      * 
      * @param store a PhoneStore to iterate through
      */
-    public static void printPhones(PhoneStore<Phone> store) {
+    public static void printPhones(PhoneStore<?> store) {
         // create an iterator and move through the list to print
         Iterator<Phone> it = store.iterator();
         while (it.hasNext()) {
@@ -23,7 +23,7 @@ public class PhoneMain {
      * @param store a PhoneStore to iterate through
      * @return a double value that is the summed price
      */
-    public static double totalPrice(PhoneStore<Phone> store) {
+    public static double totalPrice(PhoneStore<?> store) {
         // store the sum
         double sum = 0;
         // create an iterator and move through the list to print
@@ -39,13 +39,10 @@ public class PhoneMain {
      * 
      * @param store a PhoneStore to iterate through
      */
-    public static <T> void printByPrice(PhoneStore<Phone> store) {
-        Phone[] stock = store.getStock();
-        Arrays.stream(stock)
-                .sorted(Phone.compareByPrice())
-                // .map(Phone::toString)
-                .forEach(System.out::println);
-                // TODO
+    public static void printByPrice(PhoneStore<?> phoneStore) {
+        Phone[] phones = phoneStore.getStock();
+        Arrays.sort(phones, Phone.compareByPrice());
+        Arrays.stream(phones).forEach(System.out::println);
     }
 
     public static <T> void main(String[] args) {
