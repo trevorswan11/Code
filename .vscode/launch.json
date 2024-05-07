@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Loops",
+            "request": "launch",
+            "mainClass": "Loops.Loops",
+            "projectName": "FinalReview"
+        },
+        {
+            "type": "java",
             "name": "PhoneMain",
             "request": "launch",
             "mainClass": "inheritance.PhoneMain",
