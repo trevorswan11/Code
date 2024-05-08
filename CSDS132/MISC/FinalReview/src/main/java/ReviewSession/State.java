@@ -1,5 +1,7 @@
 package ReviewSession;
 
+import java.util.Comparator;
+
 public class State {
     private int population;
     private String twoLetterCode;
@@ -36,5 +38,17 @@ public class State {
             return s.getPopulation() == getPopulation() && getTwoLetterCode().equals(s.getTwoLetterCode());
         }
         return false;
+    }
+
+    public static Comparator<State> compareByPop() {
+        return (state1, state2) -> Integer.compare(state1.getPopulation(), state2.getPopulation());
+    }
+
+    public static Comparator<?> comparingPopulation() {
+        return Comparator.comparing(State::getPopulation);
+    }
+
+    public static Comparator<?> comparingCode() {
+        return Comparator.comparing(State::getTwoLetterCode);
     }
 }

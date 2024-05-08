@@ -2,7 +2,6 @@ package ComparableChallenge;
 
 /* The class that represents some measurement */
 public class Measurement extends Object implements Comparable<Measurement>{
-
     // the quantity of this measurement
     private double quantity;
 
