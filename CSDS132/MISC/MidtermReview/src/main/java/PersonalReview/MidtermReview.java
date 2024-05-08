@@ -6,7 +6,6 @@ public class MidtermReview {
 	}
 
     public static void main(String[] args) {
-        double num = 2 * Math.pow(200000,2);
-        System.out.println(TypeChecker.type(num));
+        System.out.println(TypeChecker.type(new Long(0).longValue()));
     }
 }
