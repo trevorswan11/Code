@@ -72,7 +72,7 @@ public class ToDo {
             }
             tasks[index] = b.toString();
         }
-
+        
         // If the indices are out of bounds, inform the user
         catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Invalid index");
