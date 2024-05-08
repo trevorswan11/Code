@@ -67,15 +67,8 @@ public class ToDo {
 
             // Loop through the string and change all periods
             for (int i = 0; i < s.length(); i++) {
-                // If the character is a period, change it
-                if (s.charAt(i) == '.') {
-                    b.append("!");
-                }
-
-                // Otherwise append as usual
-                else {
-                    b.append(s.charAt(i));
-                }
+                // If the character is a period, change it, otherwise preserve
+                b.append(s.charAt(i) == '.' ? "!" : s.charAt(i));
             }
             tasks[index] = b.toString();
         }
