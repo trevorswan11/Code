@@ -127,10 +127,8 @@ public abstract class Phone {
      *         second
      */
     public static Comparator<Phone> compareByPrice() {
-        return (phone1, phone2) -> {
-            return ((phone1 == null || phone2 == null) ? 1 :
-                Double.compare(phone1.getPrice(), phone2.getPrice()));
-        };
+        return (phone1, phone2) -> (phone1 == null || phone2 == null) ? 1 :
+                Double.compare(phone1.getPrice(), phone2.getPrice());
     }
 
     /**
