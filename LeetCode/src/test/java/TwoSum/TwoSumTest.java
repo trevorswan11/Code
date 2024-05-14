@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 
 public class TwoSumTest {
     // Object for testing method
-    TwoSum test = new TwoSum();
+    Solution test = new Solution();
 
     // Test given cases
     @Test
