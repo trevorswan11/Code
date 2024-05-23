@@ -1,3 +1,5 @@
+package CodeMISC;
+
 import java.util.Scanner;
 
 public class NumberTheory {

@@ -1,3 +1,5 @@
+package CodeMISC;
+
 public class EulersHomework {
 
     // question 5, non-autonomous

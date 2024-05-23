@@ -1,3 +1,5 @@
+package CodeMISC;
+
 public class TabnineTest {
     private static String TEST_STRING = "The quick brown fox jumps over the lazy dog";
 

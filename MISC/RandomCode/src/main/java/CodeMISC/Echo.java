@@ -1,3 +1,5 @@
+package CodeMISC;
+
 public class Echo {
     // The main method takes the input of the string typed in when ran
     public static void main(String[] args) {
