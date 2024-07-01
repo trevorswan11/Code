@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "CodeMISC.Main",
+            "projectName": "RandomCode"
+        },
+        {
+            "type": "java",
+            "name": "OptimizeThis",
+            "request": "launch",
+            "mainClass": "CodeMISC.OptimizeThis",
+            "projectName": "RandomCode"
+        },
+        {
+            "type": "java",
             "name": "place",
             "request": "launch",
             "mainClass": "inheritance.place",
