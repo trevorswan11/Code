@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RemoveElement")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b88fa778906572c433723347a1efa847fce06ce8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ab9b3bf263ee52d7028972a75857951983387810")]
 [assembly: System.Reflection.AssemblyProductAttribute("RemoveElement")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RemoveElement")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
