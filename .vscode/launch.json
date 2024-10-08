@@ -8,6 +8,13 @@
             "type": "java",
             "name": "Solution",
             "request": "launch",
+            "mainClass": "AddBinary.Solution",
+            "projectName": "LeetCode"
+        },
+        {
+            "type": "java",
+            "name": "Solution",
+            "request": "launch",
             "mainClass": "MergeSortedList.Solution",
             "projectName": "LeetCode"
         },
