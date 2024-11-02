@@ -8,6 +8,20 @@
             "type": "java",
             "name": "Solution",
             "request": "launch",
+            "mainClass": "AddTwoNumbers.Solution",
+            "projectName": "LeetCode"
+        },
+        {
+            "type": "java",
+            "name": "ListNode",
+            "request": "launch",
+            "mainClass": "AddTwoNumbers.ListNode",
+            "projectName": "LeetCode"
+        },
+        {
+            "type": "java",
+            "name": "Solution",
+            "request": "launch",
             "mainClass": "AddBinary.Solution",
             "projectName": "LeetCode"
         },
