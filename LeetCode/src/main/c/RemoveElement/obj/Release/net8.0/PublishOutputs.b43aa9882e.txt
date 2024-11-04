@@ -1,5 +1,0 @@
-C:\Users\Trevor\OneDrive\Documents\CWRU\Code\LeetCode\src\main\c\RemoveElement\bin\Release\net8.0\publish\RemoveElement.exe
-C:\Users\Trevor\OneDrive\Documents\CWRU\Code\LeetCode\src\main\c\RemoveElement\bin\Release\net8.0\publish\RemoveElement.dll
-C:\Users\Trevor\OneDrive\Documents\CWRU\Code\LeetCode\src\main\c\RemoveElement\bin\Release\net8.0\publish\RemoveElement.deps.json
-C:\Users\Trevor\OneDrive\Documents\CWRU\Code\LeetCode\src\main\c\RemoveElement\bin\Release\net8.0\publish\RemoveElement.runtimeconfig.json
-C:\Users\Trevor\OneDrive\Documents\CWRU\Code\LeetCode\src\main\c\RemoveElement\bin\Release\net8.0\publish\RemoveElement.pdb
