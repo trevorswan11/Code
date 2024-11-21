@@ -11,7 +11,7 @@ set clipboard+=unnamedplus
 set autochdir
 
 " QOL Mappings
-let mapleader = " "
+let mapleader=" "
 nnoremap ; :
 vnoremap ; :
 vnoremap <Leader>pa :s/\\/\//g<CR>
